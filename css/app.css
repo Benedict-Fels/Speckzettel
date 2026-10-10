@@ -305,3 +305,43 @@ input[type=url]{background:var(--bg);border:1px solid var(--line);border-radius:
 .pick-row:last-of-type{border-bottom:0}
 .pick-row input{width:20px;height:20px;accent-color:var(--accent)}
 .shop-pick .row{padding-top:4px}
+
+/* ---- 1.5: shopping list grouped, reasons, copy/share, "In den Vorrat" check list ---- */
+.shop-row{padding:0 4px 0 14px;gap:4px}
+.shop-main{display:flex;align-items:center;gap:10px;flex:1;min-width:0;min-height:52px;cursor:pointer}
+.shop-main input[type=checkbox]{width:22px;height:22px;accent-color:var(--accent);flex:none}
+.shop-name{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.shop-why{line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.shop-qty{color:var(--muted);white-space:nowrap;text-align:right}
+.shop-row.done .shop-name > span:first-child{text-decoration:line-through;color:var(--muted)}
+.shop-row.done .group-icon{display:none}
+
+/* ---- 2.0: receipt start cards, review drawn as the receipt ---- */
+.start-card{display:flex;gap:14px;align-items:center;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;min-height:76px}
+.start-card:hover{border-color:var(--accent)}
+.start-card > span:last-child{display:flex;flex-direction:column;gap:2px}
+.start-card b{font-family:var(--f-display);font-size:1.05rem}
+.start-icon{font-size:1.8rem;line-height:1}
+.start-card[disabled]{opacity:.7;cursor:progress}
+details.how summary{list-style:none;cursor:pointer}
+details.how summary::-webkit-details-marker{display:none}
+details.how:not([open]){gap:0}
+.check-ok,.check-off,.check-none{font-weight:700;border-radius:10px;padding:10px 12px}
+.check-ok{color:var(--ok);background:var(--ok-bg)}
+.check-off{color:var(--bad);background:var(--bad-bg)}
+.check-none{color:var(--warn);background:var(--warn-bg)}
+.receipt.rc{display:flex;flex-direction:column;padding:10px 12px 14px;font-family:var(--f-body);font-size:.95rem}
+.rc-line{display:flex;flex-direction:column;gap:4px;padding:10px 0;border-bottom:1px dashed color-mix(in srgb, var(--paper-ink) 25%, transparent)}
+.rc-line:last-child{border-bottom:0}
+.rc-paper{display:flex;justify-content:space-between;gap:12px;font-family:var(--f-mono);font-size:.84rem}
+.rc-text{overflow-wrap:anywhere}
+.rc-qty,.rc-minor{color:color-mix(in srgb, var(--paper-ink) 65%, transparent)}
+.rc-warn{color:var(--bad);font-family:var(--f-body);font-weight:700}
+.rc-read{display:flex;justify-content:space-between;align-items:center;gap:6px 10px;flex-wrap:wrap}
+.rc-read .row{gap:6px;flex-wrap:nowrap}
+.rc-line.skipped .rc-paper{opacity:.55}
+.rc-total{border-top:1px solid color-mix(in srgb, var(--paper-ink) 40%, transparent);margin-top:4px}
+.rc-total .rc-paper{font-weight:500;font-size:.9rem}
+.receipt-edit{display:flex;flex-direction:column;gap:10px;background:var(--surface);color:var(--ink);border-radius:10px;padding:12px;margin-top:4px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:8px}
+@media (max-width:420px){.grid3{grid-template-columns:1fr 1fr}.grid3 .fld:last-child{grid-column:1/-1}}

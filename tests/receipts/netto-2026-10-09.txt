@@ -1,0 +1,39 @@
+*** eBon ***
+Netto
+Filiale 0000
+Musterstr. 1
+12345 Musterstadt
+WWW.NETTO-ONLINE.DE
+EUR
+GL grie.Jogh.Nat.4ST 600g    1,39    B
+Bisc.SchoSchokokränze250G    1,69    B
+2 x    1,69
+Champignon weiss 400g    3,38    B
+Rabatt 50%    -1,70
+SUMME [4]    4,76
+----------
+SUMME    €    4,76
+PAYBACK Punkte EUR    4,76
+MWST    BRUTTO    NETTO
+B    7%    0,31    4,76    4,45
+------------------------------------------
+Erreichte Ersparnis
+Aktionsersparnis    2,30
+PAYBACK    2 Punkte
+------------------------------------------
+PAYBACK Karte - ******0000
+Ihr Punktestand vor dem Einkauf:    1.000
+Für diesen Einkauf erhalten Sie:
+Basis °Punkte auf 4,76 €    2
+TSE Transaktionsnummer.:00000
+Seriennr. Kasse:NTO-000-00000-1
+Signaturzähler:00000
+TSE-Start:2026-10-09T12:57:34.000Z
+TSE-Stop : 2026-10-09T12:57:34.000Z
+Steuer-Nr.DE000000000
+Montag-Samstag 7:00-21:00 Uhr
+Datum    Uhrzeit
+09.10.26    14:56
+Filiale    Pos Bed    Bon-Nr.
+0000000    001 000000000000
+(1/1)

@@ -40,7 +40,8 @@ export function seed() {
     ],
     recipes: seedRecipes(),
     starterIds: seedRecipes().map(r => r.id),
-    shopping: [{id: uid(), name: 'Bananen', amount: null, unit: null, done: false}],
+    shopping: [{id: uid(), ingredient: 'Banane', text: null, amount: null, unit: null, done: false, doneAt: null, addedAt: t, reason: null}],
+    receipts: [],
     aliases: {},
     catalogOverrides: {},
     household: {diet: 'vegan', onboarded: true},
@@ -52,4 +53,4 @@ export const defaultSettings = () => ({hintSoon: true, hintCheck: true, trackSna
 
 /* withRecipes: false when the household wants no suggested recipes. onboarded: false shows the first-start screens. */
 export const emptyState = ({withRecipes = true, onboarded = true, diet = null} = {}) => ({schema: SCHEMA, demo: false, items: [], recipes: withRecipes ? seedRecipes() : [], starterIds: withRecipes ? seedRecipes().map(r => r.id) : [],
-  shopping: [], aliases: {}, catalogOverrides: {}, household: {diet, onboarded}, settings: defaultSettings()});
+  shopping: [], receipts: [], aliases: {}, catalogOverrides: {}, household: {diet, onboarded}, settings: defaultSettings()});

@@ -4,6 +4,8 @@ import {esc} from '../text.js';
 import {APP_VERSION} from '../version.js';
 import {isBuiltIn} from '../catalog.js';
 import {AREAS} from '../areas.js';
+import {receiptStats, outcome, OUTCOME_LABELS} from '../receipt/history.js';
+import {chainLabel} from '../receipt/templates.js';
 import {header} from './components.js';
 
 export const DIETS = {all: 'alles', vegetarian: 'vegetarisch', vegan: 'vegan', none: 'Ich möchte keine Rezeptvorschläge'};
@@ -51,6 +53,22 @@ function ownIngredients() {
   }).join('')}</div>`;
 }
 
+/* Testing phase (spec 13.4): how well receipts are read. */
+function receiptStatsPanel() {
+  const list = app.state.receipts || [];
+  if (!list.length) return `<div class="panel"><h3>Bon-Statistik</h3><p class="small muted">Noch keine Bons eingelesen.</p></div>`;
+  const st = receiptStats(list);
+  const rows = [...list].sort((a, b) => b.importedAt - a.importedAt).map(r => {
+    const o = outcome(r);
+    return `<div class="shop-row"><span class="shop-name">${esc(chainLabel(r.chain))} · ${r.date ? r.date.slice(0, 10).split('-').reverse().join('.') : new Date(r.importedAt).toLocaleDateString('de-DE')}</span>
+      <span class="small muted num">${r.via === 'pdf' ? 'PDF' : r.via === 'ai' ? 'KI' : 'Text'} · ${r.lines.length} Zeilen</span><span class="chip ${o === 'smooth' ? 'ok' : o === 'error' ? 'buy' : 'check'}">${OUTCOME_LABELS[o]}</span></div>`;
+  }).join('');
+  return `<div class="panel"><h3>Bon-Statistik</h3><p class="num"><b>${st.total} Bons</b> · ${st.smooth} glatt · ${st.corrected} korrigiert · ${st.error} Fehler</p>
+    <p class="small muted">Glatt: Summe stimmt, nichts korrigiert. Korrigiert: Summe stimmt, aber eine Zutat musste geändert werden. Fehler: Summe stimmte nicht.</p>
+    <div class="items">${rows}</div>
+    <div class="row"><button class="btn small" data-act="exportReceipts">Bon-Texte als Datei</button></div></div>`;
+}
+
 export function renderSettings() {
   const {state} = app;
   const diet = state.household.diet || 'all';
@@ -69,7 +87,8 @@ export function renderSettings() {
   h += `<div class="panel"><h3>Eigene Zutaten und Anpassungen</h3>${ownIngredients()}</div>`;
   h += `<div class="panel"><h3>Gelernte Bon-Texte</h3><p class="small muted">${learned ? `${learned} Bon-Texte erkennt die App wieder, ohne zu fragen.` : 'Noch keine. Jede Korrektur beim Bon wird hier gemerkt.'}</p>
     ${learned ? `<div class="row"><button class="btn small danger" data-act="forgetAliases">${app.ui.confirm === 'forgetAliases' ? 'Wirklich alle vergessen?' : 'Alle vergessen'}</button></div>` : ''}</div>`;
+  h += receiptStatsPanel();
   h += installPanel() + dataPanel();
-  h += `<p class="muted small">Speckzettel ${APP_VERSION} · Schriften: SIL Open Font License</p>`;
+  h += `<p class="muted small">Speckzettel ${APP_VERSION} · Schriften: SIL Open Font License · PDF-Lesen: pdf.js (Mozilla, Apache-Lizenz 2.0)</p>`;
   return h;
 }

@@ -1,6 +1,6 @@
 /* Speckzettel service worker: keeps the app files on the device so it starts offline.
    For every release bump VERSION (and APP_VERSION in js/version.js); the app then shows "Neue Version da". */
-const VERSION = 'speckzettel-1.4.1';
+const VERSION = 'speckzettel-2.0.0';
 
 /* Everything the app needs offline. New files must be added here (tests/ is deliberately not cached). */
 const FILES = [
@@ -32,7 +32,13 @@ const FILES = [
   './js/text.js',
   './js/units.js',
   './js/version.js',
+  './js/receipt/history.js',
+  './js/receipt/lines.js',
+  './js/receipt/pdf.js',
   './js/receipt/pipeline.js',
+  './js/receipt/templates.js',
+  './vendor/pdfjs/pdf.min.mjs',
+  './vendor/pdfjs/pdf.worker.min.mjs',
   './js/views/components.js',
   './js/views/cook-sheet-view.js',
   './js/views/cooking-view.js',

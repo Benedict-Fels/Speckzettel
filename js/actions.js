@@ -15,8 +15,10 @@ import {newDraft, draftFromRecipe, draftFromParsed, recipeFromDraft, restoreStar
 import {refreshDraftBits} from './views/cooking-view.js';
 import {addNewStarters} from './starter-recipes.js';
 import {parseIngredientLine, parseRecipeText, splitEntries} from './recipe-text.js';
-import {addToShopping, shoppingToStock} from './shopping.js';
+import {addToShopping, shopName, setDone, stockPlan, applyStockPlan, shoppingText, settleWithReceipt} from './shopping.js';
 import {parseReceipt, aliasKey, receiptAmount} from './receipt/pipeline.js';
+import {pdfToText} from './receipt/pdf.js';
+import {receiptRecord, findDuplicate, receiptsExport} from './receipt/history.js';
 import {AI_PROMPT, SAMPLE_AI, SAMPLE_RECEIPT, SAMPLE_RECIPE_TEXT} from './samples.js';
 import {applyUpdate} from './platform.js';
 import {findGroup} from './views/sheet-view.js';
@@ -46,13 +48,18 @@ function readImport(file) {
   r.readAsText(file);
 }
 
+function copyText(text, done) {
+  const fallback = () => toast('Kopieren geht hier nicht – bitte „Teilen“ nehmen');
+  try { navigator.clipboard.writeText(text).then(() => toast(done), fallback); } catch (err) { fallback(); }
+}
+
 function copyPrompt() {
   const fallback = () => { const r = document.createRange(); r.selectNodeContents($('#prompt')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); toast('Text markiert, jetzt kopieren'); };
   try { navigator.clipboard.writeText(AI_PROMPT).then(() => toast('Auftrag kopiert'), fallback); } catch (err) { fallback(); }
 }
 
 const openSheetFor = item => { app.ui.sheet = {type: 'group', key: `${item.area}|${key(item.ingredient)}`}; app.ui.sheetMore = false; };
-const onShoppingList = () => new Set(app.state.shopping.filter(x => !x.done).map(x => key(x.name)));
+const onShoppingList = () => new Set(app.state.shopping.filter(x => !x.done).map(x => key(shopName(x))));
 const toShoppingAction = name => ({label: 'Auf den Zettel', run: () => { addToShopping(app.state, name, null, null); commit(`${name} steht auf dem Einkaufszettel`); }});
 /* Changing what all packs of an ingredient follow also lands in the household's catalog overrides. */
 function setOverride(ingredient, patch) {
@@ -121,6 +128,59 @@ function applyCookSheet() {
     commit(`${emptied.join(', ')} ${emptied.length === 1 ? 'steht' : 'stehen'} auf dem Einkaufszettel`);
   }}] : [];
   commit(changed.length ? `Abgezogen: ${changed.join(', ')}` : 'Als gekocht gemerkt', {undo: snapshot, actions});
+}
+
+/* ---- receipts ---- */
+const receiptRow = id => app.ui.receipt.rows.find(r => r.id === id);
+function showReceipt(result) {
+  const {ui, state} = app;
+  ui.receipt = result; ui.receiptEdit = null;
+  ui.receiptDuplicate = findDuplicate(state.receipts, result);
+  render();
+  const el = document.getElementById('receipt-review'); if (el) el.scrollIntoView({block: 'start'});
+}
+async function readReceiptPdf(file) {
+  const {ui, state} = app;
+  ui.receiptBusy = true; render();
+  try { showReceipt(parseReceipt(await pdfToText(file), state.aliases, {trackSnacks: state.settings.trackSnacks, via: 'pdf'})); }
+  catch (e) { toast(e.message === 'notext' ? 'In diesem PDF steht kein lesbarer Text (eingescannt?). Dann lieber über die KI.' : 'Das PDF ließ sich nicht lesen.'); }
+  finally { ui.receiptBusy = false; render(); }
+}
+/* Takes the reviewed receipt over: packs into the pantry, corrections learned, receipt kept, shopping list settled. */
+function importReceipt() {
+  const {state, ui} = app;
+  const result = ui.receipt;
+  const chain = result.chain === 'generic' ? null : result.chain;
+  const rows = result.rows;
+  const take = rows.filter(r => !r.skip && r.name.trim());
+  ui.receipt = null; ui.receiptEdit = null; ui.receiptText = ''; ui.receiptDuplicate = null;
+  let settled = [];
+  window.scrollTo(0, 0);
+  return withUndo(() => {
+    const names = [];
+    for (const r of rows) {
+      const key = aliasKey(r.text, chain);
+      if (r.skip) { if (r.ignoreAlways) state.aliases[key] = {ingredient: r.name, ignore: true}; continue; }
+      if (!r.name.trim()) continue;
+      const res = resolve(r.name.trim());
+      const name = res ? res.name : r.name.trim(), variety = r.variety ?? (res ? res.variety : null);
+      /* learn only what was corrected or newly confirmed, not every rule hit (fehler 15.3 #8) */
+      if (r.edited || r.src === 'unknown' || r.src === 'ai') state.aliases[key] = {ingredient: name, variety, area: r.area, unit: r.unit};
+      addItem(state, {name, variety, amount: r.amount, unit: r.unit, area: r.area, source: 'receipt'});
+      names.push(name);
+    }
+    if (!Array.isArray(state.receipts)) state.receipts = [];
+    state.receipts.push(receiptRecord(result, rows));
+    settled = settleWithReceipt(state, names);
+  }, () => `${take.length} ${take.length === 1 ? 'Artikel' : 'Artikel'} im Vorrat${settled.length ? ` · ${settled.length} vom Zettel erledigt` : ''}`);
+}
+function downloadText(text, filename, done) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([text], {type: 'text/plain;charset=utf-8'}));
+  a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  toast(done);
 }
 
 /* ---- clicks ---- */
@@ -226,7 +286,8 @@ function onClick(e) {
     case 'shopPickConfirm': {
       const chosen = ui.shopPick.items.filter(c => c.checked);
       ui.shopPick = null;
-      return withUndo(() => chosen.forEach(c => addToShopping(state, c.name, c.amount, c.unit)), `${chosen.length} ${chosen.length === 1 ? 'Zutat' : 'Zutaten'} auf dem Einkaufszettel`);
+      const rid = ui.recipeId;
+      return withUndo(() => chosen.forEach(c => addToShopping(state, c.name, c.amount, c.unit, {recipe: rid})), `${chosen.length} ${chosen.length === 1 ? 'Zutat' : 'Zutaten'} auf dem Einkaufszettel`);
     }
     case 'quickHave': {
       const x = recipeCheck(state.items, currentRecipe(), ui.persons)[+v];
@@ -274,29 +335,46 @@ function onClick(e) {
     }
 
     /* shopping */
-    case 'shoppingDelete': { e.preventDefault(); const s = state.shopping.find(x => x.id === v); return withUndo(() => { state.shopping = state.shopping.filter(x => x !== s); }, `${s.name} vom Zettel genommen`); }
-    case 'shoppingClear': return withUndo(() => { state.shopping = state.shopping.filter(s => !s.done); }, 'Abgehakte gelöscht');
-    case 'shoppingToStock': return withUndo(() => shoppingToStock(state), n => `${things(n)} im Vorrat`);
-
-    /* receipt */
-    case 'copyPrompt': return copyPrompt();
-    case 'sampleAI': ui.receiptText = SAMPLE_AI; ui.receiptRows = null; return render();
-    case 'sampleReceipt': ui.receiptText = SAMPLE_RECEIPT; ui.receiptRows = null; return render();
-    case 'parseReceipt': ui.receiptText = $('#receipt-text').value; ui.receiptRows = parseReceipt(ui.receiptText, state.aliases, {trackSnacks: state.settings.trackSnacks}); return render();
-    case 'receiptRowTake': { const r = ui.receiptRows.find(x => x.id === v); r.skip = false; return render(); }
-    case 'receiptRowDelete': ui.receiptRows = ui.receiptRows.filter(r => r.id !== v); return render();
-    case 'receiptImport': {
-      const rows = ui.receiptRows.filter(r => !r.skip && r.name.trim());
-      ui.receiptRows = null; ui.receiptText = '';
-      return withUndo(() => {
-        for (const r of rows) {
-          const res = resolve(r.name.trim());
-          const name = res ? res.name : r.name.trim(), variety = r.variety ?? (res ? res.variety : null);
-          if (r.src !== 'rule' || r.edited) state.aliases[aliasKey(r.text)] = {ingredient: name, variety, area: r.area, unit: r.unit};
-          addItem(state, {name, variety, amount: r.amount, unit: r.unit, area: r.area, source: 'receipt'});
-        }
-      }, `${rows.length} Artikel im Vorrat`);
+    case 'shoppingDelete': { e.preventDefault(); const s = state.shopping.find(x => x.id === v); return withUndo(() => { state.shopping = state.shopping.filter(x => x !== s); }, `${shopName(s)} vom Zettel genommen`); }
+    case 'shoppingClear': return withUndo(() => { state.shopping = state.shopping.filter(s => !s.done); }, 'Erledigte gelöscht');
+    case 'toggleShopDone': ui.showShopDone = !ui.showShopDone; return render();
+    case 'shoppingCopy': return copyText(shoppingText(state.shopping), 'Einkaufszettel kopiert');
+    case 'shoppingShare': {
+      const text = shoppingText(state.shopping);
+      if (navigator.share) navigator.share({text}).catch(() => {});
+      else copyText(text, 'Einkaufszettel kopiert');
+      return;
     }
+    case 'shoppingToStock': ui.sheet = {type: 'stock', plan: stockPlan(state)}; return render();
+    case 'stockStep': {
+      const r = ui.sheet.plan.rows[+v], d = +b.dataset.d;
+      if (r.kind === 'packs') r.count = Math.max(0, r.count + d);
+      else { const fine = r.unit === 'g' || r.unit === 'ml'; r.amount = Math.max(0, +(r.amount + d * (fine ? (r.amount > 100 || (r.amount === 100 && d > 0) ? 50 : 10) : 1)).toFixed(2)); }
+      r.take = (r.kind === 'packs' ? r.count : r.amount) > 0;
+      return render();
+    }
+    case 'stockApply': {
+      const plan = ui.sheet.plan; ui.sheet = null;
+      return withUndo(() => applyStockPlan(state, plan), n => n ? `${things(n)} im Vorrat` : 'Erledigte vom Zettel genommen');
+    }
+
+    /* receipt (spec 13) */
+    case 'copyPrompt': return copyPrompt();
+    case 'pdfPick': { const f = $('#receipt-file'); if (f) { f.value = ''; f.click(); } return; }
+    case 'sampleAI': ui.receiptText = SAMPLE_AI; ui.receipt = null; return render();
+    case 'sampleReceipt': ui.receiptText = SAMPLE_RECEIPT; ui.receipt = null; return render();
+    case 'parseReceipt': {
+      ui.receiptText = $('#receipt-text').value;
+      if (!ui.receiptText.trim()) return toast('Erst Bon-Text oder KI-Antwort einfügen');
+      return showReceipt(parseReceipt(ui.receiptText, state.aliases, {trackSnacks: state.settings.trackSnacks}));
+    }
+    case 'receiptRowTake': { const r = receiptRow(v); r.skip = false; r.userSkip = false; r.ignoreAlways = false; if (r.src === 'ignored') { r.edited = true; r.src = 'learned'; } return render(); }
+    case 'receiptRowSkip': { const r = receiptRow(v); r.skip = true; r.userSkip = true; ui.receiptEdit = null; return render(); }
+    case 'receiptRowEdit': ui.receiptEdit = ui.receiptEdit === v ? null : v; render(); return focusField(`receipt-name-${v}`);
+    case 'receiptDiscard': ui.receipt = null; ui.receiptEdit = null; window.scrollTo(0, 0); return render();
+    case 'receiptImport': return importReceipt();
+    case 'toggleReceiptHow': ui.receiptHow = !ui.receiptHow; return render();
+    case 'exportReceipts': return downloadText(receiptsExport(state.receipts || []), `speckzettel-bons-${new Date().toISOString().slice(0, 10)}.txt`, 'Bon-Texte gespeichert');
   }
 }
 
@@ -305,7 +383,15 @@ function onChange(e) {
   const t = e.target;
   const {state, ui} = app;
   if (t.id === 'import-file') { if (t.files && t.files[0]) readImport(t.files[0]); return; }
-  if (t.dataset.act === 'shoppingTick') { const s = state.shopping.find(x => x.id === t.dataset.v); s.done = t.checked; return commit(); }
+  if (t.id === 'receipt-file') { if (t.files && t.files[0]) readReceiptPdf(t.files[0]); return; }
+  if (t.dataset.ignoreAlways && ui.receipt) { receiptRow(t.dataset.ignoreAlways).ignoreAlways = t.checked; return; }
+  if (t.dataset.act === 'shoppingTick') { const s = state.shopping.find(x => x.id === t.dataset.v); setDone(s, t.checked); return commit(); }
+  if (t.dataset.stockTake != null && ui.sheet && ui.sheet.type === 'stock') { ui.sheet.plan.rows[+t.dataset.stockTake].take = t.checked; return render(); }
+  if (t.dataset.stockAmount != null && ui.sheet && ui.sheet.type === 'stock') {
+    const r = ui.sheet.plan.rows[+t.dataset.stockAmount]; const n = parseFloat(t.value.replace(',', '.'));
+    if (!isNaN(n) && n >= 0) { if (r.kind === 'packs') r.count = Math.round(n); else r.amount = n; r.take = n > 0; }
+    return render();
+  }
   if (t.dataset.pack) {
     const i = state.items.find(x => x.id === t.dataset.pack); if (!i) return;
     const f = t.dataset.f;
@@ -345,15 +431,19 @@ function onChange(e) {
       setOverride(g.ingredient, {tracking: v}); return commit();
     }
   }
-  if (t.dataset.row) {
-    const r = ui.receiptRows.find(x => x.id === t.dataset.row); const f = t.dataset.f;
-    r[f] = f === 'amount' ? parseFloat(t.value) || 0 : t.value;
+  if (t.dataset.row && ui.receipt) {
+    const r = receiptRow(t.dataset.row); if (!r) return;
+    const f = t.dataset.f;
+    r[f] = f === 'amount' ? (parseFloat(t.value.replace(',', '.')) || 0) : t.value;
     r.edited = true;
     if (f === 'name') {
       const c = catalogFor(t.value), res = resolve(t.value);
       r.variety = res ? res.variety : null;
-      if (c) { r.area = c.area; r.unit = c.unit; r.amount = receiptAmount(r.sz, r.qty || 1, c.unit, c); render(); }
+      if (c) { r.name = c.name; r.area = c.area; r.unit = c.unit; r.amount = receiptAmount(r.weightKg ? [r.weightKg * 1000, 'g'] : r.sz, r.weightKg ? 1 : (r.qty || 1), c.unit, c); }
+      r.src = r.src === 'unknown' ? 'learned' : r.src;
+      r.skip = false;
     }
+    return render();
   }
 }
 

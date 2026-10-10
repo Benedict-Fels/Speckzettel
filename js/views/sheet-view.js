@@ -8,6 +8,7 @@ import {groupItems, packStatus, rulesFor, levelText} from '../pantry.js';
 import {statusChip} from './components.js';
 import {agoText, frozenText} from './pantry-view.js';
 import {cookSheet} from './cook-sheet-view.js';
+import {stockSheet} from './shopping-view.js';
 
 const isoDate = t => { if (!t) return ''; const d = new Date(t); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
 const dateDE = t => new Date(t).toLocaleDateString('de-DE', {day: 'numeric', month: 'numeric'});
@@ -79,6 +80,7 @@ export function renderSheet() {
   let body = '';
   if (sh.type === 'group') { const g = findGroup(sh.key); if (!g) { app.ui.sheet = null; return ''; } body = groupSheet(g); }
   else if (sh.type === 'newIngredient') body = newIngredientSheet(sh.queue[0]);
+  else if (sh.type === 'stock') body = stockSheet(sh);
   else if (sh.type === 'cook') { body = cookSheet(sh); if (!body) { app.ui.sheet = null; return ''; } }
   return `<div class="sheet-backdrop" data-act="closeSheet"></div><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">${body}</div>`;
 }

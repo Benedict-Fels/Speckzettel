@@ -53,10 +53,10 @@ export function fmt(a, u) {
   return nf(a) + ' ' + unit;
 }
 
-/* "1,5", "½", "1/2", "2-3" -> number (ranges: the larger value, as in 1.0.0) */
+/* "1,5", "½", "1/2", "2-3" -> number (ranges: the middle, "1–2 Zehen" = 1,5 – spec 9.2) */
 export function parseAmountStr(s) {
   s = s.replace(',', '.').replace('½', '.5').replace('¼', '.25').replace('¾', '.75');
   const range = s.split(/[-–]/).map(x => x.trim()).filter(Boolean);
   const nums = range.map(x => x.includes('/') ? x.split('/').reduce((a, b) => +a / +b) : parseFloat(x)).filter(n => !isNaN(n));
-  return nums.length ? Math.max(...nums) : null;
+  return nums.length ? nums.reduce((a, b) => a + b, 0) / nums.length : null;
 }

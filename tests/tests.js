@@ -12,8 +12,13 @@ import {recipeId} from '../js/recipe-model.js';
 import {starterById, starterRecipes, addNewStarters} from '../js/starter-recipes.js';
 import {emptyState} from '../js/seed.js';
 import {parseIngredientLine, parseRecipeText, splitEntries} from '../js/recipe-text.js';
-import {addToShopping, shoppingToStock} from '../js/shopping.js';
-import {parseReceipt} from '../js/receipt/pipeline.js';
+import {addToShopping, shoppingToStock, shoppingAmountText, groupShopping, shoppingText, stockPlan, applyStockPlan, settleWithReceipt, shopName} from '../js/shopping.js';
+import {parseAmountStr} from '../js/units.js';
+import {parseReceipt, classifyLine, buildArticles, receiptDate, aliasKey} from '../js/receipt/pipeline.js';
+import {itemsToLines} from '../js/receipt/lines.js';
+import {detectChain} from '../js/receipt/templates.js';
+import {receiptRecord, findDuplicate, outcome, receiptStats} from '../js/receipt/history.js';
+import {NETTO_TEXT, NETTO_ITEMS} from './receipts/fixtures.js';
 import {SAMPLE_RECEIPT, SAMPLE_AI, SAMPLE_RECIPE_TEXT} from '../js/samples.js';
 
 const DAY = 864e5;
@@ -54,7 +59,7 @@ export async function runAll(catalogDoc) {
     const rc = s.recipes[0];
     is([rc.id, rc.title, rc.servings, rc.origin, rc.steps], ['x', 'Test', 2, 'own', ['a']]);
     is(rc.ingredients, [{amount: 1, unit: 'Stück', name: 'Zucchini', variety: null, optional: false, raw: false}, {amount: null, unit: null, name: 'Salz', variety: null, optional: false, raw: false}]);
-    is(s.shopping, [{id: 's', name: 'Bananen', amount: 3, unit: 'Stück', done: true}]);
+    is(s.shopping, [{id: 's', ingredient: 'Banane', text: null, amount: 3, unit: 'Stück', done: true, doneAt: null, addedAt: null, reason: null}]);
     is(s.aliases, {'tofu natur': {ingredient: 'Tofu', area: 'fridge', unit: 'g', variety: null}});
     is([s.household.onboarded, s.settings.hintSoon], [true, true], 'bestehende Daten: kein erster Start');
     is(s.catalogOverrides, {});
@@ -77,7 +82,7 @@ export async function runAll(catalogDoc) {
     const s = migrate(v3);
     is(s.items.map(i => [i.ingredient, i.variety]), [['Zwiebel', null], ['Linsen', 'rot'], ['Pflanzendrink', 'Hafer'], ['Dosentomaten', null], ['Tofu', 'geräuchert']]);
     is(s.recipes[0].ingredients.map(x => [x.name, x.variety]), [['Linsen', 'rot'], ['Zwiebel', null]]);
-    is([s.shopping[0].name, s.aliases['haferdr ung'].ingredient, s.aliases['haferdr ung'].variety, Object.keys(s.catalogOverrides)], ['Pflanzendrink', 'Pflanzendrink', 'Hafer', ['Zwiebel']]);
+    is([s.shopping[0].ingredient, s.aliases['haferdr ung'].ingredient, s.aliases['haferdr ung'].variety, Object.keys(s.catalogOverrides)], ['Pflanzendrink', 'Pflanzendrink', 'Hafer', ['Zwiebel']]);
     is(s.household, {diet: null, onboarded: true});
   });
 
@@ -149,29 +154,31 @@ export async function runAll(catalogDoc) {
 
   /* ---- receipts ---- */
   test('eBon-Text (REWE-Beispiel)', () => {
-    const rows = parseReceipt(SAMPLE_RECEIPT, {});
+    const rows = parseReceipt(SAMPLE_RECEIPT, {}).rows;
     is(rows.map(r => r.name), ['Pflanzendrink', 'Tofu', 'Spinat', 'Sojasauce', 'Kichererbsen', 'Paprika', 'Chips', 'Mandelmus']);
     is([rows[0].variety, rows[1].variety], ['Hafer', 'natur']);
     is(rows[4].amount, 2, 'Kichererbsen 2 Dosen');
     is(rows.map(r => r.src).every(x => x === 'rule'), true);
     is(rows.filter(r => r.skip).map(r => r.name), ['Chips'], 'Snacks ausgegraut');
-    is(parseReceipt(SAMPLE_RECEIPT, {}, {trackSnacks: true}).filter(r => r.skip).length, 0, 'mit „Snacks verfolgen“');
+    is(parseReceipt(SAMPLE_RECEIPT, {}, {trackSnacks: true}).rows.filter(r => r.skip).length, 0, 'mit „Snacks verfolgen“');
   });
 
   test('Bon: Mengen umrechnen, ohne Größe übliche Packung, TK in den Tiefkühler', () => {
-    const rows = parseReceipt('SPEISEZWIEB. 1KG 1,49 B\nTOFU NATUR 2,29 B\nRAHMSPINAT TK 450G 1,99 B\nMINERALWASSER 0,49 A', {});
+    const rows = parseReceipt('SPEISEZWIEB. 1KG 1,49 B\nTOFU NATUR 2,29 B\nRAHMSPINAT TK 450G 1,99 B\nMINERALWASSER 0,49 A', {}).rows;
     is(rows.map(r => [r.name, r.amount, r.unit, r.area]), [['Zwiebel', 7, 'Stück', 'pantry'], ['Tofu', 400, 'g', 'fridge'], ['Spinat', 450, 'g', 'freezer'], ['Wasser', 1, 'Stück', 'pantry']]);
     is(rows[3].skip, true, 'Getränke ausgegraut');
   });
 
   test('KI-Antwort im Format mit |', () => {
-    const rows = parseReceipt(SAMPLE_AI, {});
-    is(rows.length, 7);
-    is([rows[5].name, rows[5].amount, rows[5].unit, rows[5].area], ['Zwiebel', 8, 'Stück', 'pantry']);
+    const res = parseReceipt(SAMPLE_AI, {});
+    is([res.via, res.rows.length, res.total, res.checks.sum], ['ai', 7, 13.03, 'ok']);
+    is([res.rows[5].name, res.rows[5].amount, res.rows[5].unit, res.rows[5].area, res.rows[4].variety], ['Zwiebel', 7, 'Stück', 'pantry', 'Spaghetti']);
+    const old = parseReceipt('TOFU NAT. 400G | Tofu | 400 | g | Kühlschrank\nPFAND | Pfand | 1 | Stück | Vorrat', {});
+    is([old.rows.map(r => [r.name, r.amount]), old.checks.sum], [[['Tofu', 400]], 'none'], 'altes Format ohne Preis, Pfand nie in den Vorrat');
   });
 
   test('Gelernte Bon-Texte haben Vorrang', () => {
-    const rows = parseReceipt('MANDELMUS 250G 4,99 B', {'mandelmus': {ingredient: 'Mandelmus', area: 'pantry', unit: 'g'}});
+    const rows = parseReceipt('MANDELMUS 250G 4,99 B', {'mandelmus': {ingredient: 'Mandelmus', area: 'pantry', unit: 'g'}}).rows;
     is([rows[0].name, rows[0].src, rows[0].amount, rows[0].unit], ['Mandelmus', 'learned', 250, 'g']);
   });
 
@@ -293,7 +300,7 @@ export async function runAll(catalogDoc) {
   test('Einkaufszettel: zusammenführen und in den Vorrat', () => {
     const s = empty();
     addToShopping(s, 'Spinat', 100, 'g'); addToShopping(s, 'Spinat', 50, 'g'); addToShopping(s, 'Bananen', null, null);
-    is(s.shopping.map(x => [x.name, x.amount]), [['Spinat', 150], ['Bananen', null]]);
+    is(s.shopping.map(x => [x.ingredient, x.amount]), [['Spinat', 150], ['Banane', null]]);
     s.shopping.forEach(x => x.done = true);
     is(shoppingToStock(s), 2);
     is(s.items.map(i => [i.ingredient, i.amount, i.unit]), [['Spinat', 200, 'g'], ['Banane', 5, 'Stück']]);
@@ -453,6 +460,119 @@ export async function runAll(catalogDoc) {
     const r = recipe([['Reis', 150, 'g'], ['Tofu', 200, 'g'], ['Koriander', 1, 'Bund', {optional: true}], ['Zwiebel', 1, 'Stück']]);
     const c = shoppingCandidates(recipeCheck(s.items, r, 2), n => n === 'Zwiebel');
     is(c.map(x => [x.name, x.amount, x.unit, x.optional, x.checked]), [['Reis', 50, 'g', false, true], ['Tofu', 200, 'g', false, true], ['Koriander', 1, 'Bund', true, false]]);
+  });
+
+  /* ---- 1.5: shopping list ---- */
+  test('Umzug 1.4 (Format 5): Zettel-Einträge werden Zutat oder Freitext', () => {
+    const v5 = {schema: 5, demo: false, items: [], recipes: [], aliases: {}, catalogOverrides: {}, starterIds: [], household: {diet: 'none', onboarded: true},
+      shopping: [{id: 'a', name: 'Zwiebeln', amount: 2, unit: 'Stück', done: false}, {id: 'b', name: 'Geschenk für Lisa', amount: null, unit: null, done: true}]};
+    const s = migrate(v5);
+    is(s.shopping.map(x => [x.ingredient, x.text, x.amount, x.done]), [['Zwiebel', null, 2, false], [null, 'Geschenk für Lisa', null, true]]);
+  });
+
+  test('Zettel: Zusammenführen rechnet um, Herkunft sammelt sich, Freitext bleibt Freitext', () => {
+    const s = empty();
+    addToShopping(s, 'Kichererbsen', 1, 'Dose', {recipe: 'a'}); addToShopping(s, 'Kichererbsen', 240, 'g', {recipe: 'b'});
+    addToShopping(s, 'Zwiebel', .5, 'Stück'); addToShopping(s, 'Zwiebel', .5, 'Stück');
+    addToShopping(s, 'Geschenkpapier', null, null);
+    is(s.shopping.map(x => [shopName(x), x.amount, x.unit]), [['Kichererbsen', 2, 'Dose'], ['Zwiebel', 1, 'Stück'], ['Geschenkpapier', null, null]]);
+    is(s.shopping[0].reason, {recipes: ['a', 'b']});
+    is([s.shopping[2].ingredient, s.shopping[2].text], [null, 'Geschenkpapier']);
+  });
+
+  test('Zettel: Anzeige rundet, Packungshinweis, Ladenrundgang', () => {
+    const s = empty();
+    const e = (name, a, u) => shoppingAmountText(addToShopping(s, name, a, u));
+    is([e('Spinat', 100, 'g'), e('Dosentomaten', .3, 'Dose'), e('Zwiebel', 1.5, 'Stück'), e('Kichererbsen', 240, 'g'), e('Kreuzkümmel', 1, 'TL')],
+      ['100 g (1 Pck.)', '1 Dose', '2', '240 g (1 Dose)', '']);
+    addToShopping(s, 'Sonnencreme', null, null); addToShopping(s, 'Brot', 1, 'Stück');
+    is(groupShopping(s.shopping).map(g => g.key), ['produce', 'bread', 'cans', 'spices', 'other']);
+    is(shoppingText(s.shopping).split('\n').slice(0, 3), ['Einkauf (Speckzettel)', '– Spinat, 100 g (1 Pck.)', '– Zwiebel, 2']);
+  });
+
+  test('Zettel → Vorrat: Prüfliste mit Packungen, korrigierbar, Freitext wird nur gelöscht', () => {
+    const s = empty();
+    addToShopping(s, 'Tofu', 700, 'g'); addToShopping(s, 'Zwiebel', 3, 'Stück'); addToShopping(s, 'Olivenöl', null, null); addToShopping(s, 'Geschenkpapier', null, null);
+    addToShopping(s, 'Reis', 500, 'g');
+    s.shopping.slice(0, 4).forEach(x => { x.done = true; });
+    const plan = stockPlan(s);
+    is(plan.rows.map(r => [r.ingredient, r.kind, r.count ?? r.amount]), [['Tofu', 'packs', 2], ['Zwiebel', 'amount', 3], ['Olivenöl', 'level', undefined]]);
+    is(plan.reminders.map(shopName), ['Geschenkpapier']);
+    plan.rows[0].count = 1; plan.rows[1].take = false;
+    is(applyStockPlan(s, plan), 2);
+    is(s.items.map(i => [i.ingredient, i.amount]), [['Tofu', 400], ['Olivenöl', 1]]);
+    is(s.shopping.map(shopName), ['Reis'], 'Erledigte weg, Offenes bleibt');
+  });
+
+  test('Bon übernommen: passende Zettel-Einträge sind erledigt', () => {
+    const s = empty(); addToShopping(s, 'Tofu', 400, 'g'); addToShopping(s, 'Spinat', null, null); addToShopping(s, 'Geschenkpapier', null, null);
+    s.shopping[1].done = true;
+    is(settleWithReceipt(s, ['Tofu', 'Spinat', 'Reis']), ['Tofu', 'Spinat']);
+    is(s.shopping.map(shopName), ['Geschenkpapier']);
+  });
+
+  test('Mengenbereich „1–2“ ergibt den Mittelwert', () => {
+    is([parseAmountStr('1-2'), parseAmountStr('2–3'), parseAmountStr('½')], [1.5, 2.5, .5]);
+  });
+
+  /* ---- 2.0: receipt pipeline with the real Netto eBon of 9.10.2026 (anonymised) ---- */
+  test('PDF-Positionen → Zeilen (Netto-eBon)', () => {
+    is(itemsToLines(NETTO_ITEMS), ['EUR', 'GL grie.Jogh.Nat.4ST 600g    1,39    B', 'Bisc.SchoSchokokränze250G    1,69    B', '2 x    1,69',
+      'Champignon weiss 400g    3,38    B', 'Rabatt 50%    -1,70', 'SUMME [4]    4,76']);
+  });
+
+  test('Zeilen einordnen', () => {
+    const k = l => classifyLine(l).kind;
+    is(['GL grie.Jogh.Nat.4ST 600g    1,39    B', '2 x    1,69', '2 Stk x  0,79', '0,532 kg x 2,99 EUR/kg', 'Rabatt 50%    -1,70', 'SUMME [4]    4,76',
+      'B    7%    0,31    4,76    4,45', 'Geg. EC-Cash  EUR  17,26', 'PFAND 0,25 EURO  0,25 A', 'Aktionsersparnis    2,30', 'PAYBACK    2 Punkte', 'TSE-Start:2026-10-09T12:57:34.000Z', 'Filiale 0000'].map(k),
+      ['article', 'qty', 'qty', 'weight', 'discount', 'total', 'tax', 'payment', 'deposit', 'discount', 'text', 'tse', 'text']);
+    is(classifyLine('SUMME [4]    4,76').count, 4);
+  });
+
+  test('Netto-eBon: Kette, Datum, Mengenzeile vor dem Artikel, Rabatt, alle Proben stimmen', () => {
+    const r = parseReceipt(NETTO_TEXT, {});
+    is([r.chain, r.date, r.total, r.count], ['netto', '2026-10-09T14:56', 4.76, 4]);
+    is(r.checks, {sum: 'ok', sumFound: 4.76, sumDiff: 0, count: 'ok', lines: 'ok'});
+    is(r.rows.map(x => [x.text, x.qty, x.price, x.discount]), [['GL grie.Jogh.Nat.4ST 600g', 1, 1.39, 0], ['Bisc.SchoSchokokränze250G', 1, 1.69, 0], ['Champignon weiss 400g', 2, 3.38, -1.7]]);
+    is(r.rows.map(x => [x.name, x.amount, x.unit, x.skip]), [['Joghurt', 600, 'g', false], ['Schokolade', 1, 'Stück', true], ['Champignons', 800, 'g', false]]);
+    is(detectChain(['REWE Markt GmbH']), 'rewe');
+  });
+
+  test('Mengenzeile: Rechnung entscheidet vor der Vorlage', () => {
+    /* REWE layout (after) on an unknown chain, and Netto layout (before) on an unknown chain */
+    const after = buildArticles(['KICHERERBSEN 400G 1,58 B', '2 Stk x 0,79', 'TOFU 2,29 B', 'SUMME 3,87']);
+    is(after.articles.map(a => [a.text, a.qty]), [['KICHERERBSEN 400G', 2], ['TOFU', 1]]);
+    const before = buildArticles(['TOFU 2,29 B', '2 x 1,69', 'CHAMPIGNON 3,38 B', 'SUMME 5,67']);
+    is(before.articles.map(a => [a.text, a.qty, a.lineCheck]), [['TOFU', 1, null], ['CHAMPIGNON', 2, 'ok']]);
+    const weight = buildArticles(['BANANEN 1,49 A', '0,532 kg x 2,80 EUR/kg', 'SUMME 1,49']);
+    is([weight.articles[0].weightKg, parseReceipt('BANANEN 1,49 A\n0,532 kg x 2,80 EUR/kg\nSUMME 1,49', {}).rows[0].amount], [.532, 4], '532 g Bananen = 4 Stück');
+  });
+
+  test('Summenprobe fängt Lesefehler', () => {
+    const r = parseReceipt('TOFU 2,29 B\nSPINAT 1,89 B\nSUMME 3,68', {});
+    is([r.checks.sum, r.checks.sumDiff], ['off', -.5]);
+    const pfand = parseReceipt('WASSER 0,49 A\nPFAND 0,25 A\nLEERGUT -0,25\nSUMME 0,49', {});
+    is([pfand.checks.sum, pfand.rows.length, pfand.deposits.length], ['ok', 1, 2]);
+    is([receiptDate('Datum 09.10.2026 14:56'), receiptDate('09.10.26    14:56'), receiptDate('kein Datum')], ['2026-10-09T14:56', '2026-10-09T14:56', null]);
+  });
+
+  test('Gelernt mit Kette, „immer ignorieren“', () => {
+    const al = {[aliasKey('GL grie.Jogh.Nat.4ST 600g', 'netto')]: {ingredient: 'Joghurt', variety: 'griechisch', area: 'fridge', unit: 'g'},
+      [aliasKey('Bisc.SchoSchokokränze250G', 'netto')]: {ingredient: 'Kekse', ignore: true}};
+    const r = parseReceipt(NETTO_TEXT, al);
+    is(r.rows.map(x => [x.name, x.variety, x.src, x.skip]), [['Joghurt', 'griechisch', 'learned', false], ['Kekse', null, 'ignored', true], ['Champignons', null, 'rule', false]]);
+    is(parseReceipt('GL grie.Jogh.Nat.4ST 600g 1,39 B', al).rows[0].src, 'rule', 'andere Kette: Netto-Kürzel gilt nicht');
+  });
+
+  test('Bon merken: doppelt erkennen, Statistik', () => {
+    const res = parseReceipt(NETTO_TEXT, {});
+    const rec = receiptRecord(res, res.rows);
+    is([rec.key, rec.chain, rec.total, rec.lines.length, rec.lines[1].skipped, outcome(rec)], ['netto|2026-10-09T14:56|4.76', 'netto', 4.76, 3, true, 'smooth']);
+    is(Object.keys(rec).includes('branch') || JSON.stringify(rec).includes('PAYBACK'), false, 'keine Filiale, kein Payback');
+    is(findDuplicate([rec], parseReceipt(NETTO_TEXT, {})) === rec, true);
+    const bad = receiptRecord(parseReceipt('TOFU 2,29 B\nSUMME 3,00', {}), []);
+    const fixed = {...rec, corrected: true};
+    is(receiptStats([rec, bad, fixed]), {total: 3, smooth: 1, corrected: 1, error: 1});
   });
 
   return results;

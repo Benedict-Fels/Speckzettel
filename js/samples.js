@@ -1,25 +1,31 @@
 /* Texts for the "Bon" tab and example inputs. */
-export const AI_PROMPT = `Lies den Kassenbon auf dem Foto aus. Antworte NUR mit einer Zeile pro Artikel, ohne weiteren Text, in genau diesem Format:
-Bon-Text | Produktname | Menge | Einheit | Bereich
+export const AI_PROMPT = `Lies den Kassenbon auf dem Foto aus. Antworte NUR mit einer Zeile pro Artikel und am Ende der Summe, ohne weiteren Text, in genau diesem Format:
+Bon-Text | Zutat | Sorte | Menge | Einheit | Bereich | Preis
+SUMME | Gesamtbetrag
 
 Regeln:
 - Bon-Text: genau wie auf dem Bon
-- Produktname: allgemeiner deutscher Name (z. B. Haferdrink, Tofu, Nudeln, Zwiebeln, Gehackte Tomaten)
+- Zutat: Grundform im Singular, wie man sie im Supermarkt sagt (z. B. Pflanzendrink, Tofu, Nudeln, Zwiebel, Joghurt)
+- Sorte: nur wenn wichtig (z. B. Hafer, griechisch, geräuchert), sonst leer lassen
 - Menge: Packungsgröße mal Anzahl, als Zahl
-- Einheit: g, ml, Stk oder Dose
+- Einheit: g, ml, Stück, Dose oder Glas
 - Bereich: Kühlschrank, Vorrat oder Tiefkühler
-- Pfand, Summe, Rabatte und Zahlungsangaben weglassen
+- Preis: Zeilenpreis nach Rabatt, mit Komma
+- Pfand als eigene Zeile mit Zutat „Pfand“, Zahlungs- und Steuerzeilen weglassen
+- SUMME: der Betrag, der auf dem Bon als Summe steht
 
 Beispiel:
-BIO HAFERDR.UNG 1L | Haferdrink | 1000 | ml | Kühlschrank`;
+BIO HAFERDR.UNG 1L | Pflanzendrink | Hafer | 1000 | ml | Vorrat | 1,49
+SUMME | 1,49`;
 
-export const SAMPLE_AI = `BIO HAFERDR.UNG 1L | Haferdrink | 1000 | ml | Kühlschrank
-TOFU NAT. 400G | Tofu | 400 | g | Kühlschrank
-BLATTSPIN. 200G | Spinat | 200 | g | Kühlschrank
-SOJASAUCE 150ML | Sojasauce | 150 | ml | Vorrat
-SPAGHETTI 500G | Nudeln | 500 | g | Vorrat
-SPEISEZWIEB. 1KG | Zwiebeln | 8 | Stk | Vorrat
-ERDBEEREN 500G | Erdbeeren | 500 | g | Kühlschrank`;
+export const SAMPLE_AI = `BIO HAFERDR.UNG 1L | Pflanzendrink | Hafer | 1000 | ml | Vorrat | 1,49
+TOFU NAT. 400G | Tofu | | 400 | g | Kühlschrank | 2,29
+BLATTSPIN. 200G | Spinat | | 200 | g | Kühlschrank | 1,79
+SOJASAUCE 150ML | Sojasauce | | 150 | ml | Vorrat | 2,19
+SPAGHETTI 500G | Nudeln | Spaghetti | 500 | g | Vorrat | 0,99
+SPEISEZWIEB. 1KG | Zwiebel | | 7 | Stück | Vorrat | 1,29
+ERDBEEREN 500G | Erdbeeren | | 500 | g | Kühlschrank | 2,99
+SUMME | 13,03`;
 
 export const SAMPLE_RECEIPT = `REWE Markt GmbH
 Musterstr. 12, 70173 Stuttgart

@@ -5,10 +5,12 @@
       shelfDays null = catalog default, no snack field; catalogOverrides for own ingredients.
    4: app 1.3.0, big catalog: some ingredients renamed (singular, variety instead of own name), household + settings.
    5: app 1.4.0, recipe model (spec 2.3): summary, diet (null = from ingredients), times, icon, source, tags, createdAt,
-      cookedAt; ingredients with optional/raw. Unedited starter recipes are replaced by their new version. */
-export const SCHEMA = 5;
+      cookedAt; ingredients with optional/raw. Unedited starter recipes are replaced by their new version.
+   6: app 1.5.0, shopping entries (spec 2.4): ingredient (known) or text (free reminder), doneAt, addedAt, reason. */
+export const SCHEMA = 6;
 
 import {normalizeRecipe} from './recipe-model.js';
+import {catalogFor} from './catalog.js';
 import {starterById, addNewStarters} from './starter-recipes.js';
 
 const AREA = {kuehl: 'fridge', vorrat: 'pantry', tk: 'freezer'};
@@ -74,7 +76,18 @@ function v4to5(s) {
   };
 }
 
-const STEPS = {1: v1to2, 2: v2to3, 3: v3to4, 4: v4to5};
+/* Needs the catalog loaded (setCatalog) to tell ingredients from free text. */
+function v5to6(s) {
+  return {...s, schema: 6, shopping: (s.shopping || []).map(normalizeShopping)};
+}
+export function normalizeShopping(x) {
+  const name = x.ingredient || x.text || x.name || '';
+  const c = x.text ? null : catalogFor(name);
+  return {id: x.id, ingredient: c ? c.name : null, text: c ? null : name, amount: x.amount ?? null, unit: x.amount != null ? (x.unit || 'Stück') : null,
+    done: !!x.done, doneAt: x.doneAt ?? null, addedAt: x.addedAt ?? null, reason: x.reason ?? null};
+}
+
+const STEPS = {1: v1to2, 2: v2to3, 3: v3to4, 4: v4to5, 5: v5to6};
 
 export const schemaOf = s => s.schema || 1;
 export const looksLikeState = s => !!s && Array.isArray(s.items) && Array.isArray(s.recipes);
@@ -85,6 +98,7 @@ export function migrate(s) {
   if (v > SCHEMA) throw new Error('newer');
   while (v < SCHEMA) { s = STEPS[v](s); v = schemaOf(s); }
   s.recipes = s.recipes.map(normalizeRecipe);
+  s.receipts = Array.isArray(s.receipts) ? s.receipts : [];
   s.shopping = Array.isArray(s.shopping) ? s.shopping : [];
   s.aliases = s.aliases && typeof s.aliases === 'object' ? s.aliases : {};
   s.catalogOverrides = s.catalogOverrides && typeof s.catalogOverrides === 'object' ? s.catalogOverrides : {};

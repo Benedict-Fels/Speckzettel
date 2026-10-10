@@ -8,6 +8,7 @@ import {lineInfo} from '../recipe-edit.js';
 import {activeTime} from '../recipe-model.js';
 import {fmt} from '../units.js';
 import {key} from '../catalog.js';
+import {shopName} from '../shopping.js';
 import {header} from './components.js';
 
 const STATUS_LABELS = {ok: 'da', check: 'schau nach', buy: 'fehlt', optional: 'optional'};
@@ -68,7 +69,7 @@ function shopBlock(rows, missingCount) {
 
 function renderRecipe(r) {
   const persons = app.ui.persons;
-  const listed = new Set(app.state.shopping.filter(x => !x.done).map(x => key(x.name)));
+  const listed = new Set(app.state.shopping.filter(x => !x.done).map(x => key(shopName(x))));
   const rows = recipeCheck(app.state.items, r, persons).map(x => ({...x, onList: listed.has(key(x.ing.name))}));
   const buy = rows.filter(x => x.status === 'buy'), buyNew = buy.filter(x => !x.onList), chk = rows.filter(x => x.status === 'check');
   const diet = recipeDiet(r);
