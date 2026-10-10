@@ -1,0 +1,8520 @@
+{
+ "_comment": "Speckzettel product catalog. Keys are ingredient names (German, shown to users; singular unless bought in plural). group: shop section (see groups, in shop-walk order). area: where it is usually kept. unit: unit of the pack. tracking: exact / rough / flag. profile: perishable (shelf-life clock) or stable (no clock); the freezer always counts as frozen. shelfDays: days from purchase (perishable only). openedDays: days after opening (also turns stable into perishable). graceDays: days 'drüber' after expiry before 'vermutlich weg' (default: same as shelfDays). useBy: use-by date (meat, fish): grace 0, 'nicht mehr essen'. pack: usual pack size in unit. diet: vegan / vegetarian / all. staple: always there (Salz, Pfeffer, Wasser). snack: only tracked if the household turns snacks on. ignore: not taken over from receipts by default. plural: display plural. per: {unit: amount in this ingredient's unit}. synonyms: other names, 'text|Sorte' sets the variety. receiptRules: case-insensitive regex patterns, tried in order (longest first).",
+ "version": 3,
+ "groups": [
+  {
+   "key": "produce",
+   "label": "Obst & Gemüse",
+   "icon": "🥕"
+  },
+  {
+   "key": "bread",
+   "label": "Brot & Backwaren",
+   "icon": "🍞"
+  },
+  {
+   "key": "chilled",
+   "label": "Kühlregal",
+   "icon": "🧊"
+  },
+  {
+   "key": "dairy",
+   "label": "Milch, Käse & Eier",
+   "icon": "🧀"
+  },
+  {
+   "key": "meat",
+   "label": "Fleisch & Fisch",
+   "icon": "🥩"
+  },
+  {
+   "key": "dry",
+   "label": "Trockenware",
+   "icon": "🌾"
+  },
+  {
+   "key": "cans",
+   "label": "Konserven & Gläser",
+   "icon": "🥫"
+  },
+  {
+   "key": "oils",
+   "label": "Öle, Essig & Saucen",
+   "icon": "🫒"
+  },
+  {
+   "key": "spices",
+   "label": "Gewürze & Brühe",
+   "icon": "🧂"
+  },
+  {
+   "key": "baking",
+   "label": "Backzutaten",
+   "icon": "🧁"
+  },
+  {
+   "key": "sweets",
+   "label": "Süßes & Snacks",
+   "icon": "🍫"
+  },
+  {
+   "key": "drinks",
+   "label": "Getränke",
+   "icon": "🧃"
+  },
+  {
+   "key": "frozen",
+   "label": "Tiefkühl",
+   "icon": "❄️"
+  },
+  {
+   "key": "household",
+   "label": "Drogerie & Haushalt",
+   "icon": "🧴"
+  },
+  {
+   "key": "other",
+   "label": "Sonstiges",
+   "icon": "📦"
+  }
+ ],
+ "ingredients": {
+  "Aubergine": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 7,
+   "pack": 1,
+   "plural": "Auberginen",
+   "per": {
+    "g": 0.0033333333333333335
+   }
+  },
+  "Avocado": {
+   "area": "pantry",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 5,
+   "pack": 1,
+   "plural": "Avocados"
+  },
+  "Blumenkohl": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 6,
+   "pack": 1,
+   "per": {
+    "g": 0.00125
+   }
+  },
+  "Brokkoli": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 6,
+   "pack": 1,
+   "synonyms": [
+    "broccoli"
+   ],
+   "per": {
+    "g": 0.0022222222222222222
+   }
+  },
+  "Champignons": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 6,
+   "pack": 250,
+   "synonyms": [
+    "champignon",
+    "braune champignons|braun",
+    "egerlinge|braun"
+   ]
+  },
+  "Pilze": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 5,
+   "pack": 200,
+   "synonyms": [
+    "austernpilze|Austern",
+    "shiitake|Shiitake",
+    "kräuterseitlinge|Kräuterseitling",
+    "pfifferlinge|Pfifferling"
+   ]
+  },
+  "Chili": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 14,
+   "pack": 1,
+   "synonyms": [
+    "chilischote",
+    "chilischoten",
+    "peperoni",
+    "jalapeño|Jalapeño"
+   ],
+   "plural": "Chilis"
+  },
+  "Eisbergsalat": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 7,
+   "pack": 1
+  },
+  "Kopfsalat": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 5,
+   "pack": 1,
+   "synonyms": [
+    "blattsalat",
+    "salatkopf",
+    "romanasalat|Romana",
+    "römersalat|Romana",
+    "lollo rosso|Lollo Rosso",
+    "eichblattsalat"
+   ]
+  },
+  "Feldsalat": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 3,
+   "pack": 150,
+   "synonyms": [
+    "rapunzel"
+   ]
+  },
+  "Rucola": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 3,
+   "pack": 125,
+   "synonyms": [
+    "rauke"
+   ]
+  },
+  "Salatmischung": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 3,
+   "pack": 200,
+   "synonyms": [
+    "salatmix",
+    "babyleaf",
+    "pflücksalat"
+   ]
+  },
+  "Fenchel": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 7,
+   "pack": 1
+  },
+  "Frühlingszwiebel": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Bund",
+   "shelfDays": 5,
+   "pack": 1,
+   "synonyms": [
+    "lauchzwiebel",
+    "lauchzwiebeln"
+   ],
+   "plural": "Frühlingszwiebeln",
+   "per": {
+    "Stück": 0.16666666666666666
+   }
+  },
+  "Gurke": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 7,
+   "pack": 1,
+   "synonyms": [
+    "salatgurke",
+    "minigurken|Mini",
+    "snackgurken|Mini"
+   ],
+   "plural": "Gurken"
+  },
+  "Ingwer": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 21,
+   "pack": 100
+  },
+  "Karotte": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 21,
+   "pack": 1000,
+   "synonyms": [
+    "möhre",
+    "möhren",
+    "mohrrüben",
+    "karotten"
+   ],
+   "plural": "Karotten",
+   "per": {
+    "Stück": 80
+   }
+  },
+  "Kartoffel": {
+   "area": "pantry",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 30,
+   "pack": 2000,
+   "synonyms": [
+    "kartoffeln",
+    "drillinge|Drillinge",
+    "festkochend|festkochend",
+    "mehligkochend|mehlig"
+   ],
+   "plural": "Kartoffeln",
+   "per": {
+    "Stück": 100
+   }
+  },
+  "Süßkartoffel": {
+   "area": "pantry",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 21,
+   "pack": 1000,
+   "synonyms": [
+    "süsskartoffel",
+    "süßkartoffeln"
+   ],
+   "plural": "Süßkartoffeln",
+   "per": {
+    "Stück": 400
+   }
+  },
+  "Knoblauch": {
+   "area": "pantry",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Zehe",
+   "shelfDays": 30,
+   "pack": 10,
+   "synonyms": [
+    "knoblauchzehe",
+    "knoblauchzehen",
+    "knoblauchknolle"
+   ],
+   "per": {
+    "Stück": 1,
+    "g": 0.2,
+    "Knolle": 10
+   }
+  },
+  "Kohlrabi": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 10,
+   "pack": 1
+  },
+  "Kürbis": {
+   "area": "pantry",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 60,
+   "pack": 1,
+   "synonyms": [
+    "hokkaido|Hokkaido",
+    "butternut|Butternut",
+    "butternutkürbis|Butternut",
+    "hokkaidokürbis|Hokkaido"
+   ],
+   "per": {
+    "g": 0.0008333333333333334
+   }
+  },
+  "Lauch": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 10,
+   "pack": 1,
+   "synonyms": [
+    "porree"
+   ],
+   "per": {
+    "g": 0.0033333333333333335
+   }
+  },
+  "Mangold": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 4,
+   "pack": 300
+  },
+  "Paprika": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 8,
+   "pack": 1,
+   "synonyms": [
+    "paprikaschote",
+    "spitzpaprika|Spitz",
+    "paprika rot|rot",
+    "paprika gelb|gelb",
+    "paprika grün|grün"
+   ],
+   "plural": "Paprika",
+   "per": {
+    "g": 0.00625
+   }
+  },
+  "Pak Choi": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 5,
+   "pack": 1,
+   "synonyms": [
+    "pak choy",
+    "pak-choi"
+   ]
+  },
+  "Radieschen": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Bund",
+   "shelfDays": 5,
+   "pack": 1
+  },
+  "Rote Bete": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 14,
+   "pack": 500,
+   "synonyms": [
+    "rote beete",
+    "randen"
+   ]
+  },
+  "Rotkohl": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 30,
+   "pack": 1,
+   "synonyms": [
+    "blaukraut",
+    "rotkraut"
+   ],
+   "per": {
+    "g": 0.001
+   }
+  },
+  "Weißkohl": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 30,
+   "pack": 1,
+   "synonyms": [
+    "weisskohl",
+    "weißkraut",
+    "spitzkohl|Spitz"
+   ],
+   "per": {
+    "g": 0.0008333333333333334
+   }
+  },
+  "Wirsing": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 14,
+   "pack": 1
+  },
+  "Rosenkohl": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 7,
+   "pack": 500
+  },
+  "Grünkohl": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 4,
+   "pack": 500
+  },
+  "Sellerie": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 21,
+   "pack": 1,
+   "synonyms": [
+    "knollensellerie"
+   ]
+  },
+  "Staudensellerie": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 10,
+   "pack": 1,
+   "synonyms": [
+    "stangensellerie",
+    "selleriestangen"
+   ]
+  },
+  "Spargel": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 3,
+   "pack": 500,
+   "synonyms": [
+    "spargel weiß|weiß",
+    "spargel grün|grün",
+    "grüner spargel|grün"
+   ]
+  },
+  "Spinat": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 4,
+   "pack": 200,
+   "synonyms": [
+    "blattspinat",
+    "babyspinat|Baby",
+    "rahmspinat|Rahm"
+   ],
+   "per": {
+    "Handvoll": 30
+   }
+  },
+  "Tomate": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 7,
+   "pack": 500,
+   "synonyms": [
+    "tomaten",
+    "rispentomaten|Rispen",
+    "cherrytomaten|Cherry",
+    "kirschtomaten|Cherry",
+    "cocktailtomaten|Cherry",
+    "strauchtomaten",
+    "romatomaten|Roma",
+    "fleischtomaten|Fleisch",
+    "snacktomaten|Cherry"
+   ],
+   "plural": "Tomaten",
+   "per": {
+    "Stück": 100
+   }
+  },
+  "Zucchini": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 10,
+   "pack": 1,
+   "synonyms": [
+    "zucchetti"
+   ],
+   "plural": "Zucchini",
+   "per": {
+    "g": 0.004
+   }
+  },
+  "Zwiebel": {
+   "area": "pantry",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 30,
+   "pack": 6,
+   "synonyms": [
+    "zwiebeln",
+    "speisezwiebeln",
+    "rote zwiebel|rot",
+    "rote zwiebeln|rot",
+    "gemüsezwiebel|Gemüse"
+   ],
+   "plural": "Zwiebeln",
+   "per": {
+    "g": 0.006666666666666667
+   }
+  },
+  "Schalotte": {
+   "area": "pantry",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 30,
+   "pack": 6,
+   "plural": "Schalotten"
+  },
+  "Grüne Bohnen": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 4,
+   "pack": 500,
+   "synonyms": [
+    "brechbohnen",
+    "buschbohnen",
+    "prinzessbohnen",
+    "stangenbohnen"
+   ]
+  },
+  "Zuckerschoten": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 4,
+   "pack": 150,
+   "synonyms": [
+    "zuckerschote",
+    "kaiserschoten"
+   ]
+  },
+  "Mais (Kolben)": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 3,
+   "pack": 2,
+   "synonyms": [
+    "maiskolben"
+   ]
+  },
+  "Petersilie": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Bund",
+   "shelfDays": 5,
+   "pack": 1,
+   "synonyms": [
+    "glatte petersilie|glatt",
+    "krause petersilie|kraus"
+   ],
+   "per": {
+    "g": 0.03333333333333333,
+    "Handvoll": 0.5
+   }
+  },
+  "Basilikum": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Bund",
+   "shelfDays": 5,
+   "pack": 1,
+   "synonyms": [
+    "basilikum topf"
+   ],
+   "per": {
+    "Handvoll": 0.5,
+    "Stück": 1
+   }
+  },
+  "Koriander": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Bund",
+   "shelfDays": 4,
+   "pack": 1,
+   "synonyms": [
+    "koriandergrün"
+   ],
+   "per": {
+    "Handvoll": 0.5
+   }
+  },
+  "Schnittlauch": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Bund",
+   "shelfDays": 5,
+   "pack": 1
+  },
+  "Dill": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Bund",
+   "shelfDays": 4,
+   "pack": 1
+  },
+  "Minze": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Bund",
+   "shelfDays": 5,
+   "pack": 1,
+   "synonyms": [
+    "pfefferminze"
+   ]
+  },
+  "Apfel": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 21,
+   "pack": 6,
+   "synonyms": [
+    "äpfel",
+    "tafeläpfel"
+   ],
+   "plural": "Äpfel",
+   "per": {
+    "g": 0.005555555555555556
+   }
+  },
+  "Banane": {
+   "area": "pantry",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 5,
+   "pack": 5,
+   "synonyms": [
+    "bananen"
+   ],
+   "plural": "Bananen",
+   "per": {
+    "g": 0.008333333333333333
+   }
+  },
+  "Birne": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 7,
+   "pack": 4,
+   "plural": "Birnen",
+   "per": {
+    "g": 0.005555555555555556
+   }
+  },
+  "Orange": {
+   "area": "pantry",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 14,
+   "pack": 4,
+   "synonyms": [
+    "apfelsine",
+    "blutorange|Blut"
+   ],
+   "plural": "Orangen",
+   "per": {
+    "g": 0.005
+   }
+  },
+  "Mandarine": {
+   "area": "pantry",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 10,
+   "pack": 8,
+   "synonyms": [
+    "clementine",
+    "clementinen",
+    "mandarinen"
+   ],
+   "plural": "Mandarinen",
+   "per": {
+    "g": 0.0125
+   }
+  },
+  "Zitrone": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 21,
+   "pack": 1,
+   "synonyms": [
+    "zitronen",
+    "bio zitrone"
+   ],
+   "plural": "Zitronen",
+   "per": {
+    "g": 0.01
+   }
+  },
+  "Limette": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 14,
+   "pack": 1,
+   "synonyms": [
+    "limetten",
+    "limone"
+   ],
+   "plural": "Limetten"
+  },
+  "Erdbeeren": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 3,
+   "pack": 500,
+   "synonyms": [
+    "erdbeere"
+   ]
+  },
+  "Heidelbeeren": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 5,
+   "pack": 125,
+   "synonyms": [
+    "blaubeeren"
+   ]
+  },
+  "Himbeeren": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 2,
+   "pack": 125
+  },
+  "Weintrauben": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 7,
+   "pack": 500,
+   "synonyms": [
+    "trauben",
+    "tafeltrauben"
+   ]
+  },
+  "Kiwi": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 10,
+   "pack": 1,
+   "plural": "Kiwis"
+  },
+  "Mango": {
+   "area": "pantry",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 5,
+   "pack": 1,
+   "plural": "Mangos"
+  },
+  "Ananas": {
+   "area": "pantry",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 5,
+   "pack": 1
+  },
+  "Melone": {
+   "area": "pantry",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 7,
+   "pack": 1,
+   "synonyms": [
+    "wassermelone|Wasser",
+    "honigmelone|Honig",
+    "galiamelone|Galia"
+   ],
+   "plural": "Melonen"
+  },
+  "Pfirsich": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 4,
+   "pack": 1,
+   "synonyms": [
+    "nektarine|Nektarine",
+    "nektarinen|Nektarine",
+    "pfirsiche"
+   ],
+   "plural": "Pfirsiche"
+  },
+  "Pflaumen": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 5,
+   "pack": 500,
+   "synonyms": [
+    "zwetschgen",
+    "zwetschen"
+   ]
+  },
+  "Kirschen": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "g",
+   "shelfDays": 4,
+   "pack": 500
+  },
+  "Granatapfel": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "group": "produce",
+   "unit": "Stück",
+   "shelfDays": 14,
+   "pack": 1
+  },
+  "Brot": {
+   "area": "pantry",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Stück",
+   "graceDays": 2,
+   "group": "bread",
+   "shelfDays": 4,
+   "pack": 1,
+   "synonyms": [
+    "vollkornbrot|Vollkorn",
+    "sauerteigbrot|Sauerteig",
+    "roggenbrot|Roggen",
+    "mischbrot",
+    "dinkelbrot|Dinkel",
+    "bauernbrot",
+    "krustenbrot"
+   ]
+  },
+  "Brötchen": {
+   "area": "pantry",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Stück",
+   "graceDays": 2,
+   "group": "bread",
+   "shelfDays": 2,
+   "pack": 6,
+   "synonyms": [
+    "semmel",
+    "semmeln",
+    "schrippe",
+    "weckle",
+    "aufbackbrötchen|Aufback"
+   ]
+  },
+  "Baguette": {
+   "area": "pantry",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Stück",
+   "graceDays": 2,
+   "group": "bread",
+   "shelfDays": 2,
+   "pack": 1
+  },
+  "Brezel": {
+   "area": "pantry",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Stück",
+   "graceDays": 2,
+   "group": "bread",
+   "shelfDays": 1,
+   "pack": 1,
+   "synonyms": [
+    "laugenbrezel",
+    "brezn"
+   ],
+   "plural": "Brezeln"
+  },
+  "Toastbrot": {
+   "area": "pantry",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Stück",
+   "graceDays": 2,
+   "group": "bread",
+   "shelfDays": 7,
+   "pack": 1,
+   "synonyms": [
+    "toast",
+    "sandwichtoast",
+    "vollkorntoast|Vollkorn"
+   ]
+  },
+  "Wraps": {
+   "area": "pantry",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Packung",
+   "graceDays": 7,
+   "group": "bread",
+   "shelfDays": 30,
+   "pack": 1,
+   "synonyms": [
+    "tortilla",
+    "tortillas",
+    "weizentortillas"
+   ]
+  },
+  "Knäckebrot": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Packung",
+   "group": "bread",
+   "pack": 1
+  },
+  "Tofu": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "chilled",
+   "shelfDays": 10,
+   "openedDays": 4,
+   "pack": 400,
+   "synonyms": [
+    "tofu natur|natur",
+    "naturtofu|natur",
+    "räuchertofu|geräuchert",
+    "tofu geräuchert|geräuchert",
+    "seidentofu|Seiden",
+    "tofu nat|natur"
+   ]
+  },
+  "Tempeh": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "chilled",
+   "shelfDays": 14,
+   "openedDays": 4,
+   "pack": 200
+  },
+  "Seitan": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "chilled",
+   "shelfDays": 14,
+   "openedDays": 4,
+   "pack": 200
+  },
+  "Veganes Hack": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "chilled",
+   "shelfDays": 7,
+   "openedDays": 2,
+   "pack": 250,
+   "synonyms": [
+    "veggie hack",
+    "pflanzliches hack",
+    "vegan hack"
+   ]
+  },
+  "Vegane Würstchen": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "chilled",
+   "shelfDays": 14,
+   "openedDays": 3,
+   "pack": 200,
+   "synonyms": [
+    "veggie würstchen",
+    "tofuwürstchen",
+    "vegane bratwurst"
+   ]
+  },
+  "Veganer Aufschnitt": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "chilled",
+   "shelfDays": 14,
+   "openedDays": 4,
+   "pack": 100,
+   "synonyms": [
+    "veggie aufschnitt",
+    "vegane salami|Salami",
+    "veganer schinken|Schinken"
+   ]
+  },
+  "Hummus": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "group": "chilled",
+   "shelfDays": 7,
+   "openedDays": 4,
+   "pack": 1,
+   "synonyms": [
+    "humus",
+    "hommus"
+   ]
+  },
+  "Frische Pasta": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "chilled",
+   "shelfDays": 14,
+   "openedDays": 2,
+   "graceDays": 3,
+   "pack": 250,
+   "synonyms": [
+    "frische nudeln",
+    "tortellini|Tortellini",
+    "ravioli|Ravioli",
+    "frische tagliatelle|Tagliatelle"
+   ]
+  },
+  "Gnocchi": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "chilled",
+   "shelfDays": 30,
+   "openedDays": 2,
+   "graceDays": 3,
+   "pack": 500
+  },
+  "Kimchi": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "chilled",
+   "shelfDays": 60,
+   "openedDays": 30,
+   "graceDays": 60,
+   "pack": 300
+  },
+  "Miso": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "chilled",
+   "shelfDays": 180,
+   "graceDays": 60,
+   "synonyms": [
+    "misopaste",
+    "miso paste"
+   ]
+  },
+  "Frische Hefe": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "chilled",
+   "shelfDays": 14,
+   "pack": 42,
+   "synonyms": [
+    "hefewürfel",
+    "frischhefe",
+    "hefe frisch"
+   ]
+  },
+  "Blätterteig": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "chilled",
+   "shelfDays": 30,
+   "openedDays": 1,
+   "graceDays": 7,
+   "pack": 275,
+   "synonyms": [
+    "blätterteig frisch"
+   ]
+  },
+  "Pizzateig": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "chilled",
+   "shelfDays": 30,
+   "openedDays": 1,
+   "graceDays": 7,
+   "pack": 400,
+   "synonyms": [
+    "pizza teig"
+   ]
+  },
+  "Pflanzenjoghurt": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "chilled",
+   "shelfDays": 21,
+   "openedDays": 4,
+   "pack": 500,
+   "synonyms": [
+    "sojajoghurt|Soja",
+    "kokosjoghurt|Kokos",
+    "haferjoghurt|Hafer",
+    "veganer joghurt",
+    "joghurtalternative"
+   ]
+  },
+  "Margarine": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "chilled",
+   "shelfDays": 60,
+   "pack": 250,
+   "synonyms": [
+    "vegane butter",
+    "pflanzenbutter",
+    "pflanzenmargarine"
+   ]
+  },
+  "Milch": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "ml",
+   "group": "dairy",
+   "shelfDays": 7,
+   "openedDays": 3,
+   "graceDays": 2,
+   "pack": 1000,
+   "synonyms": [
+    "frischmilch",
+    "vollmilch|Voll",
+    "fettarme milch|fettarm",
+    "weidemilch"
+   ]
+  },
+  "H-Milch": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "ml",
+   "group": "dairy",
+   "openedDays": 4,
+   "pack": 1000,
+   "synonyms": [
+    "haltbare milch",
+    "h milch",
+    "h-vollmilch"
+   ]
+  },
+  "Pflanzendrink": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "ml",
+   "group": "dairy",
+   "openedDays": 5,
+   "pack": 1000,
+   "synonyms": [
+    "haferdrink|Hafer",
+    "hafermilch|Hafer",
+    "sojadrink|Soja",
+    "sojamilch|Soja",
+    "mandeldrink|Mandel",
+    "mandelmilch|Mandel",
+    "reisdrink|Reis",
+    "kokosdrink|Kokos",
+    "erbsendrink|Erbse",
+    "dinkeldrink|Dinkel",
+    "cashewdrink|Cashew"
+   ]
+  },
+  "Pflanzensahne": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "ml",
+   "group": "dairy",
+   "openedDays": 4,
+   "pack": 200,
+   "synonyms": [
+    "hafercuisine|Hafer",
+    "sojacuisine|Soja",
+    "kokoscuisine|Kokos",
+    "kochcreme|Hafer",
+    "hafer cuisine|Hafer",
+    "soja cuisine|Soja",
+    "pflanzliche sahne",
+    "hafersahne|Hafer"
+   ]
+  },
+  "Sahne": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "ml",
+   "group": "dairy",
+   "shelfDays": 14,
+   "openedDays": 3,
+   "graceDays": 2,
+   "pack": 200,
+   "synonyms": [
+    "schlagsahne",
+    "süße sahne",
+    "kochsahne",
+    "schlagrahm",
+    "rahm"
+   ]
+  },
+  "Saure Sahne": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "g",
+   "group": "dairy",
+   "shelfDays": 21,
+   "openedDays": 5,
+   "graceDays": 10,
+   "pack": 200,
+   "synonyms": [
+    "schmand|Schmand",
+    "crème fraîche|Crème fraîche",
+    "creme fraiche|Crème fraîche",
+    "sauerrahm"
+   ]
+  },
+  "Joghurt": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "g",
+   "group": "dairy",
+   "shelfDays": 21,
+   "openedDays": 4,
+   "graceDays": 60,
+   "pack": 500,
+   "synonyms": [
+    "naturjoghurt|natur",
+    "griechischer joghurt|griechisch",
+    "joghurt griechisch|griechisch",
+    "jogurt",
+    "joghurt natur|natur"
+   ]
+  },
+  "Skyr": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "g",
+   "group": "dairy",
+   "shelfDays": 21,
+   "openedDays": 4,
+   "graceDays": 60,
+   "pack": 450
+  },
+  "Quark": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "g",
+   "group": "dairy",
+   "shelfDays": 21,
+   "openedDays": 4,
+   "graceDays": 60,
+   "pack": 500,
+   "synonyms": [
+    "magerquark|mager",
+    "speisequark",
+    "sahnequark|Sahne",
+    "topfen"
+   ]
+  },
+  "Frischkäse": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "g",
+   "group": "dairy",
+   "shelfDays": 21,
+   "openedDays": 7,
+   "graceDays": 10,
+   "pack": 200,
+   "synonyms": [
+    "frischkäse natur",
+    "doppelrahmfrischkäse"
+   ]
+  },
+  "Mozzarella": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "g",
+   "group": "dairy",
+   "shelfDays": 14,
+   "openedDays": 2,
+   "graceDays": 10,
+   "pack": 125,
+   "synonyms": [
+    "büffelmozzarella|Büffel",
+    "burrata|Burrata",
+    "mozzarella mini|Mini"
+   ]
+  },
+  "Feta": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "g",
+   "group": "dairy",
+   "shelfDays": 30,
+   "openedDays": 5,
+   "graceDays": 10,
+   "pack": 200,
+   "synonyms": [
+    "hirtenkäse",
+    "schafskäse",
+    "salatkäse"
+   ]
+  },
+  "Halloumi": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "g",
+   "group": "dairy",
+   "shelfDays": 60,
+   "openedDays": 5,
+   "pack": 225,
+   "synonyms": [
+    "grillkäse"
+   ]
+  },
+  "Ricotta": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "g",
+   "group": "dairy",
+   "shelfDays": 14,
+   "openedDays": 3,
+   "graceDays": 10,
+   "pack": 250
+  },
+  "Mascarpone": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "g",
+   "group": "dairy",
+   "shelfDays": 21,
+   "openedDays": 3,
+   "graceDays": 10,
+   "pack": 250
+  },
+  "Weichkäse": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "g",
+   "group": "dairy",
+   "shelfDays": 14,
+   "openedDays": 5,
+   "graceDays": 10,
+   "pack": 150,
+   "synonyms": [
+    "camembert|Camembert",
+    "brie|Brie"
+   ]
+  },
+  "Rohmilchkäse": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "g",
+   "group": "dairy",
+   "shelfDays": 14,
+   "openedDays": 5,
+   "graceDays": 0,
+   "pack": 150,
+   "synonyms": [
+    "käse aus rohmilch"
+   ]
+  },
+  "Parmesan": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "g",
+   "group": "dairy",
+   "shelfDays": 60,
+   "openedDays": 30,
+   "graceDays": 60,
+   "pack": 100,
+   "synonyms": [
+    "grana padano|Grana Padano",
+    "parmigiano",
+    "hartkäse",
+    "pecorino|Pecorino"
+   ]
+  },
+  "Hartkäse am Stück": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "g",
+   "group": "dairy",
+   "shelfDays": 30,
+   "openedDays": 14,
+   "graceDays": 60,
+   "pack": 300,
+   "synonyms": [
+    "bergkäse|Bergkäse",
+    "gouda am stück|Gouda",
+    "alter gouda|Gouda",
+    "emmentaler am stück|Emmentaler",
+    "cheddar|Cheddar",
+    "käse am stück"
+   ]
+  },
+  "Käse in Scheiben": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "g",
+   "group": "dairy",
+   "shelfDays": 21,
+   "openedDays": 7,
+   "graceDays": 10,
+   "pack": 150,
+   "synonyms": [
+    "käseaufschnitt",
+    "gouda scheiben|Gouda",
+    "scheibenkäse",
+    "emmentaler scheiben|Emmentaler",
+    "butterkäse|Butterkäse"
+   ]
+  },
+  "Reibekäse": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "g",
+   "group": "dairy",
+   "shelfDays": 30,
+   "openedDays": 7,
+   "graceDays": 10,
+   "pack": 200,
+   "synonyms": [
+    "geriebener käse",
+    "pizzakäse",
+    "gratinkäse",
+    "käse gerieben"
+   ]
+  },
+  "Butter": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "g",
+   "group": "dairy",
+   "shelfDays": 30,
+   "pack": 250,
+   "synonyms": [
+    "süßrahmbutter",
+    "sauerrahmbutter",
+    "deutsche markenbutter"
+   ]
+  },
+  "Buttermilch": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "ml",
+   "group": "dairy",
+   "shelfDays": 14,
+   "openedDays": 3,
+   "graceDays": 5,
+   "pack": 500
+  },
+  "Ei": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "Stück",
+   "group": "dairy",
+   "shelfDays": 21,
+   "pack": 10,
+   "synonyms": [
+    "eier",
+    "freilandeier",
+    "bodenhaltung eier",
+    "bio eier",
+    "eier freiland"
+   ],
+   "plural": "Eier"
+  },
+  "Hackfleisch": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "all",
+   "unit": "g",
+   "useBy": true,
+   "group": "meat",
+   "shelfDays": 1,
+   "pack": 500,
+   "synonyms": [
+    "hack",
+    "gemischtes hack|gemischt",
+    "rinderhack|Rind",
+    "schweinehack|Schwein",
+    "faschiertes",
+    "hackfleisch gemischt|gemischt"
+   ]
+  },
+  "Mett": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "all",
+   "unit": "g",
+   "useBy": true,
+   "group": "meat",
+   "shelfDays": 1,
+   "pack": 250,
+   "synonyms": [
+    "zwiebelmett",
+    "hackepeter"
+   ]
+  },
+  "Hähnchenbrust": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "all",
+   "unit": "g",
+   "useBy": true,
+   "group": "meat",
+   "shelfDays": 2,
+   "pack": 400,
+   "synonyms": [
+    "hähnchenbrustfilet",
+    "hühnerbrust",
+    "hähnchenfilet",
+    "hähnchen brust"
+   ]
+  },
+  "Hähnchenschenkel": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "all",
+   "unit": "g",
+   "useBy": true,
+   "group": "meat",
+   "shelfDays": 2,
+   "pack": 500,
+   "synonyms": [
+    "hähnchenkeulen",
+    "hähnchen unterschenkel"
+   ]
+  },
+  "Putenbrust": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "all",
+   "unit": "g",
+   "useBy": true,
+   "group": "meat",
+   "shelfDays": 2,
+   "pack": 400,
+   "synonyms": [
+    "putenschnitzel|Schnitzel",
+    "putenfilet"
+   ]
+  },
+  "Schnitzel": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "all",
+   "unit": "g",
+   "useBy": true,
+   "group": "meat",
+   "shelfDays": 2,
+   "pack": 400,
+   "synonyms": [
+    "schweineschnitzel|Schwein",
+    "kalbsschnitzel|Kalb"
+   ]
+  },
+  "Steak": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "all",
+   "unit": "g",
+   "useBy": true,
+   "group": "meat",
+   "shelfDays": 3,
+   "pack": 300,
+   "synonyms": [
+    "rindersteak",
+    "rumpsteak|Rumpsteak",
+    "entrecote|Entrecôte",
+    "hüftsteak|Hüfte"
+   ]
+  },
+  "Gulasch": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "all",
+   "unit": "g",
+   "useBy": true,
+   "group": "meat",
+   "shelfDays": 2,
+   "pack": 500,
+   "synonyms": [
+    "rindergulasch|Rind",
+    "schweinegulasch|Schwein"
+   ]
+  },
+  "Bratwurst": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "all",
+   "unit": "g",
+   "useBy": true,
+   "group": "meat",
+   "shelfDays": 3,
+   "pack": 400,
+   "synonyms": [
+    "rostbratwurst",
+    "grillwurst",
+    "nürnberger|Nürnberger",
+    "thüringer|Thüringer"
+   ]
+  },
+  "Würstchen": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "all",
+   "unit": "g",
+   "group": "meat",
+   "shelfDays": 14,
+   "openedDays": 3,
+   "graceDays": 7,
+   "pack": 250,
+   "synonyms": [
+    "wiener",
+    "wiener würstchen",
+    "frankfurter",
+    "wienerle",
+    "geflügelwürstchen|Geflügel"
+   ]
+  },
+  "Aufschnitt": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "all",
+   "unit": "g",
+   "group": "meat",
+   "shelfDays": 10,
+   "openedDays": 3,
+   "graceDays": 5,
+   "pack": 100,
+   "synonyms": [
+    "wurstaufschnitt",
+    "lyoner|Lyoner",
+    "mortadella|Mortadella",
+    "bierschinken"
+   ]
+  },
+  "Salami": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "all",
+   "unit": "g",
+   "group": "meat",
+   "shelfDays": 60,
+   "openedDays": 21,
+   "graceDays": 60,
+   "pack": 150,
+   "synonyms": [
+    "salami am stück",
+    "salamisticks"
+   ]
+  },
+  "Schinken": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "all",
+   "unit": "g",
+   "group": "meat",
+   "shelfDays": 14,
+   "openedDays": 3,
+   "graceDays": 5,
+   "pack": 100,
+   "synonyms": [
+    "kochschinken|gekocht",
+    "hinterschinken|gekocht",
+    "rohschinken|roh",
+    "serrano|Serrano",
+    "parmaschinken|Parma"
+   ]
+  },
+  "Speck": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "all",
+   "unit": "g",
+   "group": "meat",
+   "shelfDays": 30,
+   "openedDays": 7,
+   "pack": 125,
+   "synonyms": [
+    "speckwürfel|Würfel",
+    "bacon",
+    "schinkenwürfel|Würfel",
+    "bauchspeck"
+   ]
+  },
+  "Lachs": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "all",
+   "unit": "g",
+   "useBy": true,
+   "group": "meat",
+   "shelfDays": 2,
+   "pack": 250,
+   "synonyms": [
+    "lachsfilet",
+    "lachs frisch"
+   ]
+  },
+  "Räucherlachs": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "all",
+   "unit": "g",
+   "useBy": true,
+   "group": "meat",
+   "shelfDays": 14,
+   "pack": 100,
+   "synonyms": [
+    "graved lachs|Graved",
+    "stremellachs"
+   ]
+  },
+  "Fisch": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "all",
+   "unit": "g",
+   "useBy": true,
+   "group": "meat",
+   "shelfDays": 1,
+   "pack": 300,
+   "synonyms": [
+    "fischfilet",
+    "kabeljau|Kabeljau",
+    "seelachs|Seelachs",
+    "forelle|Forelle",
+    "dorade|Dorade",
+    "zander|Zander",
+    "rotbarsch|Rotbarsch"
+   ]
+  },
+  "Garnelen": {
+   "area": "fridge",
+   "profile": "perishable",
+   "tracking": "exact",
+   "diet": "all",
+   "unit": "g",
+   "useBy": true,
+   "group": "meat",
+   "shelfDays": 2,
+   "pack": 200,
+   "synonyms": [
+    "shrimps",
+    "scampi",
+    "riesengarnelen"
+   ]
+  },
+  "Nudeln": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 500,
+   "synonyms": [
+    "pasta",
+    "spaghetti|Spaghetti",
+    "penne|Penne",
+    "fusilli|Fusilli",
+    "linguine|Linguine",
+    "farfalle|Farfalle",
+    "rigatoni|Rigatoni",
+    "tagliatelle|Tagliatelle",
+    "makkaroni|Makkaroni",
+    "spirelli|Spirelli",
+    "orecchiette|Orecchiette",
+    "vollkornnudeln|Vollkorn",
+    "spaghettini|Spaghetti",
+    "conchiglie"
+   ]
+  },
+  "Lasagneplatten": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 500,
+   "synonyms": [
+    "lasagne platten",
+    "lasagneblätter"
+   ]
+  },
+  "Reis": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 1000,
+   "synonyms": [
+    "basmati|Basmati",
+    "basmatireis|Basmati",
+    "jasminreis|Jasmin",
+    "langkornreis|Langkorn",
+    "vollkornreis|Vollkorn",
+    "risottoreis|Risotto",
+    "arborio|Risotto",
+    "milchreis|Milchreis",
+    "sushireis|Sushi",
+    "parboiled reis"
+   ]
+  },
+  "Linsen": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 500,
+   "synonyms": [
+    "rote linsen|rot",
+    "belugalinsen|Beluga",
+    "tellerlinsen|Teller",
+    "berglinsen|Berg",
+    "gelbe linsen|gelb",
+    "braune linsen|braun"
+   ]
+  },
+  "Couscous": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 500,
+   "synonyms": [
+    "cous cous",
+    "kuskus"
+   ]
+  },
+  "Bulgur": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 500
+  },
+  "Quinoa": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 500
+  },
+  "Polenta": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 500,
+   "synonyms": [
+    "maisgrieß"
+   ]
+  },
+  "Grieß": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 500,
+   "synonyms": [
+    "hartweizengrieß",
+    "weichweizengrieß",
+    "griess"
+   ]
+  },
+  "Haferflocken": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 500,
+   "synonyms": [
+    "zarte haferflocken|zart",
+    "kernige haferflocken|kernig",
+    "hafer flocken"
+   ]
+  },
+  "Müsli": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 750,
+   "synonyms": [
+    "granola|Granola",
+    "crunchy|Crunchy",
+    "knuspermüsli|Knusper"
+   ]
+  },
+  "Cornflakes": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 375,
+   "synonyms": [
+    "corn flakes"
+   ]
+  },
+  "Reisnudeln": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 250,
+   "synonyms": [
+    "glasnudeln|Glas",
+    "reis nudeln"
+   ]
+  },
+  "Mie-Nudeln": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 250,
+   "synonyms": [
+    "mie nudeln",
+    "mienudeln",
+    "ramen nudeln|Ramen",
+    "udon|Udon",
+    "asia nudeln"
+   ]
+  },
+  "Sojagranulat": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 300,
+   "synonyms": [
+    "sojaschnetzel|Schnetzel",
+    "soja schnetzel|Schnetzel",
+    "texturiertes soja"
+   ]
+  },
+  "Paniermehl": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "synonyms": [
+    "semmelbrösel",
+    "panko|Panko"
+   ]
+  },
+  "Walnüsse": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 200,
+   "synonyms": [
+    "walnusskerne",
+    "walnuss"
+   ]
+  },
+  "Mandeln": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 200,
+   "synonyms": [
+    "mandelkerne",
+    "gemahlene mandeln|gemahlen",
+    "mandelblättchen|Blättchen",
+    "mandelstifte|Stifte"
+   ]
+  },
+  "Haselnüsse": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 200,
+   "synonyms": [
+    "haselnusskerne",
+    "gemahlene haselnüsse|gemahlen"
+   ]
+  },
+  "Cashews": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 200,
+   "synonyms": [
+    "cashewkerne",
+    "cashew"
+   ]
+  },
+  "Erdnüsse": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 200,
+   "synonyms": [
+    "erdnusskerne",
+    "erdnüsse geröstet|geröstet"
+   ]
+  },
+  "Pinienkerne": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 50
+  },
+  "Sonnenblumenkerne": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 250
+  },
+  "Kürbiskerne": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 200
+  },
+  "Sesam": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "synonyms": [
+    "sesamsaat",
+    "sesam geschält|geschält"
+   ]
+  },
+  "Leinsamen": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "synonyms": [
+    "geschrotete leinsamen|geschrotet"
+   ]
+  },
+  "Chiasamen": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "synonyms": [
+    "chia samen",
+    "chia"
+   ]
+  },
+  "Rosinen": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 250,
+   "synonyms": [
+    "sultaninen"
+   ]
+  },
+  "Datteln": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 200,
+   "synonyms": [
+    "medjool datteln|Medjool"
+   ]
+  },
+  "Trockenobst": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "dry",
+   "pack": 200,
+   "synonyms": [
+    "getrocknete aprikosen|Aprikose",
+    "softaprikosen|Aprikose",
+    "getrocknete feigen|Feige",
+    "cranberries getrocknet|Cranberry"
+   ]
+  },
+  "Dosentomaten": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Dose",
+   "group": "cans",
+   "openedDays": 4,
+   "pack": 1,
+   "synonyms": [
+    "gehackte tomaten|gehackt",
+    "stückige tomaten|stückig",
+    "geschälte tomaten|geschält",
+    "tomaten aus der dose",
+    "pizzatomaten",
+    "polpa",
+    "tomaten gehackt|gehackt",
+    "tomaten in stücken|stückig"
+   ],
+   "per": {
+    "g": 0.0025,
+    "ml": 0.0025
+   }
+  },
+  "Passata": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "ml",
+   "group": "cans",
+   "openedDays": 4,
+   "pack": 500,
+   "synonyms": [
+    "passierte tomaten",
+    "tomaten passiert",
+    "tomatenpüree"
+   ]
+  },
+  "Tomatenmark": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "cans",
+   "synonyms": [
+    "tomatenmark 3-fach",
+    "tomatenpaste"
+   ]
+  },
+  "Kokosmilch": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Dose",
+   "group": "cans",
+   "openedDays": 3,
+   "pack": 1,
+   "synonyms": [
+    "kokosnussmilch",
+    "kokosmilch dose",
+    "coconut milk"
+   ],
+   "per": {
+    "ml": 0.0025,
+    "g": 0.0025
+   }
+  },
+  "Kichererbsen": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Dose",
+   "group": "cans",
+   "openedDays": 3,
+   "pack": 1,
+   "synonyms": [
+    "kichererbsen dose"
+   ],
+   "per": {
+    "g": 0.004166666666666667
+   }
+  },
+  "Kidneybohnen": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Dose",
+   "group": "cans",
+   "openedDays": 3,
+   "pack": 1,
+   "synonyms": [
+    "kidney bohnen",
+    "rote bohnen",
+    "kidney"
+   ],
+   "per": {
+    "g": 0.004
+   }
+  },
+  "Weiße Bohnen": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Dose",
+   "group": "cans",
+   "openedDays": 3,
+   "pack": 1,
+   "synonyms": [
+    "weisse bohnen",
+    "cannellini|Cannellini",
+    "butterbohnen|Butter",
+    "weiße riesenbohnen"
+   ],
+   "per": {
+    "g": 0.004
+   }
+  },
+  "Schwarze Bohnen": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Dose",
+   "group": "cans",
+   "openedDays": 3,
+   "pack": 1,
+   "per": {
+    "g": 0.004
+   }
+  },
+  "Mais": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Dose",
+   "group": "cans",
+   "openedDays": 3,
+   "pack": 1,
+   "synonyms": [
+    "gemüsemais",
+    "zuckermais",
+    "mais dose"
+   ],
+   "per": {
+    "g": 0.0035087719298245615
+   }
+  },
+  "Thunfisch": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "all",
+   "unit": "Dose",
+   "group": "cans",
+   "openedDays": 2,
+   "pack": 1,
+   "synonyms": [
+    "thunfisch in öl|Öl",
+    "thunfisch naturale|natur"
+   ]
+  },
+  "Oliven": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Glas",
+   "group": "cans",
+   "openedDays": 21,
+   "pack": 1,
+   "synonyms": [
+    "kalamata|Kalamata",
+    "schwarze oliven|schwarz",
+    "grüne oliven|grün"
+   ]
+  },
+  "Kapern": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Glas",
+   "group": "cans",
+   "openedDays": 60,
+   "pack": 1
+  },
+  "Gewürzgurken": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Glas",
+   "group": "cans",
+   "openedDays": 30,
+   "pack": 1,
+   "synonyms": [
+    "essiggurken",
+    "cornichons|Cornichons",
+    "saure gurken"
+   ]
+  },
+  "Sauerkraut": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Glas",
+   "group": "cans",
+   "openedDays": 7,
+   "pack": 1,
+   "per": {
+    "g": 0.002
+   }
+  },
+  "Pesto": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Glas",
+   "group": "cans",
+   "openedDays": 7,
+   "pack": 1,
+   "synonyms": [
+    "basilikumpesto|Basilikum",
+    "pesto rosso|Rosso",
+    "pesto verde|Basilikum",
+    "pesto genovese|Basilikum"
+   ]
+  },
+  "Getrocknete Tomaten": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Glas",
+   "group": "cans",
+   "openedDays": 30,
+   "pack": 1,
+   "synonyms": [
+    "tomaten getrocknet",
+    "sonnengetrocknete tomaten"
+   ]
+  },
+  "Apfelmus": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "Glas",
+   "group": "cans",
+   "openedDays": 7,
+   "pack": 1
+  },
+  "Marmelade": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "Glas",
+   "group": "cans",
+   "synonyms": [
+    "konfitüre",
+    "fruchtaufstrich",
+    "erdbeermarmelade|Erdbeer",
+    "aprikosenkonfitüre|Aprikose"
+   ]
+  },
+  "Honig": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegetarian",
+   "unit": "Glas",
+   "group": "cans",
+   "synonyms": [
+    "blütenhonig",
+    "waldhonig"
+   ]
+  },
+  "Ahornsirup": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "ml",
+   "group": "cans",
+   "synonyms": [
+    "ahorn sirup"
+   ]
+  },
+  "Agavendicksaft": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "ml",
+   "group": "cans",
+   "synonyms": [
+    "agavensirup",
+    "dattelsirup|Dattel",
+    "reissirup|Reis"
+   ]
+  },
+  "Erdnussmus": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "Glas",
+   "group": "cans",
+   "synonyms": [
+    "erdnussbutter",
+    "erdnusscreme"
+   ]
+  },
+  "Mandelmus": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "Glas",
+   "group": "cans",
+   "synonyms": [
+    "mandelbutter",
+    "weißes mandelmus|weiß"
+   ]
+  },
+  "Tahin": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "Glas",
+   "group": "cans",
+   "synonyms": [
+    "tahini",
+    "sesammus",
+    "sesampaste"
+   ]
+  },
+  "Nuss-Nougat-Creme": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "Glas",
+   "group": "cans",
+   "synonyms": [
+    "nougatcreme",
+    "nusscreme",
+    "schokoaufstrich"
+   ]
+  },
+  "Olivenöl": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "ml",
+   "group": "oils",
+   "synonyms": [
+    "natives olivenöl",
+    "olivenöl extra",
+    "olivenoel"
+   ]
+  },
+  "Rapsöl": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "ml",
+   "group": "oils",
+   "synonyms": [
+    "rapsoel"
+   ]
+  },
+  "Sonnenblumenöl": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "ml",
+   "group": "oils",
+   "synonyms": [
+    "sonnenblumenoel"
+   ]
+  },
+  "Sesamöl": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "ml",
+   "group": "oils",
+   "synonyms": [
+    "geröstetes sesamöl|geröstet"
+   ]
+  },
+  "Kokosöl": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "oils",
+   "synonyms": [
+    "kokosfett"
+   ]
+  },
+  "Essig": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "ml",
+   "group": "oils",
+   "synonyms": [
+    "weißweinessig|Weißwein",
+    "balsamico|Balsamico",
+    "aceto balsamico|Balsamico",
+    "apfelessig|Apfel",
+    "rotweinessig|Rotwein",
+    "reisessig|Reis",
+    "branntweinessig"
+   ]
+  },
+  "Sojasauce": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "ml",
+   "group": "oils",
+   "synonyms": [
+    "sojasoße",
+    "shoyu",
+    "tamari|Tamari",
+    "soja sauce"
+   ]
+  },
+  "Senf": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "oils",
+   "synonyms": [
+    "mittelscharfer senf|mittelscharf",
+    "dijon senf|Dijon",
+    "dijonsenf|Dijon",
+    "süßer senf|süß",
+    "körniger senf|körnig"
+   ]
+  },
+  "Ketchup": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "ml",
+   "group": "oils",
+   "synonyms": [
+    "tomatenketchup",
+    "curry ketchup|Curry"
+   ]
+  },
+  "Mayonnaise": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegetarian",
+   "unit": "g",
+   "group": "oils",
+   "synonyms": [
+    "mayo",
+    "salatmayonnaise",
+    "remoulade|Remoulade"
+   ]
+  },
+  "Currypaste": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "oils",
+   "synonyms": [
+    "rote currypaste|rot",
+    "grüne currypaste|grün",
+    "currypaste rot|rot",
+    "currypaste grün|grün",
+    "gelbe currypaste|gelb"
+   ]
+  },
+  "Chilisauce": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "ml",
+   "group": "oils",
+   "synonyms": [
+    "sriracha|Sriracha",
+    "sambal oelek|Sambal",
+    "sweet chili|süß",
+    "süße chilisauce|süß",
+    "tabasco"
+   ]
+  },
+  "Zitronensaft": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "ml",
+   "group": "oils",
+   "synonyms": [
+    "limettensaft|Limette"
+   ]
+  },
+  "Salz": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "spices",
+   "synonyms": [
+    "speisesalz",
+    "meersalz|Meer",
+    "jodsalz",
+    "salz jodiert",
+    "fleur de sel"
+   ],
+   "staple": true
+  },
+  "Pfeffer": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "spices",
+   "synonyms": [
+    "schwarzer pfeffer|schwarz",
+    "pfeffer schwarz|schwarz",
+    "pfefferkörner",
+    "weißer pfeffer|weiß"
+   ],
+   "staple": true
+  },
+  "Paprikapulver": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "spices",
+   "synonyms": [
+    "paprika edelsüß|edelsüß",
+    "paprika rosenscharf|scharf",
+    "geräuchertes paprikapulver|geräuchert",
+    "paprika pulver"
+   ]
+  },
+  "Currypulver": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "spices",
+   "synonyms": [
+    "curry",
+    "currypulver mild|mild"
+   ]
+  },
+  "Kreuzkümmel": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "spices",
+   "synonyms": [
+    "cumin",
+    "kreuzkümmel gemahlen"
+   ]
+  },
+  "Kurkuma": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "spices",
+   "synonyms": [
+    "gelbwurz",
+    "curcuma"
+   ]
+  },
+  "Zimt": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "spices",
+   "synonyms": [
+    "zimtpulver",
+    "zimtstange|Stange"
+   ]
+  },
+  "Chiliflocken": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "spices",
+   "synonyms": [
+    "chili flocken",
+    "chilipulver|Pulver",
+    "cayennepfeffer|Cayenne",
+    "chili gemahlen|Pulver"
+   ]
+  },
+  "Oregano": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "spices",
+   "synonyms": [
+    "oregano getrocknet"
+   ]
+  },
+  "Thymian": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "spices",
+   "synonyms": [
+    "thymian getrocknet"
+   ]
+  },
+  "Rosmarin": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "spices",
+   "synonyms": [
+    "rosmarin getrocknet"
+   ]
+  },
+  "Italienische Kräuter": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "spices",
+   "synonyms": [
+    "kräuter der provence|Provence",
+    "pizzagewürz",
+    "kräutermischung",
+    "tk kräuter|TK"
+   ]
+  },
+  "Lorbeerblatt": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "spices",
+   "synonyms": [
+    "lorbeerblätter",
+    "lorbeer"
+   ],
+   "plural": "Lorbeerblätter"
+  },
+  "Muskat": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "spices",
+   "synonyms": [
+    "muskatnuss",
+    "muskat gemahlen"
+   ]
+  },
+  "Garam Masala": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "spices",
+   "synonyms": [
+    "garam masala gewürz"
+   ]
+  },
+  "Gemüsebrühe": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "spices",
+   "synonyms": [
+    "brühe",
+    "gemüsebouillon",
+    "brühwürfel",
+    "gemüsefond",
+    "bouillon"
+   ]
+  },
+  "Hefeflocken": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "spices",
+   "synonyms": [
+    "edelhefeflocken",
+    "nährhefe"
+   ]
+  },
+  "Mehl": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "baking",
+   "synonyms": [
+    "weizenmehl|Weizen",
+    "dinkelmehl|Dinkel",
+    "mehl type 405|405",
+    "weizenmehl 405|405",
+    "vollkornmehl|Vollkorn",
+    "roggenmehl|Roggen"
+   ]
+  },
+  "Zucker": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "baking",
+   "synonyms": [
+    "weißer zucker",
+    "rohrzucker|Rohrzucker",
+    "kristallzucker",
+    "feinzucker",
+    "brauner zucker|braun"
+   ]
+  },
+  "Puderzucker": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "baking"
+  },
+  "Backpulver": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "baking"
+  },
+  "Natron": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "baking",
+   "synonyms": [
+    "kaiser natron"
+   ]
+  },
+  "Speisestärke": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "baking",
+   "synonyms": [
+    "maisstärke",
+    "stärke",
+    "kartoffelstärke"
+   ]
+  },
+  "Trockenhefe": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "baking",
+   "synonyms": [
+    "hefe trocken",
+    "backhefe"
+   ]
+  },
+  "Vanillezucker": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "baking",
+   "synonyms": [
+    "vanillinzucker",
+    "bourbon vanillezucker"
+   ]
+  },
+  "Kakao": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "baking",
+   "synonyms": [
+    "kakaopulver",
+    "backkakao"
+   ]
+  },
+  "Schokotropfen": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "baking",
+   "synonyms": [
+    "schokodrops",
+    "kuvertüre|Kuvertüre",
+    "blockschokolade"
+   ]
+  },
+  "Schokolade": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "snack": true,
+   "group": "sweets",
+   "synonyms": [
+    "zartbitterschokolade|zartbitter",
+    "zartbitter|zartbitter",
+    "vollmilchschokolade|Vollmilch",
+    "schoko",
+    "tafel schokolade"
+   ]
+  },
+  "Chips": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "snack": true,
+   "group": "sweets",
+   "synonyms": [
+    "kartoffelchips",
+    "tortilla chips|Tortilla",
+    "nachos|Tortilla",
+    "paprika chips|Paprika"
+   ]
+  },
+  "Kekse": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "snack": true,
+   "group": "sweets",
+   "synonyms": [
+    "cookies",
+    "butterkekse",
+    "butterkeks",
+    "plätzchen"
+   ]
+  },
+  "Gummibärchen": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "all",
+   "unit": "Stück",
+   "snack": true,
+   "group": "sweets",
+   "synonyms": [
+    "fruchtgummi",
+    "weingummi"
+   ]
+  },
+  "Salzstangen": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "snack": true,
+   "group": "sweets",
+   "synonyms": [
+    "salzbrezeln",
+    "brezeln salz"
+   ]
+  },
+  "Popcorn": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "snack": true,
+   "group": "sweets"
+  },
+  "Müsliriegel": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "snack": true,
+   "group": "sweets",
+   "synonyms": [
+    "riegel",
+    "proteinriegel"
+   ]
+  },
+  "Nussmischung": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "snack": true,
+   "group": "sweets",
+   "synonyms": [
+    "studentenfutter",
+    "nuss mix"
+   ]
+  },
+  "Wasser": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "ignore": true,
+   "group": "drinks",
+   "synonyms": [
+    "mineralwasser",
+    "sprudel",
+    "stilles wasser|still",
+    "tafelwasser"
+   ],
+   "staple": true
+  },
+  "Saft": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "ignore": true,
+   "group": "drinks",
+   "synonyms": [
+    "orangensaft|Orange",
+    "apfelsaft|Apfel",
+    "multivitaminsaft|Multivitamin",
+    "direktsaft",
+    "apfelschorle|Apfelschorle"
+   ]
+  },
+  "Limonade": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "ignore": true,
+   "group": "drinks",
+   "synonyms": [
+    "limo",
+    "cola|Cola",
+    "spezi",
+    "eistee|Eistee"
+   ]
+  },
+  "Bier": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "ignore": true,
+   "group": "drinks",
+   "synonyms": [
+    "pils",
+    "radler|Radler",
+    "weizenbier|Weizen"
+   ]
+  },
+  "Wein": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "ignore": true,
+   "group": "drinks",
+   "synonyms": [
+    "rotwein|Rot",
+    "weißwein|Weiß",
+    "rosé|Rosé",
+    "sekt|Sekt"
+   ]
+  },
+  "Kaffee": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "g",
+   "ignore": false,
+   "group": "drinks",
+   "synonyms": [
+    "kaffeebohnen|Bohnen",
+    "espresso|Espresso",
+    "gemahlener kaffee|gemahlen",
+    "filterkaffee"
+   ]
+  },
+  "Tee": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "rough",
+   "diet": "vegan",
+   "unit": "Packung",
+   "ignore": false,
+   "group": "drinks",
+   "synonyms": [
+    "kräutertee|Kräuter",
+    "grüner tee|grün",
+    "schwarzer tee|schwarz",
+    "früchtetee|Früchte",
+    "pfefferminztee|Pfefferminz"
+   ]
+  },
+  "Erbsen": {
+   "area": "freezer",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "frozen",
+   "pack": 450,
+   "synonyms": [
+    "tk erbsen",
+    "erbsen tk",
+    "junge erbsen",
+    "erbsen fein"
+   ]
+  },
+  "Gemüsemischung": {
+   "area": "freezer",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "frozen",
+   "pack": 750,
+   "synonyms": [
+    "tk gemüse",
+    "wokgemüse|Wok",
+    "buttergemüse",
+    "pfannengemüse|Pfanne",
+    "suppengemüse"
+   ]
+  },
+  "Beerenmischung": {
+   "area": "freezer",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "frozen",
+   "pack": 300,
+   "synonyms": [
+    "tk beeren",
+    "beerenmix",
+    "waldbeeren|Wald"
+   ]
+  },
+  "Pommes": {
+   "area": "freezer",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "frozen",
+   "pack": 750,
+   "synonyms": [
+    "pommes frites",
+    "ofenfrites",
+    "kroketten|Kroketten"
+   ]
+  },
+  "Tiefkühlpizza": {
+   "area": "freezer",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegetarian",
+   "unit": "Stück",
+   "group": "frozen",
+   "pack": 1,
+   "synonyms": [
+    "pizza",
+    "steinofenpizza"
+   ]
+  },
+  "Edamame": {
+   "area": "freezer",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "vegan",
+   "unit": "g",
+   "group": "frozen",
+   "pack": 400
+  },
+  "Fischstäbchen": {
+   "area": "freezer",
+   "profile": "stable",
+   "tracking": "exact",
+   "diet": "all",
+   "unit": "g",
+   "group": "frozen",
+   "pack": 450
+  },
+  "Eis": {
+   "area": "freezer",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "group": "frozen",
+   "pack": 1,
+   "synonyms": [
+    "speiseeis",
+    "eiscreme",
+    "eis am stiel"
+   ],
+   "snack": true
+  },
+  "Spülmittel": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "ignore": true,
+   "group": "household",
+   "synonyms": [
+    "geschirrspülmittel",
+    "spülmaschinentabs|Tabs",
+    "spültabs|Tabs"
+   ]
+  },
+  "Toilettenpapier": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "ignore": true,
+   "group": "household",
+   "synonyms": [
+    "klopapier",
+    "wc papier"
+   ]
+  },
+  "Küchenrolle": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "ignore": true,
+   "group": "household",
+   "synonyms": [
+    "küchentücher",
+    "haushaltsrolle"
+   ]
+  },
+  "Zahnpasta": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "ignore": true,
+   "group": "household",
+   "synonyms": [
+    "zahncreme"
+   ]
+  },
+  "Duschgel": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "ignore": true,
+   "group": "household",
+   "synonyms": [
+    "shampoo|Shampoo",
+    "seife|Seife"
+   ]
+  },
+  "Waschmittel": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "ignore": true,
+   "group": "household",
+   "synonyms": [
+    "weichspüler|Weichspüler"
+   ]
+  },
+  "Müllbeutel": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "ignore": true,
+   "group": "household",
+   "synonyms": [
+    "mülltüten",
+    "gefrierbeutel|Gefrier",
+    "alufolie|Alu",
+    "frischhaltefolie|Folie",
+    "backpapier|Backpapier"
+   ]
+  },
+  "Tragetasche": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "ignore": true,
+   "group": "household",
+   "synonyms": [
+    "tüte",
+    "tragetasche papier",
+    "papiertüte",
+    "tasche"
+   ]
+  },
+  "Blumen": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "ignore": true,
+   "group": "other",
+   "synonyms": [
+    "blumenstrauß",
+    "tulpen"
+   ]
+  },
+  "Zeitschrift": {
+   "area": "pantry",
+   "profile": "stable",
+   "tracking": "flag",
+   "diet": "vegan",
+   "unit": "Stück",
+   "ignore": true,
+   "group": "other",
+   "synonyms": [
+    "zeitung",
+    "magazin"
+   ]
+  }
+ },
+ "receiptRules": [
+  [
+   "tomat.*(geh|st(ü|ue)ck|dose|gesch)|geh.*tomat",
+   "Dosentomaten"
+  ],
+  [
+   "veg.*(aufschn|salami|schinken)",
+   "Veganer Aufschnitt"
+  ],
+  [
+   "scheib.*k(ä|ae)se|k(ä|ae)se.*scheib",
+   "Käse in Scheiben"
+  ],
+  [
+   "ger(?:ä|ae)uchert.*paprikapulv",
+   "Paprikapulver"
+  ],
+  [
+   "erdnu(ss|ß).?(mus|butter|creme)",
+   "Erdnussmus"
+  ],
+  [
+   "sonnengetrockne.*tomate",
+   "Getrocknete Tomaten"
+  ],
+  [
+   "doppelrahmfrischk(?:ä|ae)",
+   "Frischkäse"
+  ],
+  [
+   "hafer.*(dr|milch)|haferdr",
+   "Pflanzendrink"
+  ],
+  [
+   "h(?:ä|ae)hnch.*unterschenk",
+   "Hähnchenschenkel"
+  ],
+  [
+   "gefl(?:ü|ue)gelw(?:ü|ue)rstch",
+   "Würstchen"
+  ],
+  [
+   "garam.*masala.*gew(?:ü|ue)rz",
+   "Garam Masala"
+  ],
+  [
+   "h(?:ä|ae)hnchenbrustfil",
+   "Hähnchenbrust"
+  ],
+  [
+   "aprikosenkonfit(?:ü|ue)",
+   "Marmelade"
+  ],
+  [
+   "ger(?:ö|oe)stet.*sesam(?:ö|oe)",
+   "Sesamöl"
+  ],
+  [
+   "italienisc.*kr(?:ä|ae)ute",
+   "Italienische Kräuter"
+  ],
+  [
+   "zartbitterschokola",
+   "Schokolade"
+  ],
+  [
+   "geschirrsp(?:ü|ue)lmitt",
+   "Spülmittel"
+  ],
+  [
+   "bl(?:ä|ae)tterte.*frisch",
+   "Blätterteig"
+  ],
+  [
+   "gemahle.*haseln(?:ü|ue)s",
+   "Haselnüsse"
+  ],
+  [
+   "cranberri.*getrockn",
+   "Trockenobst"
+  ],
+  [
+   "wei(?:ß|ss)e.*riesenbohn",
+   "Weiße Bohnen"
+  ],
+  [
+   "kreuzk(?:ü|ue)mm.*gemahl",
+   "Kreuzkümmel"
+  ],
+  [
+   "bourbo.*vanillezuck",
+   "Vanillezucker"
+  ],
+  [
+   "vollmilchschokola",
+   "Schokolade"
+  ],
+  [
+   "sp(?:ü|ue)lmaschinenta",
+   "Spülmittel"
+  ],
+  [
+   "kr(?:ä|ae)uterseitlin",
+   "Pilze"
+  ],
+  [
+   "fr(?:ü|ue)hlingszwieb",
+   "Frühlingszwiebel"
+  ],
+  [
+   "joghurtalternati",
+   "Pflanzenjoghurt"
+  ],
+  [
+   "griechisch.*joghur",
+   "Joghurt"
+  ],
+  [
+   "b(?:ü|ue)ffelmozzarel",
+   "Mozzarella"
+  ],
+  [
+   "deutsc.*markenbutt",
+   "Butter"
+  ],
+  [
+   "h(ä|ae)hn.*(schenk|keul)",
+   "Hähnchenschenkel"
+  ],
+  [
+   "h(?:ä|ae)hnchenschenk",
+   "Hähnchenschenkel"
+  ],
+  [
+   "kernig.*haferflock",
+   "Haferflocken"
+  ],
+  [
+   "erdn(?:ü|ue)s.*ger(?:ö|oe)st",
+   "Erdnüsse"
+  ],
+  [
+   "geschrote.*leinsam",
+   "Leinsamen"
+  ],
+  [
+   "getrockne.*aprikos",
+   "Trockenobst"
+  ],
+  [
+   "mittelscharf.*\\bsenf\\b",
+   "Senf"
+  ],
+  [
+   "s(?:ü|ue)(?:ß|ss)e.*chilisau",
+   "Chilisauce"
+  ],
+  [
+   "braune.*champigno",
+   "Champignons"
+  ],
+  [
+   "s(?:ü|ue)(?:ß|ss)kartoffe",
+   "Süßkartoffel"
+  ],
+  [
+   "butternutk(?:ü|ue)rb",
+   "Kürbis"
+  ],
+  [
+   "aufbackbr(?:ö|oe)tch",
+   "Brötchen"
+  ],
+  [
+   "vegane.*w(?:ü|ue)rstch",
+   "Vegane Würstchen"
+  ],
+  [
+   "veggie.*w(?:ü|ue)rstch",
+   "Vegane Würstchen"
+  ],
+  [
+   "frisch.*tagliatel",
+   "Frische Pasta"
+  ],
+  [
+   "pflanzenmargari",
+   "Margarine"
+  ],
+  [
+   "frischk(?:ä|ae).*natur",
+   "Frischkäse"
+  ],
+  [
+   "hartk(?:ä|ae).*st(?:ü|ue)ck",
+   "Hartkäse am Stück"
+  ],
+  [
+   "emmental.*st(?:ü|ue)ck",
+   "Hartkäse am Stück"
+  ],
+  [
+   "s(?:ü|ue)(?:ß|ss)rahmbutt",
+   "Butter"
+  ],
+  [
+   "hackfleis.*gemisc",
+   "Hackfleisch"
+  ],
+  [
+   "schweineschnitz",
+   "Schnitzel"
+  ],
+  [
+   "wiener.*w(?:ü|ue)rstch",
+   "Würstchen"
+  ],
+  [
+   "zarte.*haferflock",
+   "Haferflocken"
+  ],
+  [
+   "mandelbl(?:ä|ae)ttch",
+   "Mandeln"
+  ],
+  [
+   "sonnenblumenker",
+   "Sonnenblumenkerne"
+  ],
+  [
+   "getrockne.*feigen",
+   "Trockenobst"
+  ],
+  [
+   "gesch(?:ä|ae)l.*tomate",
+   "Dosentomaten"
+  ],
+  [
+   "getrockne.*tomate",
+   "Getrocknete Tomaten"
+  ],
+  [
+   "wei(?:ß|ss)es.*mandelm",
+   "Mandelmus"
+  ],
+  [
+   "nuss.*nougat.*creme",
+   "Nuss-Nougat-Creme"
+  ],
+  [
+   "gr(?:ü|ue)ne.*currypas",
+   "Currypaste"
+  ],
+  [
+   "paprik.*rosenscha",
+   "Paprikapulver"
+  ],
+  [
+   "kr(?:ä|ae)utermischu",
+   "Italienische Kräuter"
+  ],
+  [
+   "kartoffelst(?:ä|ae)r",
+   "Speisestärke"
+  ],
+  [
+   "tragetasc.*papier",
+   "Tragetasche"
+  ],
+  [
+   "s(?:ü|ue)(?:ß|ss)kartoff",
+   "Süßkartoffel"
+  ],
+  [
+   "hokkaidok(?:ü|ue)rb",
+   "Kürbis"
+  ],
+  [
+   "gr(?:ü|ue)ner.*sparge",
+   "Spargel"
+  ],
+  [
+   "glatte.*petersil",
+   "Petersilie"
+  ],
+  [
+   "krause.*petersil",
+   "Petersilie"
+  ],
+  [
+   "tofu.*ger(?:ä|ae)uche",
+   "Tofu"
+  ],
+  [
+   "pflanzlich.*\\bhack\\b",
+   "Veganes Hack"
+  ],
+  [
+   "vegane.*aufschni",
+   "Veganer Aufschnitt"
+  ],
+  [
+   "veggie.*aufschni",
+   "Veganer Aufschnitt"
+  ],
+  [
+   "pflanzlic.*sahne",
+   "Pflanzensahne"
+  ],
+  [
+   "joghur.*griechis",
+   "Joghurt"
+  ],
+  [
+   "k(?:ä|ae)seaufschni",
+   "Käse in Scheiben"
+  ],
+  [
+   "emmental.*scheib",
+   "Käse in Scheiben"
+  ],
+  [
+   "gerieben.*k(?:ä|ae)se",
+   "Reibekäse"
+  ],
+  [
+   "bodenhaltu.*\\beier\\b",
+   "Ei"
+  ],
+  [
+   "h(?:ä|ae)hnchenkeul",
+   "Hähnchenschenkel"
+  ],
+  [
+   "schinkenw(?:ü|ue)rf",
+   "Speck"
+  ],
+  [
+   "lasagnebl(?:ä|ae)tt",
+   "Lasagneplatten"
+  ],
+  [
+   "weichweizengri",
+   "Grieß"
+  ],
+  [
+   "texturiert.*soja",
+   "Sojagranulat"
+  ],
+  [
+   "st(?:ü|ue)cki.*tomate",
+   "Dosentomaten"
+  ],
+  [
+   "tomate.*st(?:ü|ue)cke",
+   "Dosentomaten"
+  ],
+  [
+   "kichererbs.*dose",
+   "Kichererbsen"
+  ],
+  [
+   "tomate.*getrockn",
+   "Getrocknete Tomaten"
+  ],
+  [
+   "erdbeermarmela",
+   "Marmelade"
+  ],
+  [
+   "currypas.*gr(?:ü|ue)n",
+   "Currypaste"
+  ],
+  [
+   "wei(?:ß|ss)er.*pfeffe",
+   "Pfeffer"
+  ],
+  [
+   "paprik.*edels(?:ü|ue)",
+   "Paprikapulver"
+  ],
+  [
+   "oregan.*getrockn",
+   "Oregano"
+  ],
+  [
+   "thymia.*getrockn",
+   "Thymian"
+  ],
+  [
+   "rosmar.*getrockn",
+   "Rosmarin"
+  ],
+  [
+   "kr(ä|ae)utermisch",
+   "Italienische Kräuter"
+  ],
+  [
+   "kr(?:ä|ae)ute.*proven",
+   "Italienische Kräuter"
+  ],
+  [
+   "lorbeerbl(?:ä|ae)tt",
+   "Lorbeerblatt"
+  ],
+  [
+   "gem(?:ü|ue)sebouill",
+   "Gemüsebrühe"
+  ],
+  [
+   "wei(?:ß|ss)er.*zucker",
+   "Zucker"
+  ],
+  [
+   "multivitaminsa",
+   "Saft"
+  ],
+  [
+   "gemahlen.*kaffee",
+   "Kaffee"
+  ],
+  [
+   "gem(?:ü|ue)semischu",
+   "Gemüsemischung"
+  ],
+  [
+   "k(?:ü|ue)chent(?:ü|ue)ch",
+   "Küchenrolle"
+  ],
+  [
+   "frischhaltefol",
+   "Müllbeutel"
+  ],
+  [
+   "s(?:ü|ue)sskartoff",
+   "Süßkartoffel"
+  ],
+  [
+   "knoblauchknol",
+   "Knoblauch"
+  ],
+  [
+   "knollenseller",
+   "Sellerie"
+  ],
+  [
+   "staudenseller",
+   "Staudensellerie"
+  ],
+  [
+   "stangenseller",
+   "Staudensellerie"
+  ],
+  [
+   "selleriestang",
+   "Staudensellerie"
+  ],
+  [
+   "cocktailtomat",
+   "Tomate"
+  ],
+  [
+   "gem(?:ü|ue)sezwieb",
+   "Zwiebel"
+  ],
+  [
+   "gr(?:ü|ue)ne.*bohnen",
+   "Grüne Bohnen"
+  ],
+  [
+   "weizentortill",
+   "Wraps"
+  ],
+  [
+   "tofuw(?:ü|ue)rstch",
+   "Vegane Würstchen"
+  ],
+  [
+   "vegane.*bratwur",
+   "Vegane Würstchen"
+  ],
+  [
+   "bl(ä|ae)tterteig",
+   "Blätterteig"
+  ],
+  [
+   "pflanzenjoghu",
+   "Pflanzenjoghurt"
+  ],
+  [
+   "mandel.?(dr|milch)",
+   "Pflanzendrink"
+  ],
+  [
+   "s(?:ü|ue)(?:ß|ss)e.*sahne",
+   "Sahne"
+  ],
+  [
+   "k(?:ä|ae)se.*st(?:ü|ue)ck",
+   "Hartkäse am Stück"
+  ],
+  [
+   "sauerrahmbutt",
+   "Butter"
+  ],
+  [
+   "h(ä|ae)hnchenfil",
+   "Hähnchenbrust"
+  ],
+  [
+   "h(?:ä|ae)hnchenbru",
+   "Hähnchenbrust"
+  ],
+  [
+   "h(?:ä|ae)hnchenfil",
+   "Hähnchenbrust"
+  ],
+  [
+   "h(?:ä|ae)hnch.*brust",
+   "Hähnchenbrust"
+  ],
+  [
+   "schweinegulas",
+   "Gulasch"
+  ],
+  [
+   "wurstaufschni",
+   "Aufschnitt"
+  ],
+  [
+   "salami.*st(?:ü|ue)ck",
+   "Salami"
+  ],
+  [
+   "hartweizengri",
+   "Grieß"
+  ],
+  [
+   "gemahle.*mandel",
+   "Mandeln"
+  ],
+  [
+   "sesam.*gesch(?:ä|ae)",
+   "Sesam"
+  ],
+  [
+   "passier.*tomate",
+   "Passata"
+  ],
+  [
+   "tomatenma.*fach",
+   "Tomatenmark"
+  ],
+  [
+   "wei(?:ß|ss)e.*bohnen",
+   "Weiße Bohnen"
+  ],
+  [
+   "schwarze bohn",
+   "Schwarze Bohnen"
+  ],
+  [
+   "thunfis.*natura",
+   "Thunfisch"
+  ],
+  [
+   "gr(?:ü|ue)ne.*oliven",
+   "Oliven"
+  ],
+  [
+   "fruchtaufstri",
+   "Marmelade"
+  ],
+  [
+   "schokoaufstri",
+   "Nuss-Nougat-Creme"
+  ],
+  [
+   "sonnenblumeno",
+   "Sonnenblumenöl"
+  ],
+  [
+   "wei(?:ß|ss)weiness",
+   "Essig"
+  ],
+  [
+   "branntweiness",
+   "Essig"
+  ],
+  [
+   "s(?:ü|ue)(?:ß|ss)er.*\\bsenf\\b",
+   "Senf"
+  ],
+  [
+   "salatmayonnai",
+   "Mayonnaise"
+  ],
+  [
+   "gelbe.*currypas",
+   "Currypaste"
+  ],
+  [
+   "schwarz.*pfeffe",
+   "Pfeffer"
+  ],
+  [
+   "pfefferk(?:ö|oe)rn",
+   "Pfeffer"
+  ],
+  [
+   "currypulv.*mild",
+   "Currypulver"
+  ],
+  [
+   "gem(?:ü|ue)sebr(?:ü|ue)",
+   "Gemüsebrühe"
+  ],
+  [
+   "edelhefeflock",
+   "Hefeflocken"
+  ],
+  [
+   "blockschokola",
+   "Schokotropfen"
+  ],
+  [
+   "tafel.*schokola",
+   "Schokolade"
+  ],
+  [
+   "studentenfutt",
+   "Nussmischung"
+  ],
+  [
+   "gem(ü|ue)semisch",
+   "Gemüsemischung"
+  ],
+  [
+   "pfannengem(?:ü|ue)",
+   "Gemüsemischung"
+  ],
+  [
+   "tiefk(?:ü|ue)hlpiz",
+   "Tiefkühlpizza"
+  ],
+  [
+   "fischst(?:ä|ae)bch",
+   "Fischstäbchen"
+  ],
+  [
+   "toilettenpapi",
+   "Toilettenpapier"
+  ],
+  [
+   "eichblattsal",
+   "Kopfsalat"
+  ],
+  [
+   "knoblauchzeh",
+   "Knoblauch"
+  ],
+  [
+   "paprik.*gr(?:ü|ue)n",
+   "Paprika"
+  ],
+  [
+   "sparge.*wei(?:ß|ss)",
+   "Spargel"
+  ],
+  [
+   "sparge.*gr(?:ü|ue)n",
+   "Spargel"
+  ],
+  [
+   "strauchtomat",
+   "Tomate"
+  ],
+  [
+   "fleischtomat",
+   "Tomate"
+  ],
+  [
+   "speisezwiebe",
+   "Zwiebel"
+  ],
+  [
+   "prinzessbohn",
+   "Grüne Bohnen"
+  ],
+  [
+   "vegane.*salami",
+   "Veganer Aufschnitt"
+  ],
+  [
+   "vegane.*schink",
+   "Veganer Aufschnitt"
+  ],
+  [
+   "frisch.*nudeln",
+   "Frische Pasta"
+  ],
+  [
+   "vegane.*joghur",
+   "Pflanzenjoghurt"
+  ],
+  [
+   "vegane.*butter",
+   "Margarine"
+  ],
+  [
+   "pflanzenbutt",
+   "Margarine"
+  ],
+  [
+   "mozzarel.*mini",
+   "Mozzarella"
+  ],
+  [
+   "rohmilchk(?:ä|ae)",
+   "Rohmilchkäse"
+  ],
+  [
+   "k(?:ä|ae)se.*rohmil",
+   "Rohmilchkäse"
+  ],
+  [
+   "gouda.*st(?:ü|ue)ck",
+   "Hartkäse am Stück"
+  ],
+  [
+   "k(?:ä|ae)se.*scheib",
+   "Käse in Scheiben"
+  ],
+  [
+   "scheibenk(?:ä|ae)",
+   "Käse in Scheiben"
+  ],
+  [
+   "k(?:ä|ae)se.*gerieb",
+   "Reibekäse"
+  ],
+  [
+   "gemischt.*\\bhack\\b",
+   "Hackfleisch"
+  ],
+  [
+   "putenschnitz",
+   "Putenbrust"
+  ],
+  [
+   "kalbsschnitz",
+   "Schnitzel"
+  ],
+  [
+   "hinterschink",
+   "Schinken"
+  ],
+  [
+   "r(?:ä|ae)ucherlac",
+   "Räucherlachs"
+  ],
+  [
+   "riesengarnel",
+   "Garnelen"
+  ],
+  [
+   "vollkornnude",
+   "Nudeln"
+  ],
+  [
+   "lasagneplatt",
+   "Lasagneplatten"
+  ],
+  [
+   "lasagn.*platte",
+   "Lasagneplatten"
+  ],
+  [
+   "braune.*linsen",
+   "Linsen"
+  ],
+  [
+   "knusperm(?:ü|ue)s",
+   "Müsli"
+  ],
+  [
+   "semmelbr(?:ö|oe)s",
+   "Paniermehl"
+  ],
+  [
+   "haselnussker",
+   "Haselnüsse"
+  ],
+  [
+   "sonnenbl.*kern",
+   "Sonnenblumenkerne"
+  ],
+  [
+   "medjoo.*dattel",
+   "Datteln"
+  ],
+  [
+   "gehack.*tomate",
+   "Dosentomaten"
+  ],
+  [
+   "tomate.*gehack",
+   "Dosentomaten"
+  ],
+  [
+   "tomate.*passie",
+   "Passata"
+  ],
+  [
+   "tomatenp(?:ü|ue)r",
+   "Passata"
+  ],
+  [
+   "kokosnussmil",
+   "Kokosmilch"
+  ],
+  [
+   "kokosmil.*dose",
+   "Kokosmilch"
+  ],
+  [
+   "kidney.*bohnen",
+   "Kidneybohnen"
+  ],
+  [
+   "wei(ß|ss)e bohn",
+   "Weiße Bohnen"
+  ],
+  [
+   "weisse.*bohnen",
+   "Weiße Bohnen"
+  ],
+  [
+   "schwar.*bohnen",
+   "Schwarze Bohnen"
+  ],
+  [
+   "gem(ü|ue)semais",
+   "Mais"
+  ],
+  [
+   "schwar.*oliven",
+   "Oliven"
+  ],
+  [
+   "gew(?:ü|ue)rzgurk",
+   "Gewürzgurken"
+  ],
+  [
+   "basilikumpes",
+   "Pesto"
+  ],
+  [
+   "fruchtaufstr",
+   "Marmelade"
+  ],
+  [
+   "agavendicksa",
+   "Agavendicksaft"
+  ],
+  [
+   "native.*oliven",
+   "Olivenöl"
+  ],
+  [
+   "sonnenbl.*(ö|oe)l",
+   "Sonnenblumenöl"
+  ],
+  [
+   "sonnenblumen",
+   "Sonnenblumenöl"
+  ],
+  [
+   "aceto.*balsami",
+   "Essig"
+  ],
+  [
+   "k(?:ö|oe)rnig.*\\bsenf\\b",
+   "Senf"
+  ],
+  [
+   "tomatenketch",
+   "Ketchup"
+  ],
+  [
+   "rote.*currypas",
+   "Currypaste"
+  ],
+  [
+   "zitronensaft",
+   "Zitronensaft"
+  ],
+  [
+   "limettensaft",
+   "Zitronensaft"
+  ],
+  [
+   "pfeffe.*schwar",
+   "Pfeffer"
+  ],
+  [
+   "paprik.*pulver",
+   "Paprikapulver"
+  ],
+  [
+   "cayennepfeff",
+   "Chiliflocken"
+  ],
+  [
+   "muskat.*gemahl",
+   "Muskat"
+  ],
+  [
+   "gem(ü|ue)sefond",
+   "Gemüsebrühe"
+  ],
+  [
+   "br(?:ü|ue)hw(?:ü|ue)rf",
+   "Gemüsebrühe"
+  ],
+  [
+   "kristallzuck",
+   "Zucker"
+  ],
+  [
+   "braune.*zucker",
+   "Zucker"
+  ],
+  [
+   "kaiser.*natron",
+   "Natron"
+  ],
+  [
+   "speisest(?:ä|ae)r",
+   "Speisestärke"
+  ],
+  [
+   "vanillinzuck",
+   "Vanillezucker"
+  ],
+  [
+   "kartoffelchi",
+   "Chips"
+  ],
+  [
+   "gummib(?:ä|ae)rch",
+   "Gummibärchen"
+  ],
+  [
+   "stille.*wasser",
+   "Wasser"
+  ],
+  [
+   "pfefferminzt",
+   "Tee"
+  ],
+  [
+   "buttergem(?:ü|ue)",
+   "Gemüsemischung"
+  ],
+  [
+   "suppengem(?:ü|ue)",
+   "Gemüsemischung"
+  ],
+  [
+   "beerenmischu",
+   "Beerenmischung"
+  ],
+  [
+   "pommes.*frites",
+   "Pommes"
+  ],
+  [
+   "steinofenpiz",
+   "Tiefkühlpizza"
+  ],
+  [
+   "haushaltsrol",
+   "Küchenrolle"
+  ],
+  [
+   "frischhaltef",
+   "Müllbeutel"
+  ],
+  [
+   "salatmischu",
+   "Salatmischung"
+  ],
+  [
+   "pfl(?:ü|ue)cksal",
+   "Salatmischung"
+  ],
+  [
+   "lauchzwiebe",
+   "Frühlingszwiebel"
+  ],
+  [
+   "mehligkoche",
+   "Kartoffel"
+  ],
+  [
+   "s(ü|ue)(ß|ss)kart",
+   "Süßkartoffel"
+  ],
+  [
+   "knoblauchze",
+   "Knoblauch"
+  ],
+  [
+   "paprikascho",
+   "Paprika"
+  ],
+  [
+   "rispentomat",
+   "Tomate"
+  ],
+  [
+   "cherrytomat",
+   "Tomate"
+  ],
+  [
+   "kirschtomat",
+   "Tomate"
+  ],
+  [
+   "stangenbohn",
+   "Grüne Bohnen"
+  ],
+  [
+   "zuckerschot",
+   "Zuckerschoten"
+  ],
+  [
+   "kaiserschot",
+   "Zuckerschoten"
+  ],
+  [
+   "basilik.*topf",
+   "Basilikum"
+  ],
+  [
+   "koriandergr",
+   "Koriander"
+  ],
+  [
+   "sauerteigbr",
+   "Brot"
+  ],
+  [
+   "sandwichtoa",
+   "Toastbrot"
+  ],
+  [
+   "vollkorntoa",
+   "Toastbrot"
+  ],
+  [
+   "r(?:ä|ae)ucherto",
+   "Tofu"
+  ],
+  [
+   "tofuw(ü|ue)rst",
+   "Vegane Würstchen"
+  ],
+  [
+   "frisch.*pasta",
+   "Frische Pasta"
+  ],
+  [
+   "bl(?:ä|ae)tterte",
+   "Blätterteig"
+  ],
+  [
+   "pflanzenbut",
+   "Margarine"
+  ],
+  [
+   "frischmilch",
+   "Milch"
+  ],
+  [
+   "fettar.*milch",
+   "Milch"
+  ],
+  [
+   "haltba.*milch",
+   "H-Milch"
+  ],
+  [
+   "soja.?(dr|milch)",
+   "Pflanzendrink"
+  ],
+  [
+   "pflanzendri",
+   "Pflanzendrink"
+  ],
+  [
+   "pflanzensah",
+   "Pflanzensahne"
+  ],
+  [
+   "hafer.*cuisin",
+   "Pflanzensahne"
+  ],
+  [
+   "schlagsahne",
+   "Sahne"
+  ],
+  [
+   "creme.*fraich",
+   "Saure Sahne"
+  ],
+  [
+   "joghur.*natur",
+   "Joghurt"
+  ],
+  [
+   "grana.*padano",
+   "Parmesan"
+  ],
+  [
+   "gouda.*scheib",
+   "Käse in Scheiben"
+  ],
+  [
+   "h(ä|ae)hn.*brust",
+   "Hähnchenbrust"
+  ],
+  [
+   "h(?:ü|ue)hnerbru",
+   "Hähnchenbrust"
+  ],
+  [
+   "rindergulas",
+   "Gulasch"
+  ],
+  [
+   "rostbratwur",
+   "Bratwurst"
+  ],
+  [
+   "parmaschink",
+   "Schinken"
+  ],
+  [
+   "speckw(?:ü|ue)rf",
+   "Speck"
+  ],
+  [
+   "lachs.*frisch",
+   "Lachs"
+  ],
+  [
+   "graved.*lachs",
+   "Räucherlachs"
+  ],
+  [
+   "parboil.*\\breis\\b",
+   "Reis"
+  ],
+  [
+   "gelbe.*linsen",
+   "Linsen"
+  ],
+  [
+   "hafer.*flocke",
+   "Haferflocken"
+  ],
+  [
+   "ramen.*nudeln",
+   "Mie-Nudeln"
+  ],
+  [
+   "sojaschnetz",
+   "Sojagranulat"
+  ],
+  [
+   "soja.*schnetz",
+   "Sojagranulat"
+  ],
+  [
+   "erdnusskern",
+   "Erdnüsse"
+  ],
+  [
+   "k(?:ü|ue)rbisker",
+   "Kürbiskerne"
+  ],
+  [
+   "softaprikos",
+   "Trockenobst"
+  ],
+  [
+   "saure.*gurken",
+   "Gewürzgurken"
+  ],
+  [
+   "pesto.*genove",
+   "Pesto"
+  ],
+  [
+   "bl(?:ü|ue)tenhon",
+   "Honig"
+  ],
+  [
+   "erdnussbutt",
+   "Erdnussmus"
+  ],
+  [
+   "oliven.*extra",
+   "Olivenöl"
+  ],
+  [
+   "curry.*ketchu",
+   "Ketchup"
+  ],
+  [
+   "sambal.*oelek",
+   "Chilisauce"
+  ],
+  [
+   "edels(ü|ue)(ß|ss)",
+   "Paprikapulver"
+  ],
+  [
+   "paprikapulv",
+   "Paprikapulver"
+  ],
+  [
+   "kreuzk(?:ü|ue)mm",
+   "Kreuzkümmel"
+  ],
+  [
+   "chili.*flocke",
+   "Chiliflocken"
+  ],
+  [
+   "chili.*gemahl",
+   "Chiliflocken"
+  ],
+  [
+   "ital.*kr(ä|ae)ut",
+   "Italienische Kräuter"
+  ],
+  [
+   "pizzagew(?:ü|ue)",
+   "Italienische Kräuter"
+  ],
+  [
+   "garam.*masala",
+   "Garam Masala"
+  ],
+  [
+   "vanillezuck",
+   "Vanillezucker"
+  ],
+  [
+   "schokotropf",
+   "Schokotropfen"
+  ],
+  [
+   "tortil.*chips",
+   "Chips"
+  ],
+  [
+   "paprik.*chips",
+   "Chips"
+  ],
+  [
+   "m(?:ü|ue)slirieg",
+   "Müsliriegel"
+  ],
+  [
+   "proteinrieg",
+   "Müsliriegel"
+  ],
+  [
+   "mineralwass",
+   "Wasser"
+  ],
+  [
+   "junge.*erbsen",
+   "Erbsen"
+  ],
+  [
+   "k(?:ü|ue)chenrol",
+   "Küchenrolle"
+  ],
+  [
+   "weichsp(?:ü|ue)l",
+   "Waschmittel"
+  ],
+  [
+   "m(?:ü|ue)llt(?:ü|ue)t",
+   "Müllbeutel"
+  ],
+  [
+   "gefrierbeut",
+   "Müllbeutel"
+  ],
+  [
+   "austernpil",
+   "Pilze"
+  ],
+  [
+   "pfifferlin",
+   "Pilze"
+  ],
+  [
+   "chilischot",
+   "Chili"
+  ],
+  [
+   "eisbergsal",
+   "Eisbergsalat"
+  ],
+  [
+   "r(?:ö|oe)mersal",
+   "Kopfsalat"
+  ],
+  [
+   "lollo.*rosso",
+   "Kopfsalat"
+  ],
+  [
+   "lauchzwieb",
+   "Frühlingszwiebel"
+  ],
+  [
+   "speisekart",
+   "Kartoffel"
+  ],
+  [
+   "spitzpapri",
+   "Paprika"
+  ],
+  [
+   "paprik.*gelb",
+   "Paprika"
+  ],
+  [
+   "wei(ß|ss)kohl",
+   "Weißkohl"
+  ],
+  [
+   "snacktomat",
+   "Tomate"
+  ],
+  [
+   "rote.*zwiebe",
+   "Zwiebel"
+  ],
+  [
+   "zuckerscho",
+   "Zuckerschoten"
+  ],
+  [
+   "\\bmais\\b.*kolben",
+   "Mais (Kolben)"
+  ],
+  [
+   "schnittlau",
+   "Schnittlauch"
+  ],
+  [
+   "pfeffermin",
+   "Minze"
+  ],
+  [
+   "tafel(?:ä|ae)pf",
+   "Apfel"
+  ],
+  [
+   "heidelbeer",
+   "Heidelbeeren"
+  ],
+  [
+   "tafeltraub",
+   "Weintrauben"
+  ],
+  [
+   "wassermelo",
+   "Melone"
+  ],
+  [
+   "vollkornbr",
+   "Brot"
+  ],
+  [
+   "br(ö|oe)tchen",
+   "Brötchen"
+  ],
+  [
+   "laugenbrez",
+   "Brezel"
+  ],
+  [
+   "kn(?:ä|ae)ckebr",
+   "Knäckebrot"
+  ],
+  [
+   "vegane.*\\bhack\\b",
+   "Veganes Hack"
+  ],
+  [
+   "veggie.*\\bhack\\b",
+   "Veganes Hack"
+  ],
+  [
+   "veg.*w(ü|ue)rst",
+   "Vegane Würstchen"
+  ],
+  [
+   "frischhefe",
+   "Frische Hefe"
+  ],
+  [
+   "frisch.*hefe",
+   "Frische Hefe"
+  ],
+  [
+   "hefew(?:ü|ue)rf",
+   "Frische Hefe"
+  ],
+  [
+   "hefe.*frisch",
+   "Frische Hefe"
+  ],
+  [
+   "joghurtalt",
+   "Pflanzenjoghurt"
+  ],
+  [
+   "kokosjoghu",
+   "Pflanzenjoghurt"
+  ],
+  [
+   "haferjoghu",
+   "Pflanzenjoghurt"
+  ],
+  [
+   "haltb.*milch",
+   "H-Milch"
+  ],
+  [
+   "kokos.?drink",
+   "Pflanzendrink"
+  ],
+  [
+   "hafersahne",
+   "Pflanzensahne"
+  ],
+  [
+   "hafercuisi",
+   "Pflanzensahne"
+  ],
+  [
+   "kokoscuisi",
+   "Pflanzensahne"
+  ],
+  [
+   "soja.*cuisin",
+   "Pflanzensahne"
+  ],
+  [
+   "cr(è|e)me fra",
+   "Saure Sahne"
+  ],
+  [
+   "saure.*sahne",
+   "Saure Sahne"
+  ],
+  [
+   "\\bcr\\b.*\\bme\\b.*\\bfra\\b.*\\bche\\b",
+   "Saure Sahne"
+  ],
+  [
+   "naturjoghu",
+   "Joghurt"
+  ],
+  [
+   "frischk(ä|ae)",
+   "Frischkäse"
+  ],
+  [
+   "frischk(?:ä|ae)",
+   "Frischkäse"
+  ],
+  [
+   "hirtenk(?:ä|ae)",
+   "Feta"
+  ],
+  [
+   "schafsk(?:ä|ae)",
+   "Feta"
+  ],
+  [
+   "am st(ü|ue)ck",
+   "Hartkäse am Stück"
+  ],
+  [
+   "alter.*gouda",
+   "Hartkäse am Stück"
+  ],
+  [
+   "butterk(ä|ae)",
+   "Käse in Scheiben"
+  ],
+  [
+   "butterk(?:ä|ae)",
+   "Käse in Scheiben"
+  ],
+  [
+   "gratink(?:ä|ae)",
+   "Reibekäse"
+  ],
+  [
+   "freilandei",
+   "Ei"
+  ],
+  [
+   "\\beier\\b.*freila",
+   "Ei"
+  ],
+  [
+   "rinderhack",
+   "Hackfleisch"
+  ],
+  [
+   "schweineha",
+   "Hackfleisch"
+  ],
+  [
+   "n(?:ü|ue)rnberg",
+   "Bratwurst"
+  ],
+  [
+   "bierschink",
+   "Aufschnitt"
+  ],
+  [
+   "salamistic",
+   "Salami"
+  ],
+  [
+   "kochschink",
+   "Schinken"
+  ],
+  [
+   "r(ä|ae)ucherl",
+   "Räucherlachs"
+  ],
+  [
+   "stremellac",
+   "Räucherlachs"
+  ],
+  [
+   "langkornre",
+   "Reis"
+  ],
+  [
+   "vollkornre",
+   "Reis"
+  ],
+  [
+   "rote.*linsen",
+   "Linsen"
+  ],
+  [
+   "belugalins",
+   "Linsen"
+  ],
+  [
+   "tellerlins",
+   "Linsen"
+  ],
+  [
+   "haferflock",
+   "Haferflocken"
+  ],
+  [
+   "corn.*flakes",
+   "Cornflakes"
+  ],
+  [
+   "\\breis\\b.*nudeln",
+   "Reisnudeln"
+  ],
+  [
+   "asia.*nudeln",
+   "Mie-Nudeln"
+  ],
+  [
+   "sojagranul",
+   "Sojagranulat"
+  ],
+  [
+   "walnussker",
+   "Walnüsse"
+  ],
+  [
+   "mandelstif",
+   "Mandeln"
+  ],
+  [
+   "haseln(?:ü|ue)s",
+   "Haselnüsse"
+  ],
+  [
+   "erdnussker",
+   "Erdnüsse"
+  ],
+  [
+   "dosentomat",
+   "Dosentomaten"
+  ],
+  [
+   "tomate.*dose",
+   "Dosentomaten"
+  ],
+  [
+   "pizzatomat",
+   "Dosentomaten"
+  ],
+  [
+   "tomatenpas",
+   "Tomatenmark"
+  ],
+  [
+   "kokosnussm",
+   "Kokosmilch"
+  ],
+  [
+   "coconu.*milk",
+   "Kokosmilch"
+  ],
+  [
+   "kichererbs",
+   "Kichererbsen"
+  ],
+  [
+   "kidneybohn",
+   "Kidneybohnen"
+  ],
+  [
+   "rote.*bohnen",
+   "Kidneybohnen"
+  ],
+  [
+   "butterbohn",
+   "Weiße Bohnen"
+  ],
+  [
+   "zuckermais",
+   "Mais"
+  ],
+  [
+   "gem(?:ü|ue)sema",
+   "Mais"
+  ],
+  [
+   "pesto.*rosso",
+   "Pesto"
+  ],
+  [
+   "pesto.*verde",
+   "Pesto"
+  ],
+  [
+   "ahorn.*sirup",
+   "Ahornsirup"
+  ],
+  [
+   "erdnusscre",
+   "Erdnussmus"
+  ],
+  [
+   "mandelbutt",
+   "Mandelmus"
+  ],
+  [
+   "oliven.?(ö|oe)l",
+   "Olivenöl"
+  ],
+  [
+   "rotweiness",
+   "Essig"
+  ],
+  [
+   "sweet chil",
+   "Chilisauce"
+  ],
+  [
+   "sweet.*chili",
+   "Chilisauce"
+  ],
+  [
+   "zitronensa",
+   "Zitronensaft"
+  ],
+  [
+   "limettensa",
+   "Zitronensaft"
+  ],
+  [
+   "\\bsalz\\b.*jodier",
+   "Salz"
+  ],
+  [
+   "paprikapul",
+   "Paprikapulver"
+  ],
+  [
+   "chiliflock",
+   "Chiliflocken"
+  ],
+  [
+   "lorbeerbla",
+   "Lorbeerblatt"
+  ],
+  [
+   "gem(?:ü|ue)sefo",
+   "Gemüsebrühe"
+  ],
+  [
+   "n(ä|ae)hrhefe",
+   "Hefeflocken"
+  ],
+  [
+   "vollkornme",
+   "Mehl"
+  ],
+  [
+   "maisst(?:ä|ae)r",
+   "Speisestärke"
+  ],
+  [
+   "trockenhef",
+   "Trockenhefe"
+  ],
+  [
+   "hefe.*trocke",
+   "Trockenhefe"
+  ],
+  [
+   "vanill.?zuck",
+   "Vanillezucker"
+  ],
+  [
+   "brezel.*\\bsalz\\b",
+   "Salzstangen"
+  ],
+  [
+   "studentenf",
+   "Nussmischung"
+  ],
+  [
+   "nussmischu",
+   "Nussmischung"
+  ],
+  [
+   "apfelschor",
+   "Saft"
+  ],
+  [
+   "wei(ß|ss)wein",
+   "Wein"
+  ],
+  [
+   "kaffeebohn",
+   "Kaffee"
+  ],
+  [
+   "filterkaff",
+   "Kaffee"
+  ],
+  [
+   "kr(ä|ae)utert",
+   "Tee"
+  ],
+  [
+   "fr(ü|ue)chtet",
+   "Tee"
+  ],
+  [
+   "kr(?:ä|ae)utert",
+   "Tee"
+  ],
+  [
+   "fr(?:ü|ue)chtet",
+   "Tee"
+  ],
+  [
+   "erbsen.*fein",
+   "Erbsen"
+  ],
+  [
+   "pfannengem",
+   "Gemüsemischung"
+  ],
+  [
+   "sp(?:ü|ue)lmitt",
+   "Spülmittel"
+  ],
+  [
+   "toilettenp",
+   "Toilettenpapier"
+  ],
+  [
+   "m(?:ü|ue)llbeut",
+   "Müllbeutel"
+  ],
+  [
+   "papiert(?:ü|ue)",
+   "Tragetasche"
+  ],
+  [
+   "blumenstra",
+   "Blumen"
+  ],
+  [
+   "champigno",
+   "Champignons"
+  ],
+  [
+   "chilischo",
+   "Chili"
+  ],
+  [
+   "romanasal",
+   "Kopfsalat"
+  ],
+  [
+   "fr(ü|ue)hl.*zw",
+   "Frühlingszwiebel"
+  ],
+  [
+   "snackgurk",
+   "Gurke"
+  ],
+  [
+   "mohrr(?:ü|ue)b",
+   "Karotte"
+  ],
+  [
+   "festkoche",
+   "Kartoffel"
+  ],
+  [
+   "butternut",
+   "Kürbis"
+  ],
+  [
+   "rote.*beete",
+   "Rote Bete"
+  ],
+  [
+   "spitzkohl",
+   "Weißkohl"
+  ],
+  [
+   "wei(?:ß|ss)kra",
+   "Weißkohl"
+  ],
+  [
+   "blattspin",
+   "Spinat"
+  ],
+  [
+   "rispentom",
+   "Tomate"
+  ],
+  [
+   "romatomat",
+   "Tomate"
+  ],
+  [
+   "brechbohn",
+   "Grüne Bohnen"
+  ],
+  [
+   "buschbohn",
+   "Grüne Bohnen"
+  ],
+  [
+   "clementin",
+   "Mandarine"
+  ],
+  [
+   "weintraub",
+   "Weintrauben"
+  ],
+  [
+   "honigmelo",
+   "Melone"
+  ],
+  [
+   "galiamelo",
+   "Melone"
+  ],
+  [
+   "granatapf",
+   "Granatapfel"
+  ],
+  [
+   "krustenbr",
+   "Brot"
+  ],
+  [
+   "tofu.*natur",
+   "Tofu"
+  ],
+  [
+   "hack.*vegan",
+   "Veganes Hack"
+  ],
+  [
+   "vegan.*\\bhack\\b",
+   "Veganes Hack"
+  ],
+  [
+   "miso.*paste",
+   "Miso"
+  ],
+  [
+   "pizza.*teig",
+   "Pizzateig"
+  ],
+  [
+   "sojajoghu",
+   "Pflanzenjoghurt"
+  ],
+  [
+   "vollmilch",
+   "Milch"
+  ],
+  [
+   "frischmil",
+   "Milch"
+  ],
+  [
+   "reis.?drink",
+   "Pflanzendrink"
+  ],
+  [
+   "mandeldri",
+   "Pflanzendrink"
+  ],
+  [
+   "mandelmil",
+   "Pflanzendrink"
+  ],
+  [
+   "erbsendri",
+   "Pflanzendrink"
+  ],
+  [
+   "dinkeldri",
+   "Pflanzendrink"
+  ],
+  [
+   "cashewdri",
+   "Pflanzendrink"
+  ],
+  [
+   "kochcreme",
+   "Pflanzensahne"
+  ],
+  [
+   "sojacuisi",
+   "Pflanzensahne"
+  ],
+  [
+   "kochsahne",
+   "Sahne"
+  ],
+  [
+   "schlagsah",
+   "Sahne"
+  ],
+  [
+   "saure sah",
+   "Saure Sahne"
+  ],
+  [
+   "speisequa",
+   "Quark"
+  ],
+  [
+   "salatk(?:ä|ae)",
+   "Feta"
+  ],
+  [
+   "grillk(?:ä|ae)",
+   "Halloumi"
+  ],
+  [
+   "weichk(?:ä|ae)",
+   "Weichkäse"
+  ],
+  [
+   "pizzak(ä|ae)",
+   "Reibekäse"
+  ],
+  [
+   "reibek(?:ä|ae)",
+   "Reibekäse"
+  ],
+  [
+   "pizzak(?:ä|ae)",
+   "Reibekäse"
+  ],
+  [
+   "buttermil",
+   "Buttermilch"
+  ],
+  [
+   "freilande",
+   "Ei"
+  ],
+  [
+   "hackfleis",
+   "Hackfleisch"
+  ],
+  [
+   "faschiert",
+   "Hackfleisch"
+  ],
+  [
+   "zwiebelme",
+   "Mett"
+  ],
+  [
+   "rinderste",
+   "Steak"
+  ],
+  [
+   "h(?:ü|ue)ftste",
+   "Steak"
+  ],
+  [
+   "th(?:ü|ue)ring",
+   "Bratwurst"
+  ],
+  [
+   "w(ü|ue)rstch",
+   "Würstchen"
+  ],
+  [
+   "w(?:ü|ue)rstch",
+   "Würstchen"
+  ],
+  [
+   "frankfurt",
+   "Würstchen"
+  ],
+  [
+   "rohschink",
+   "Schinken"
+  ],
+  [
+   "schinkenw",
+   "Speck"
+  ],
+  [
+   "tagliatel",
+   "Nudeln"
+  ],
+  [
+   "orecchiet",
+   "Nudeln"
+  ],
+  [
+   "spaghetti",
+   "Nudeln"
+  ],
+  [
+   "milchreis",
+   "Reis"
+  ],
+  [
+   "basmatire",
+   "Reis"
+  ],
+  [
+   "risottore",
+   "Reis"
+  ],
+  [
+   "mandelker",
+   "Mandeln"
+  ],
+  [
+   "cashewker",
+   "Cashews"
+  ],
+  [
+   "erdn(ü|ue)ss",
+   "Erdnüsse"
+  ],
+  [
+   "pinienker",
+   "Pinienkerne"
+  ],
+  [
+   "k(ü|ue)rbisk",
+   "Kürbiskerne"
+  ],
+  [
+   "chia.*samen",
+   "Chiasamen"
+  ],
+  [
+   "trockenob",
+   "Trockenobst"
+  ],
+  [
+   "tomatenma",
+   "Tomatenmark"
+  ],
+  [
+   "kichererb",
+   "Kichererbsen"
+  ],
+  [
+   "rote bohn",
+   "Kidneybohnen"
+  ],
+  [
+   "gew(ü|ue)rzg",
+   "Gewürzgurken"
+  ],
+  [
+   "essiggurk",
+   "Gewürzgurken"
+  ],
+  [
+   "getr.*tomat",
+   "Getrocknete Tomaten"
+  ],
+  [
+   "konfit(?:ü|ue)",
+   "Marmelade"
+  ],
+  [
+   "dattelsir",
+   "Agavendicksaft"
+  ],
+  [
+   "agavensir",
+   "Agavendicksaft"
+  ],
+  [
+   "mandelmus",
+   "Mandelmus"
+  ],
+  [
+   "nusscreme",
+   "Nuss-Nougat-Creme"
+  ],
+  [
+   "nougatcre",
+   "Nuss-Nougat-Creme"
+  ],
+  [
+   "sesam(ö|oe)l",
+   "Sesamöl"
+  ],
+  [
+   "kokos(ö|oe)l",
+   "Kokosöl"
+  ],
+  [
+   "kokosfett",
+   "Kokosöl"
+  ],
+  [
+   "soja.*sauce",
+   "Sojasauce"
+  ],
+  [
+   "dijon.*\\bsenf\\b",
+   "Senf"
+  ],
+  [
+   "currypast",
+   "Currypaste"
+  ],
+  [
+   "currypulv",
+   "Currypulver"
+  ],
+  [
+   "chilipulv",
+   "Chiliflocken"
+  ],
+  [
+   "hefeflock",
+   "Hefeflocken"
+  ],
+  [
+   "puderzuck",
+   "Puderzucker"
+  ],
+  [
+   "trockenhe",
+   "Trockenhefe"
+  ],
+  [
+   "kakaopulv",
+   "Kakao"
+  ],
+  [
+   "schokodro",
+   "Schokotropfen"
+  ],
+  [
+   "kuvert(?:ü|ue)",
+   "Schokotropfen"
+  ],
+  [
+   "butterkek",
+   "Kekse"
+  ],
+  [
+   "pl(?:ä|ae)tzch",
+   "Kekse"
+  ],
+  [
+   "fruchtgum",
+   "Gummibärchen"
+  ],
+  [
+   "salzstang",
+   "Salzstangen"
+  ],
+  [
+   "salzbreze",
+   "Salzstangen"
+  ],
+  [
+   "nussmisch",
+   "Nussmischung"
+  ],
+  [
+   "tafelwass",
+   "Wasser"
+  ],
+  [
+   "orangensa",
+   "Saft"
+  ],
+  [
+   "wokgem(?:ü|ue)",
+   "Gemüsemischung"
+  ],
+  [
+   "speiseeis",
+   "Eis"
+  ],
+  [
+   "k(ü|ue)chenr",
+   "Küchenrolle"
+  ],
+  [
+   "k(ü|ue)chent",
+   "Küchenrolle"
+  ],
+  [
+   "waschmitt",
+   "Waschmittel"
+  ],
+  [
+   "tragetasc",
+   "Tragetasche"
+  ],
+  [
+   "zeitschri",
+   "Zeitschrift"
+  ],
+  [
+   "blumenko",
+   "Blumenkohl"
+  ],
+  [
+   "champign",
+   "Champignons"
+  ],
+  [
+   "blattsal",
+   "Kopfsalat"
+  ],
+  [
+   "salat.?mix",
+   "Salatmischung"
+  ],
+  [
+   "salatgur",
+   "Gurke"
+  ],
+  [
+   "minigurk",
+   "Gurke"
+  ],
+  [
+   "m(?:ö|oe)hren",
+   "Karotte"
+  ],
+  [
+   "kartoffe",
+   "Kartoffel"
+  ],
+  [
+   "k(ü|ue)rbis",
+   "Kürbis"
+  ],
+  [
+   "hokkaido",
+   "Kürbis"
+  ],
+  [
+   "k(?:ü|ue)rbis",
+   "Kürbis"
+  ],
+  [
+   "radiesch",
+   "Radieschen"
+  ],
+  [
+   "rote.*bete",
+   "Rote Bete"
+  ],
+  [
+   "wei(?:ß|ss)ko",
+   "Weißkohl"
+  ],
+  [
+   "gr(?:ü|ue)nko",
+   "Grünkohl"
+  ],
+  [
+   "babyspin",
+   "Spinat"
+  ],
+  [
+   "rahmspin",
+   "Spinat"
+  ],
+  [
+   "maiskolb",
+   "Mais (Kolben)"
+  ],
+  [
+   "petersil",
+   "Petersilie"
+  ],
+  [
+   "blutoran",
+   "Orange"
+  ],
+  [
+   "clementi",
+   "Mandarine"
+  ],
+  [
+   "mandarin",
+   "Mandarine"
+  ],
+  [
+   "blaubeer",
+   "Heidelbeeren"
+  ],
+  [
+   "nektarin",
+   "Pfirsich"
+  ],
+  [
+   "zwetschg",
+   "Pflaumen"
+  ],
+  [
+   "roggenbr",
+   "Brot"
+  ],
+  [
+   "dinkelbr",
+   "Brot"
+  ],
+  [
+   "bauernbr",
+   "Brot"
+  ],
+  [
+   "br(?:ö|oe)tch",
+   "Brötchen"
+  ],
+  [
+   "seidento",
+   "Tofu"
+  ],
+  [
+   "tortelli",
+   "Frische Pasta"
+  ],
+  [
+   "frischhe",
+   "Frische Hefe"
+  ],
+  [
+   "kokos.?jog",
+   "Pflanzenjoghurt"
+  ],
+  [
+   "hafer.?jog",
+   "Pflanzenjoghurt"
+  ],
+  [
+   "weidemil",
+   "Milch"
+  ],
+  [
+   "erbsendr",
+   "Pflanzendrink"
+  ],
+  [
+   "haferdri",
+   "Pflanzendrink"
+  ],
+  [
+   "hafermil",
+   "Pflanzendrink"
+  ],
+  [
+   "kokosdri",
+   "Pflanzendrink"
+  ],
+  [
+   "hafersah",
+   "Pflanzensahne"
+  ],
+  [
+   "schlagra",
+   "Sahne"
+  ],
+  [
+   "magerqua",
+   "Quark"
+  ],
+  [
+   "sahnequa",
+   "Quark"
+  ],
+  [
+   "mozzarel",
+   "Mozzarella"
+  ],
+  [
+   "mascarpo",
+   "Mascarpone"
+  ],
+  [
+   "parmigia",
+   "Parmesan"
+  ],
+  [
+   "hartk(?:ä|ae)",
+   "Parmesan"
+  ],
+  [
+   "bergk(?:ä|ae)",
+   "Hartkäse am Stück"
+  ],
+  [
+   "gerieben",
+   "Reibekäse"
+  ],
+  [
+   "rinderha",
+   "Hackfleisch"
+  ],
+  [
+   "hackepet",
+   "Mett"
+  ],
+  [
+   "putenbru",
+   "Putenbrust"
+  ],
+  [
+   "putenfil",
+   "Putenbrust"
+  ],
+  [
+   "grillwur",
+   "Bratwurst"
+  ],
+  [
+   "aufschni",
+   "Aufschnitt"
+  ],
+  [
+   "mortadel",
+   "Aufschnitt"
+  ],
+  [
+   "schinken(?!w)",
+   "Schinken"
+  ],
+  [
+   "bauchspe",
+   "Speck"
+  ],
+  [
+   "lachsfil",
+   "Lachs"
+  ],
+  [
+   "seelachs",
+   "Fisch"
+  ],
+  [
+   "fischfil",
+   "Fisch"
+  ],
+  [
+   "conchigl",
+   "Nudeln"
+  ],
+  [
+   "langkorn",
+   "Reis"
+  ],
+  [
+   "jasminre",
+   "Reis"
+  ],
+  [
+   "berglins",
+   "Linsen"
+  ],
+  [
+   "cous.*cous",
+   "Couscous"
+  ],
+  [
+   "cornflak",
+   "Cornflakes"
+  ],
+  [
+   "reisnude",
+   "Reisnudeln"
+  ],
+  [
+   "glasnude",
+   "Reisnudeln"
+  ],
+  [
+   "sojagran",
+   "Sojagranulat"
+  ],
+  [
+   "sojaschn",
+   "Sojagranulat"
+  ],
+  [
+   "semmelbr",
+   "Paniermehl"
+  ],
+  [
+   "panierme",
+   "Paniermehl"
+  ],
+  [
+   "waln(?:ü|ue)s",
+   "Walnüsse"
+  ],
+  [
+   "erdn(?:ü|ue)s",
+   "Erdnüsse"
+  ],
+  [
+   "sultanin",
+   "Rosinen"
+  ],
+  [
+   "cranberr",
+   "Trockenobst"
+  ],
+  [
+   "pizzatom",
+   "Dosentomaten"
+  ],
+  [
+   "passiert",
+   "Passata"
+  ],
+  [
+   "tomatenm",
+   "Tomatenmark"
+  ],
+  [
+   "kokosmil",
+   "Kokosmilch"
+  ],
+  [
+   "cannelli",
+   "Weiße Bohnen"
+  ],
+  [
+   "zuckerma",
+   "Mais"
+  ],
+  [
+   "\\bmais\\b.*dose",
+   "Mais"
+  ],
+  [
+   "cornicho",
+   "Gewürzgurken"
+  ],
+  [
+   "sauerkra",
+   "Sauerkraut"
+  ],
+  [
+   "apfelmus",
+   "Apfelmus"
+  ],
+  [
+   "ahornsir",
+   "Ahornsirup"
+  ],
+  [
+   "erdnussm",
+   "Erdnussmus"
+  ],
+  [
+   "sesammus",
+   "Tahin"
+  ],
+  [
+   "sesampas",
+   "Tahin"
+  ],
+  [
+   "raps(ö|oe)l",
+   "Rapsöl"
+  ],
+  [
+   "raps(?:ö|oe)l",
+   "Rapsöl"
+  ],
+  [
+   "sesam(?:ö|oe)",
+   "Sesamöl"
+  ],
+  [
+   "kokos(?:ö|oe)",
+   "Kokosöl"
+  ],
+  [
+   "apfeless",
+   "Essig"
+  ],
+  [
+   "soja.?s(au|o)",
+   "Sojasauce"
+  ],
+  [
+   "mayonnai",
+   "Mayonnaise"
+  ],
+  [
+   "currypas",
+   "Currypaste"
+  ],
+  [
+   "sriracha",
+   "Chilisauce"
+  ],
+  [
+   "chili.?sau",
+   "Chilisauce"
+  ],
+  [
+   "chilisau",
+   "Chilisauce"
+  ],
+  [
+   "meersalz",
+   "Salz"
+  ],
+  [
+   "speisesa",
+   "Salz"
+  ],
+  [
+   "rosensch",
+   "Paprikapulver"
+  ],
+  [
+   "zimtpulv",
+   "Zimt"
+  ],
+  [
+   "zimtstan",
+   "Zimt"
+  ],
+  [
+   "chilipul",
+   "Chiliflocken"
+  ],
+  [
+   "provence",
+   "Italienische Kräuter"
+  ],
+  [
+   "kr(?:ä|ae)ute",
+   "Italienische Kräuter"
+  ],
+  [
+   "muskatnu",
+   "Muskat"
+  ],
+  [
+   "bouillon",
+   "Gemüsebrühe"
+  ],
+  [
+   "n(?:ä|ae)hrhe",
+   "Hefeflocken"
+  ],
+  [
+   "weizenme",
+   "Mehl"
+  ],
+  [
+   "dinkelme",
+   "Mehl"
+  ],
+  [
+   "\\bmehl\\b.*type",
+   "Mehl"
+  ],
+  [
+   "roggenme",
+   "Mehl"
+  ],
+  [
+   "rohrzuck",
+   "Zucker"
+  ],
+  [
+   "feinzuck",
+   "Zucker"
+  ],
+  [
+   "backpulv",
+   "Backpulver"
+  ],
+  [
+   "st(ä|ae)rke",
+   "Speisestärke"
+  ],
+  [
+   "st(?:ä|ae)rke",
+   "Speisestärke"
+  ],
+  [
+   "zartbitt",
+   "Schokolade"
+  ],
+  [
+   "schokola",
+   "Schokolade"
+  ],
+  [
+   "butterke",
+   "Kekse"
+  ],
+  [
+   "salzbrez",
+   "Salzstangen"
+  ],
+  [
+   "direktsa",
+   "Saft"
+  ],
+  [
+   "weizenbi",
+   "Bier"
+  ],
+  [
+   "wei(?:ß|ss)we",
+   "Wein"
+  ],
+  [
+   "espresso",
+   "Kaffee"
+  ],
+  [
+   "gr(?:ü|ue)ner",
+   "Tee"
+  ],
+  [
+   "gem(?:ü|ue)se",
+   "Gemüsemischung"
+  ],
+  [
+   "waldbeer",
+   "Beerenmischung"
+  ],
+  [
+   "ofenfrit",
+   "Pommes"
+  ],
+  [
+   "eiscreme",
+   "Eis"
+  ],
+  [
+   "sp(?:ü|ue)lta",
+   "Spülmittel"
+  ],
+  [
+   "gefrierb",
+   "Müllbeutel"
+  ],
+  [
+   "backpapi",
+   "Müllbeutel"
+  ],
+  [
+   "tragetas",
+   "Tragetasche"
+  ],
+  [
+   "zeitschr",
+   "Zeitschrift"
+  ],
+  [
+   "aubergi",
+   "Aubergine"
+  ],
+  [
+   "egerlin",
+   "Champignons"
+  ],
+  [
+   "kopfsal",
+   "Kopfsalat"
+  ],
+  [
+   "salatko",
+   "Kopfsalat"
+  ],
+  [
+   "feldsal",
+   "Feldsalat"
+  ],
+  [
+   "lauchzw",
+   "Frühlingszwiebel"
+  ],
+  [
+   "m(?:ö|oe)hre",
+   "Karotte"
+  ],
+  [
+   "kartoff",
+   "Kartoffel"
+  ],
+  [
+   "drillin",
+   "Kartoffel"
+  ],
+  [
+   "knoblau",
+   "Knoblauch"
+  ],
+  [
+   "buttern",
+   "Kürbis"
+  ],
+  [
+   "paprika(?!pulver)",
+   "Paprika"
+  ],
+  [
+   "rote be",
+   "Rote Bete"
+  ],
+  [
+   "blaukra",
+   "Rotkohl"
+  ],
+  [
+   "weissko",
+   "Weißkohl"
+  ],
+  [
+   "spitzko",
+   "Weißkohl"
+  ],
+  [
+   "rosenko",
+   "Rosenkohl"
+  ],
+  [
+   "cherryt",
+   "Tomate"
+  ],
+  [
+   "zucchet",
+   "Zucchini"
+  ],
+  [
+   "schalot",
+   "Schalotte"
+  ],
+  [
+   "basilik",
+   "Basilikum"
+  ],
+  [
+   "koriand",
+   "Koriander"
+  ],
+  [
+   "(ä|ae)pfel",
+   "Apfel"
+  ],
+  [
+   "(?:ä|ae)pfel",
+   "Apfel"
+  ],
+  [
+   "apfelsi",
+   "Orange"
+  ],
+  [
+   "mandari",
+   "Mandarine"
+  ],
+  [
+   "erdbeer",
+   "Erdbeeren"
+  ],
+  [
+   "himbeer",
+   "Himbeeren"
+  ],
+  [
+   "nektari",
+   "Pfirsich"
+  ],
+  [
+   "pfirsic",
+   "Pfirsich"
+  ],
+  [
+   "zwetsch",
+   "Pflaumen"
+  ],
+  [
+   "mischbr",
+   "Brot"
+  ],
+  [
+   "toastbr",
+   "Toastbrot"
+  ],
+  [
+   "tortill",
+   "Wraps"
+  ],
+  [
+   "naturto",
+   "Tofu"
+  ],
+  [
+   "veg.*hack",
+   "Veganes Hack"
+  ],
+  [
+   "tortell",
+   "Frische Pasta"
+  ],
+  [
+   "misopas",
+   "Miso"
+  ],
+  [
+   "pizzate",
+   "Pizzateig"
+  ],
+  [
+   "soja.?jog",
+   "Pflanzenjoghurt"
+  ],
+  [
+   "margari",
+   "Margarine"
+  ],
+  [
+   "vollmil",
+   "Milch"
+  ],
+  [
+   "sojadri",
+   "Pflanzendrink"
+  ],
+  [
+   "sojamil",
+   "Pflanzendrink"
+  ],
+  [
+   "reisdri",
+   "Pflanzendrink"
+  ],
+  [
+   "cuisine",
+   "Pflanzensahne"
+  ],
+  [
+   "kochcre",
+   "Pflanzensahne"
+  ],
+  [
+   "kochsah",
+   "Sahne"
+  ],
+  [
+   "schmand",
+   "Saure Sahne"
+  ],
+  [
+   "sauerra",
+   "Saure Sahne"
+  ],
+  [
+   "hirtenk",
+   "Feta"
+  ],
+  [
+   "schafsk",
+   "Feta"
+  ],
+  [
+   "camembe",
+   "Weichkäse"
+  ],
+  [
+   "cheddar",
+   "Hartkäse am Stück"
+  ],
+  [
+   "gratink",
+   "Reibekäse"
+  ],
+  [
+   "schnitz",
+   "Schnitzel"
+  ],
+  [
+   "rumpste",
+   "Steak"
+  ],
+  [
+   "entreco",
+   "Steak"
+  ],
+  [
+   "bratwur",
+   "Bratwurst"
+  ],
+  [
+   "aufschn",
+   "Aufschnitt"
+  ],
+  [
+   "rotbars",
+   "Fisch"
+  ],
+  [
+   "spaghet",
+   "Nudeln"
+  ],
+  [
+   "makkaro",
+   "Nudeln"
+  ],
+  [
+   "lasagne",
+   "Lasagneplatten"
+  ],
+  [
+   "basmati",
+   "Reis"
+  ],
+  [
+   "risotto",
+   "Reis"
+  ],
+  [
+   "arborio",
+   "Reis"
+  ],
+  [
+   "milchre",
+   "Reis"
+  ],
+  [
+   "sushire",
+   "Reis"
+  ],
+  [
+   "maisgri",
+   "Polenta"
+  ],
+  [
+   "grie(ß|ss)",
+   "Grieß"
+  ],
+  [
+   "grie(?:ß|ss)",
+   "Grieß"
+  ],
+  [
+   "haferfl",
+   "Haferflocken"
+  ],
+  [
+   "m(ü|ue)sli",
+   "Müsli"
+  ],
+  [
+   "granola",
+   "Müsli"
+  ],
+  [
+   "m(?:ü|ue)sli",
+   "Müsli"
+  ],
+  [
+   "mienude",
+   "Mie-Nudeln"
+  ],
+  [
+   "sesamsa",
+   "Sesam"
+  ],
+  [
+   "leinsam",
+   "Leinsamen"
+  ],
+  [
+   "chiasam",
+   "Chiasamen"
+  ],
+  [
+   "aprikos",
+   "Trockenobst"
+  ],
+  [
+   "cannell",
+   "Weiße Bohnen"
+  ],
+  [
+   "thunfis",
+   "Thunfisch"
+  ],
+  [
+   "cornich",
+   "Gewürzgurken"
+  ],
+  [
+   "marmela",
+   "Marmelade"
+  ],
+  [
+   "waldhon",
+   "Honig"
+  ],
+  [
+   "reissir",
+   "Agavendicksaft"
+  ],
+  [
+   "mandelm",
+   "Mandelmus"
+  ],
+  [
+   "nusscre",
+   "Nuss-Nougat-Creme"
+  ],
+  [
+   "oliveno",
+   "Olivenöl"
+  ],
+  [
+   "kokosfe",
+   "Kokosöl"
+  ],
+  [
+   "balsami",
+   "Essig"
+  ],
+  [
+   "reisess",
+   "Essig"
+  ],
+  [
+   "sojasau",
+   "Sojasauce"
+  ],
+  [
+   "dijonse",
+   "Senf"
+  ],
+  [
+   "ketchup",
+   "Ketchup"
+  ],
+  [
+   "remoula",
+   "Mayonnaise"
+  ],
+  [
+   "jodsalz",
+   "Salz"
+  ],
+  [
+   "pfeffer(?!minz)",
+   "Pfeffer"
+  ],
+  [
+   "kurkuma",
+   "Kurkuma"
+  ],
+  [
+   "curcuma",
+   "Kurkuma"
+  ],
+  [
+   "chilifl",
+   "Chiliflocken"
+  ],
+  [
+   "cayenne",
+   "Chiliflocken"
+  ],
+  [
+   "lorbeer",
+   "Lorbeerblatt"
+  ],
+  [
+   "br(ü|ue)he",
+   "Gemüsebrühe"
+  ],
+  [
+   "br(?:ü|ue)he",
+   "Gemüsebrühe"
+  ],
+  [
+   "weizenm",
+   "Mehl"
+  ],
+  [
+   "dinkelm",
+   "Mehl"
+  ],
+  [
+   "backkak",
+   "Kakao"
+  ],
+  [
+   "weingum",
+   "Gummibärchen"
+  ],
+  [
+   "sprudel",
+   "Wasser"
+  ],
+  [
+   "schorle",
+   "Saft"
+  ],
+  [
+   "apfelsa",
+   "Saft"
+  ],
+  [
+   "rotwein",
+   "Wein"
+  ],
+  [
+   "schwarz",
+   "Tee"
+  ],
+  [
+   "beerenm",
+   "Beerenmischung"
+  ],
+  [
+   "krokett",
+   "Pommes"
+  ],
+  [
+   "fischst",
+   "Fischstäbchen"
+  ],
+  [
+   "speisee",
+   "Eis"
+  ],
+  [
+   "sp(ü|ue)lm",
+   "Spülmittel"
+  ],
+  [
+   "klopapi",
+   "Toilettenpapier"
+  ],
+  [
+   "zahnpas",
+   "Zahnpasta"
+  ],
+  [
+   "zahncre",
+   "Zahnpasta"
+  ],
+  [
+   "shampoo",
+   "Duschgel"
+  ],
+  [
+   "weichsp",
+   "Waschmittel"
+  ],
+  [
+   "m(ü|ue)llb",
+   "Müllbeutel"
+  ],
+  [
+   "backpap",
+   "Müllbeutel"
+  ],
+  [
+   "papiert",
+   "Tragetasche"
+  ],
+  [
+   "zeitung",
+   "Zeitschrift"
+  ],
+  [
+   "avocad",
+   "Avocado"
+  ],
+  [
+   "brokko",
+   "Brokkoli"
+  ],
+  [
+   "brocco",
+   "Brokkoli"
+  ],
+  [
+   "shiita",
+   "Pilze"
+  ],
+  [
+   "pepero",
+   "Chili"
+  ],
+  [
+   "jalape",
+   "Chili"
+  ],
+  [
+   "rapunz",
+   "Feldsalat"
+  ],
+  [
+   "rucola",
+   "Rucola"
+  ],
+  [
+   "salatm",
+   "Salatmischung"
+  ],
+  [
+   "babyle",
+   "Salatmischung"
+  ],
+  [
+   "fenche",
+   "Fenchel"
+  ],
+  [
+   "ingwer",
+   "Ingwer"
+  ],
+  [
+   "m(ö|oe)hr",
+   "Karotte"
+  ],
+  [
+   "karott",
+   "Karotte"
+  ],
+  [
+   "kartof",
+   "Kartoffel"
+  ],
+  [
+   "kohlra",
+   "Kohlrabi"
+  ],
+  [
+   "hokkai",
+   "Kürbis"
+  ],
+  [
+   "porree",
+   "Lauch"
+  ],
+  [
+   "mangol",
+   "Mangold"
+  ],
+  [
+   "paprik",
+   "Paprika"
+  ],
+  [
+   "randen",
+   "Rote Bete"
+  ],
+  [
+   "rotkoh",
+   "Rotkohl"
+  ],
+  [
+   "rotkra",
+   "Rotkohl"
+  ],
+  [
+   "wirsin",
+   "Wirsing"
+  ],
+  [
+   "seller",
+   "Sellerie"
+  ],
+  [
+   "sparge",
+   "Spargel"
+  ],
+  [
+   "spinat",
+   "Spinat"
+  ],
+  [
+   "tomate",
+   "Tomate"
+  ],
+  [
+   "zucchi",
+   "Zucchini"
+  ],
+  [
+   "zwiebe",
+   "Zwiebel"
+  ],
+  [
+   "banane",
+   "Banane"
+  ],
+  [
+   "orange(?!nsaft)",
+   "Orange"
+  ],
+  [
+   "orange",
+   "Orange"
+  ],
+  [
+   "zitron(?!ensaft)",
+   "Zitrone"
+  ],
+  [
+   "zitron",
+   "Zitrone"
+  ],
+  [
+   "limett",
+   "Limette"
+  ],
+  [
+   "limone",
+   "Limette"
+  ],
+  [
+   "erdbee",
+   "Erdbeeren"
+  ],
+  [
+   "traube",
+   "Weintrauben"
+  ],
+  [
+   "ananas",
+   "Ananas"
+  ],
+  [
+   "melone",
+   "Melone"
+  ],
+  [
+   "pfirsi",
+   "Pfirsich"
+  ],
+  [
+   "pflaum",
+   "Pflaumen"
+  ],
+  [
+   "kirsch",
+   "Kirschen"
+  ],
+  [
+   "semmel",
+   "Brötchen"
+  ],
+  [
+   "schrip",
+   "Brötchen"
+  ],
+  [
+   "weckle",
+   "Brötchen"
+  ],
+  [
+   "baguet",
+   "Baguette"
+  ],
+  [
+   "brezel",
+   "Brezel"
+  ],
+  [
+   "tortil",
+   "Wraps"
+  ],
+  [
+   "tempeh",
+   "Tempeh"
+  ],
+  [
+   "seitan",
+   "Seitan"
+  ],
+  [
+   "hummus",
+   "Hummus"
+  ],
+  [
+   "hommus",
+   "Hummus"
+  ],
+  [
+   "raviol",
+   "Frische Pasta"
+  ],
+  [
+   "gnocch",
+   "Gnocchi"
+  ],
+  [
+   "kimchi",
+   "Kimchi"
+  ],
+  [
+   "margar",
+   "Margarine"
+  ],
+  [
+   "\\bh.?milch",
+   "H-Milch"
+  ],
+  [
+   "schman",
+   "Saure Sahne"
+  ],
+  [
+   "jogurt",
+   "Joghurt"
+  ],
+  [
+   "joghur",
+   "Joghurt"
+  ],
+  [
+   "topfen",
+   "Quark"
+  ],
+  [
+   "burrat",
+   "Mozzarella"
+  ],
+  [
+   "hallou",
+   "Halloumi"
+  ],
+  [
+   "ricott",
+   "Ricotta"
+  ],
+  [
+   "camemb",
+   "Weichkäse"
+  ],
+  [
+   "parmes",
+   "Parmesan"
+  ],
+  [
+   "pecori",
+   "Parmesan"
+  ],
+  [
+   "chedda",
+   "Hartkäse am Stück"
+  ],
+  [
+   "reibek",
+   "Reibekäse"
+  ],
+  [
+   "\\bbutter(?!milch|k(ä|ae)s|keks|bohn|nut)",
+   "Butter"
+  ],
+  [
+   "butter",
+   "Butter"
+  ],
+  [
+   "bodenh",
+   "Ei"
+  ],
+  [
+   "hackfl",
+   "Hackfleisch"
+  ],
+  [
+   "gulasc",
+   "Gulasch"
+  ],
+  [
+   "rostbr",
+   "Bratwurst"
+  ],
+  [
+   "wiener",
+   "Würstchen"
+  ],
+  [
+   "lyoner",
+   "Aufschnitt"
+  ],
+  [
+   "salami",
+   "Salami"
+  ],
+  [
+   "schink",
+   "Schinken"
+  ],
+  [
+   "serran",
+   "Schinken"
+  ],
+  [
+   "graved",
+   "Räucherlachs"
+  ],
+  [
+   "kabelj",
+   "Fisch"
+  ],
+  [
+   "forell",
+   "Fisch"
+  ],
+  [
+   "seelac",
+   "Fisch"
+  ],
+  [
+   "dorade",
+   "Fisch"
+  ],
+  [
+   "zander",
+   "Fisch"
+  ],
+  [
+   "garnel",
+   "Garnelen"
+  ],
+  [
+   "shrimp",
+   "Garnelen"
+  ],
+  [
+   "scampi",
+   "Garnelen"
+  ],
+  [
+   "fusill",
+   "Nudeln"
+  ],
+  [
+   "farfal",
+   "Nudeln"
+  ],
+  [
+   "taglia",
+   "Nudeln"
+  ],
+  [
+   "makkar",
+   "Nudeln"
+  ],
+  [
+   "spirel",
+   "Nudeln"
+  ],
+  [
+   "nudeln",
+   "Nudeln"
+  ],
+  [
+   "lingui",
+   "Nudeln"
+  ],
+  [
+   "rigato",
+   "Nudeln"
+  ],
+  [
+   "jasmin",
+   "Reis"
+  ],
+  [
+   "basmat",
+   "Reis"
+  ],
+  [
+   "arbori",
+   "Reis"
+  ],
+  [
+   "linsen",
+   "Linsen"
+  ],
+  [
+   "cousco",
+   "Couscous"
+  ],
+  [
+   "kuskus",
+   "Couscous"
+  ],
+  [
+   "bulgur",
+   "Bulgur"
+  ],
+  [
+   "quinoa",
+   "Quinoa"
+  ],
+  [
+   "polent",
+   "Polenta"
+  ],
+  [
+   "griess",
+   "Grieß"
+  ],
+  [
+   "granol",
+   "Müsli"
+  ],
+  [
+   "crunch",
+   "Müsli"
+  ],
+  [
+   "mie.?nud",
+   "Mie-Nudeln"
+  ],
+  [
+   "panier",
+   "Paniermehl"
+  ],
+  [
+   "walnus",
+   "Walnüsse"
+  ],
+  [
+   "mandel(?!dr|mil|mus)",
+   "Mandeln"
+  ],
+  [
+   "mandel",
+   "Mandeln"
+  ],
+  [
+   "haseln",
+   "Haselnüsse"
+  ],
+  [
+   "cashew(?!dr)",
+   "Cashews"
+  ],
+  [
+   "cashew",
+   "Cashews"
+  ],
+  [
+   "pinien",
+   "Pinienkerne"
+  ],
+  [
+   "rosine",
+   "Rosinen"
+  ],
+  [
+   "dattel",
+   "Datteln"
+  ],
+  [
+   "feigen",
+   "Trockenobst"
+  ],
+  [
+   "passat",
+   "Passata"
+  ],
+  [
+   "kokosm",
+   "Kokosmilch"
+  ],
+  [
+   "kidney",
+   "Kidneybohnen"
+  ],
+  [
+   "oliven(?!(ö|oe)l)",
+   "Oliven"
+  ],
+  [
+   "oliven",
+   "Oliven"
+  ],
+  [
+   "kalama",
+   "Oliven"
+  ],
+  [
+   "kapern",
+   "Kapern"
+  ],
+  [
+   "essigg",
+   "Gewürzgurken"
+  ],
+  [
+   "apfelm",
+   "Apfelmus"
+  ],
+  [
+   "marmel",
+   "Marmelade"
+  ],
+  [
+   "konfit",
+   "Marmelade"
+  ],
+  [
+   "tahini",
+   "Tahin"
+  ],
+  [
+   "sesamm",
+   "Tahin"
+  ],
+  [
+   "nougat",
+   "Nuss-Nougat-Creme"
+  ],
+  [
+   "rapsoe",
+   "Rapsöl"
+  ],
+  [
+   "balsam",
+   "Essig"
+  ],
+  [
+   "sojaso",
+   "Sojasauce"
+  ],
+  [
+   "tamari",
+   "Sojasauce"
+  ],
+  [
+   "ketchu",
+   "Ketchup"
+  ],
+  [
+   "remoul",
+   "Mayonnaise"
+  ],
+  [
+   "sambal",
+   "Chilisauce"
+  ],
+  [
+   "srirac",
+   "Chilisauce"
+  ],
+  [
+   "tabasc",
+   "Chilisauce"
+  ],
+  [
+   "meersa",
+   "Salz"
+  ],
+  [
+   "jodsal",
+   "Salz"
+  ],
+  [
+   "pfeffe",
+   "Pfeffer"
+  ],
+  [
+   "kreuzk",
+   "Kreuzkümmel"
+  ],
+  [
+   "kurkum",
+   "Kurkuma"
+  ],
+  [
+   "gelbwu",
+   "Kurkuma"
+  ],
+  [
+   "curcum",
+   "Kurkuma"
+  ],
+  [
+   "oregan",
+   "Oregano"
+  ],
+  [
+   "thymia",
+   "Thymian"
+  ],
+  [
+   "rosmar",
+   "Rosmarin"
+  ],
+  [
+   "lorbee",
+   "Lorbeerblatt"
+  ],
+  [
+   "muskat",
+   "Muskat"
+  ],
+  [
+   "bouill",
+   "Gemüsebrühe"
+  ],
+  [
+   "hefefl",
+   "Hefeflocken"
+  ],
+  [
+   "\\bzucker(?!sch|mais)",
+   "Zucker"
+  ],
+  [
+   "zucker",
+   "Zucker"
+  ],
+  [
+   "puderz",
+   "Puderzucker"
+  ],
+  [
+   "natron",
+   "Natron"
+  ],
+  [
+   "backhe",
+   "Trockenhefe"
+  ],
+  [
+   "kuvert",
+   "Schokotropfen"
+  ],
+  [
+   "schoko(?!tropf|aufstr)",
+   "Schokolade"
+  ],
+  [
+   "schoko",
+   "Schokolade"
+  ],
+  [
+   "nachos",
+   "Chips"
+  ],
+  [
+   "cookie",
+   "Kekse"
+  ],
+  [
+   "gummib",
+   "Gummibärchen"
+  ],
+  [
+   "popcor",
+   "Popcorn"
+  ],
+  [
+   "riegel",
+   "Müsliriegel"
+  ],
+  [
+   "wasser",
+   "Wasser"
+  ],
+  [
+   "sprude",
+   "Wasser"
+  ],
+  [
+   "eistee",
+   "Limonade"
+  ],
+  [
+   "limona",
+   "Limonade"
+  ],
+  [
+   "radler",
+   "Bier"
+  ],
+  [
+   "rotwei",
+   "Wein"
+  ],
+  [
+   "kaffee",
+   "Kaffee"
+  ],
+  [
+   "espres",
+   "Kaffee"
+  ],
+  [
+   "erbsen(?!dr)",
+   "Erbsen"
+  ],
+  [
+   "erbsen",
+   "Erbsen"
+  ],
+  [
+   "wokgem",
+   "Gemüsemischung"
+  ],
+  [
+   "beeren",
+   "Beerenmischung"
+  ],
+  [
+   "pommes",
+   "Pommes"
+  ],
+  [
+   "frites",
+   "Pommes"
+  ],
+  [
+   "edamam",
+   "Edamame"
+  ],
+  [
+   "eiscre",
+   "Eis"
+  ],
+  [
+   "klopap",
+   "Toilettenpapier"
+  ],
+  [
+   "papier",
+   "Toilettenpapier"
+  ],
+  [
+   "zahncr",
+   "Zahnpasta"
+  ],
+  [
+   "duschg",
+   "Duschgel"
+  ],
+  [
+   "shampo",
+   "Duschgel"
+  ],
+  [
+   "waschm",
+   "Waschmittel"
+  ],
+  [
+   "alufol",
+   "Müllbeutel"
+  ],
+  [
+   "\\bt(ü|ue)te",
+   "Tragetasche"
+  ],
+  [
+   "t(?:ü|ue)te",
+   "Tragetasche"
+  ],
+  [
+   "tasche",
+   "Tragetasche"
+  ],
+  [
+   "blumen",
+   "Blumen"
+  ],
+  [
+   "tulpen",
+   "Blumen"
+  ],
+  [
+   "zeitun",
+   "Zeitschrift"
+  ],
+  [
+   "magazi",
+   "Zeitschrift"
+  ],
+  [
+   "champ",
+   "Champignons"
+  ],
+  [
+   "pilze",
+   "Pilze"
+  ],
+  [
+   "chili",
+   "Chili"
+  ],
+  [
+   "rauke",
+   "Rucola"
+  ],
+  [
+   "gurke",
+   "Gurke"
+  ],
+  [
+   "karot",
+   "Karotte"
+  ],
+  [
+   "knobl",
+   "Knoblauch"
+  ],
+  [
+   "lauch",
+   "Lauch"
+  ],
+  [
+   "tomat",
+   "Tomate"
+  ],
+  [
+   "zucch",
+   "Zucchini"
+  ],
+  [
+   "zwieb",
+   "Zwiebel"
+  ],
+  [
+   "minze",
+   "Minze"
+  ],
+  [
+   "\\bapfel(?!saft|mus|essig)",
+   "Apfel"
+  ],
+  [
+   "apfel",
+   "Apfel"
+  ],
+  [
+   "banan",
+   "Banane"
+  ],
+  [
+   "birne",
+   "Birne"
+  ],
+  [
+   "mango",
+   "Mango"
+  ],
+  [
+   "brezn",
+   "Brezel"
+  ],
+  [
+   "toast",
+   "Toastbrot"
+  ],
+  [
+   "wraps",
+   "Wraps"
+  ],
+  [
+   "humus",
+   "Hummus"
+  ],
+  [
+   "hefew",
+   "Frische Hefe"
+  ],
+  [
+   "\\bmilch(?!reis)",
+   "Milch"
+  ],
+  [
+   "milch",
+   "Milch"
+  ],
+  [
+   "\\bsahne",
+   "Sahne"
+  ],
+  [
+   "sahne",
+   "Sahne"
+  ],
+  [
+   "quark",
+   "Quark"
+  ],
+  [
+   "mozza",
+   "Mozzarella"
+  ],
+  [
+   "grana",
+   "Parmesan"
+  ],
+  [
+   "pecor",
+   "Parmesan"
+  ],
+  [
+   "bergk",
+   "Hartkäse am Stück"
+  ],
+  [
+   "puten",
+   "Putenbrust"
+  ],
+  [
+   "steak",
+   "Steak"
+  ],
+  [
+   "bratw",
+   "Bratwurst"
+  ],
+  [
+   "speck",
+   "Speck"
+  ],
+  [
+   "bacon",
+   "Speck"
+  ],
+  [
+   "lachs(?!.*r(ä|ae)uch)",
+   "Lachs"
+  ],
+  [
+   "lachs",
+   "Lachs"
+  ],
+  [
+   "fisch",
+   "Fisch"
+  ],
+  [
+   "spagh",
+   "Nudeln"
+  ],
+  [
+   "penne",
+   "Nudeln"
+  ],
+  [
+   "nudel",
+   "Nudeln"
+  ],
+  [
+   "pasta",
+   "Nudeln"
+  ],
+  [
+   "rigat",
+   "Nudeln"
+  ],
+  [
+   "ramen",
+   "Mie-Nudeln"
+  ],
+  [
+   "panko",
+   "Paniermehl"
+  ],
+  [
+   "walnu",
+   "Walnüsse"
+  ],
+  [
+   "sesam(?!(ö|oe)l|mus)",
+   "Sesam"
+  ],
+  [
+   "sesam",
+   "Sesam"
+  ],
+  [
+   "polpa",
+   "Dosentomaten"
+  ],
+  [
+   "thunf",
+   "Thunfisch"
+  ],
+  [
+   "pesto",
+   "Pesto"
+  ],
+  [
+   "honig",
+   "Honig"
+  ],
+  [
+   "agave",
+   "Agavendicksaft"
+  ],
+  [
+   "tahin",
+   "Tahin"
+  ],
+  [
+   "essig",
+   "Essig"
+  ],
+  [
+   "shoyu",
+   "Sojasauce"
+  ],
+  [
+   "dijon",
+   "Senf"
+  ],
+  [
+   "fleur",
+   "Salz"
+  ],
+  [
+   "curry(?!past|ketch)",
+   "Currypulver"
+  ],
+  [
+   "curry",
+   "Currypulver"
+  ],
+  [
+   "cumin",
+   "Kreuzkümmel"
+  ],
+  [
+   "garam",
+   "Garam Masala"
+  ],
+  [
+   "kakao",
+   "Kakao"
+  ],
+  [
+   "chips",
+   "Chips"
+  ],
+  [
+   "kekse",
+   "Kekse"
+  ],
+  [
+   "spezi",
+   "Limonade"
+  ],
+  [
+   "pizza(?!teig|tom|k(ä|ae))",
+   "Tiefkühlpizza"
+  ],
+  [
+   "pizza",
+   "Tiefkühlpizza"
+  ],
+  [
+   "stiel",
+   "Eis"
+  ],
+  [
+   "zahnp",
+   "Zahnpasta"
+  ],
+  [
+   "seife",
+   "Duschgel"
+  ],
+  [
+   "choi",
+   "Pak Choi"
+  ],
+  [
+   "choy",
+   "Pak Choi"
+  ],
+  [
+   "spin",
+   "Spinat"
+  ],
+  [
+   "\\bdill\\b",
+   "Dill"
+  ],
+  [
+   "kiwi",
+   "Kiwi"
+  ],
+  [
+   "brot(?!chen)",
+   "Brot"
+  ],
+  [
+   "\\bbrot\\b",
+   "Brot"
+  ],
+  [
+   "tofu",
+   "Tofu"
+  ],
+  [
+   "miso",
+   "Miso"
+  ],
+  [
+   "\\brahm\\b",
+   "Sahne"
+  ],
+  [
+   "jogh",
+   "Joghurt"
+  ],
+  [
+   "skyr",
+   "Skyr"
+  ],
+  [
+   "\\bfeta",
+   "Feta"
+  ],
+  [
+   "\\bfeta\\b",
+   "Feta"
+  ],
+  [
+   "\\bbrie",
+   "Weichkäse"
+  ],
+  [
+   "\\bbrie\\b",
+   "Weichkäse"
+  ],
+  [
+   "\\beier",
+   "Ei"
+  ],
+  [
+   "\\beier\\b",
+   "Ei"
+  ],
+  [
+   "\\bhack\\b",
+   "Hackfleisch"
+  ],
+  [
+   "mett",
+   "Mett"
+  ],
+  [
+   "\\breis\\b",
+   "Reis"
+  ],
+  [
+   "udon",
+   "Mie-Nudeln"
+  ],
+  [
+   "chia",
+   "Chiasamen"
+  ],
+  [
+   "\\bmais\\b",
+   "Mais"
+  ],
+  [
+   "\\bsenf",
+   "Senf"
+  ],
+  [
+   "\\bsenf\\b",
+   "Senf"
+  ],
+  [
+   "mayo",
+   "Mayonnaise"
+  ],
+  [
+   "\\bsalz(?!stang|brez)",
+   "Salz"
+  ],
+  [
+   "\\bsalz\\b",
+   "Salz"
+  ],
+  [
+   "zimt",
+   "Zimt"
+  ],
+  [
+   "\\bmehl",
+   "Mehl"
+  ],
+  [
+   "\\bmehl\\b",
+   "Mehl"
+  ],
+  [
+   "keks",
+   "Kekse"
+  ],
+  [
+   "nuss",
+   "Nussmischung"
+  ],
+  [
+   "saft",
+   "Saft"
+  ],
+  [
+   "\\bsaft\\b",
+   "Saft"
+  ],
+  [
+   "\\blimo",
+   "Limonade"
+  ],
+  [
+   "cola",
+   "Limonade"
+  ],
+  [
+   "\\blimo\\b",
+   "Limonade"
+  ],
+  [
+   "\\bbier",
+   "Bier"
+  ],
+  [
+   "\\bpils",
+   "Bier"
+  ],
+  [
+   "\\bbier\\b",
+   "Bier"
+  ],
+  [
+   "pils",
+   "Bier"
+  ],
+  [
+   "\\bwein",
+   "Wein"
+  ],
+  [
+   "\\bsekt",
+   "Wein"
+  ],
+  [
+   "\\bwein\\b",
+   "Wein"
+  ],
+  [
+   "sekt",
+   "Wein"
+  ],
+  [
+   "tabs",
+   "Spülmittel"
+  ],
+  [
+   "\\bros\\b",
+   "Wein"
+  ],
+  [
+   "\\btee\\b",
+   "Tee"
+  ],
+  [
+   "\\beis\\b",
+   "Eis"
+  ]
+ ]
+}

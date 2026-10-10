@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speckzettel Tests</title>
+<style>
+  :root{--bg:#f6f1ee;--ink:#2a1d1a;--ok:#2a7a4c;--bad:#a83d33}
+  @media (prefers-color-scheme: dark){:root{--bg:#181211;--ink:#f0e7e3;--ok:#7ccc98;--bad:#ee8b80}}
+  body{margin:0;padding:24px 16px;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,sans-serif}
+  li{margin:4px 0} .ok{color:var(--ok)} .bad{color:var(--bad)} pre{white-space:pre-wrap;margin:2px 0 0 1.2em;font-size:.85rem}
+</style>
+</head>
+<body>
+<h1>Speckzettel Tests</h1>
+<p id="sum">Läuft …</p>
+<ul id="out"></ul>
+<script type="module">
+  import {runAll} from './tests.js';
+  const catalog = await (await fetch('../data/catalog.json')).json();
+  const results = await runAll(catalog);
+  const esc = s => s.replace(/[&<>]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;'}[c]));
+  document.getElementById('out').innerHTML = results.map(r => `<li class="${r.ok ? 'ok' : 'bad'}">${r.ok ? '✓' : '✗'} ${esc(r.name)}${r.ok ? '' : `<pre>${esc(r.error)}</pre>`}</li>`).join('');
+  const failed = results.filter(r => !r.ok).length;
+  document.getElementById('sum').textContent = `${results.length - failed} von ${results.length} Tests bestanden`;
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Speckzettel</title>
+<meta name="description" content="Vorrat, Einkaufszettel und Rezepte in einer App – gefüttert mit deinen Kassenbons.">
+<meta name="theme-color" content="#B8473A">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Speckzettel">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<nav class="tabs" aria-label="Bereiche"><div class="in" id="nav"></div></nav>
+<div id="sheet"></div>
+<div class="toast" id="toast" role="status" hidden></div>
+<div class="update" id="update" role="status" hidden><span>Neue Version da</span><button class="btn small primary" data-act="update">Neu laden</button></div>
+<script>
+/* Modules do not load from a double-clicked file; say so instead of showing a blank page. */
+if (location.protocol === 'file:') document.getElementById('app').innerHTML =
+  '<div class="panel" style="margin-top:24px"><h2>Bitte über eine Webadresse öffnen</h2><p>Speckzettel läuft nicht per Doppelklick auf die Datei. Zum Testen im Ordner <code>python -m http.server 8000</code> starten und <code>http://localhost:8000</code> öffnen (siehe README.md).</p></div>';
+</script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
