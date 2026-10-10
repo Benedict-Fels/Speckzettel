@@ -10,7 +10,7 @@ const opt = (name, amount, unit, variety = null) => ing(name, amount, unit, vari
 const STARTERS = [
   {id: 'r1', title: 'Spaghetti mit Tomatensauce und Spinat', summary: 'Der Klassiker, der den Spinat rettet.', servings: 2, prepTime: 5, cookTime: 15, icon: 'pasta', ingredients: [
     ing('Nudeln', 250, 'g'), ing('Dosentomaten', 1, 'Dose'), ing('Zwiebel', 1, 'Stück'),
-    ing('Knoblauch', 2, 'Zehe'), ing('Spinat', 100, 'g'), ing('Olivenöl', 2, 'EL'), ing('Salz', null, null), opt('Basilikum', .5, 'Bund')],
+    ing('Knoblauch', 2, 'Zehe'), ing('Spinat', 100, 'g'), ing('Öl', 2, 'EL', 'Oliven'), ing('Salz', null, null), opt('Basilikum', .5, 'Bund')],
     steps: ['Nudeln ins Salzwasser.', 'Zwiebel und Knoblauch klein schnippeln, in Öl glasig dünsten.', 'Tomaten dazu, 10 Minuten blubbern lassen.', 'Spinat unterheben, bis er zusammenfällt, abschmecken, fertig.']},
   {id: 'r2', title: 'Rotes Linsen-Dal', summary: 'Cremig, mild scharf, in einer halben Stunde.', servings: 2, prepTime: 10, cookTime: 20, icon: 'curry', ingredients: [
     ing('Linsen', 200, 'g', 'rot'), ing('Kokosmilch', 1, 'Dose'), ing('Dosentomaten', 1, 'Dose'),
@@ -38,15 +38,15 @@ const STARTERS = [
     steps: ['Nudeln kochen, in den letzten 3 Minuten Brokkoli dazu.', 'Erdnussmus, Sojasauce, Knoblauch, Ingwer und etwas Nudelwasser verrühren.', 'Karotte raspeln.', 'Alles mischen, mit Frühlingszwiebel und Sesam drüber.']},
   {id: 'start-ofengemuese', title: 'Ofengemüse mit Hummus', summary: 'Blech rein, fertig.', servings: 2, prepTime: 15, cookTime: 30, icon: 'oven', ingredients: [
     ing('Süßkartoffel', 1, 'Stück'), ing('Paprika', 1, 'Stück'), ing('Zucchini', 1, 'Stück'), ing('Zwiebel', 1, 'Stück'),
-    ing('Kichererbsen', 1, 'Dose'), ing('Olivenöl', 3, 'EL'), ing('Paprikapulver', 1, 'TL'), ing('Hummus', null, null), opt('Petersilie', .5, 'Bund')],
+    ing('Kichererbsen', 1, 'Dose'), ing('Öl', 3, 'EL', 'Oliven'), ing('Paprikapulver', 1, 'TL'), ing('Hummus', null, null), opt('Petersilie', .5, 'Bund')],
     steps: ['Ofen auf 200 °C vorheizen.', 'Gemüse in grobe Stücke schneiden, Kichererbsen abtropfen.', 'Alles mit Öl, Paprika und Salz aufs Blech, 30 Minuten rösten.', 'Mit Hummus und Petersilie servieren.']},
   {id: 'start-kartoffel-lauch-suppe', title: 'Kartoffel-Lauch-Suppe', summary: 'Wärmt, kostet fast nichts.', servings: 4, prepTime: 10, cookTime: 25, icon: 'soup', ingredients: [
     ing('Kartoffel', 600, 'g'), ing('Lauch', 2, 'Stück'), ing('Zwiebel', 1, 'Stück'), ing('Gemüsebrühe', 1, 'EL'),
-    ing('Rapsöl', 1, 'EL'), opt('Pflanzensahne', 100, 'ml'), opt('Schnittlauch', .5, 'Bund')],
+    ing('Öl', 1, 'EL'), opt('Pflanzensahne', 100, 'ml'), opt('Schnittlauch', .5, 'Bund')],
     steps: ['Zwiebel und Lauch schneiden, in Öl andünsten.', 'Kartoffeln würfeln, mit 1 Liter Wasser und Brühe dazu, 20 Minuten kochen.', 'Pürieren, nach Lust Sahne rein, abschmecken.', 'Schnittlauch drüber.']},
   {id: 'start-couscous-salat', title: 'Couscous-Salat mit Kichererbsen', summary: 'Hält sich zwei Tage, gut fürs Büro.', servings: 2, prepTime: 15, cookTime: 5, icon: 'salad', ingredients: [
     ing('Couscous', 150, 'g'), ing('Kichererbsen', 1, 'Dose'), ing('Gurke', 1, 'Stück'), ing('Tomate', 2, 'Stück'),
-    ing('Zitrone', 1, 'Stück'), ing('Olivenöl', 3, 'EL'), opt('Minze', .5, 'Bund'), opt('Granatapfel', .5, 'Stück')],
+    ing('Zitrone', 1, 'Stück'), ing('Öl', 3, 'EL', 'Oliven'), opt('Minze', .5, 'Bund'), opt('Granatapfel', .5, 'Stück')],
     steps: ['Couscous mit kochendem Wasser übergießen, 5 Minuten quellen lassen.', 'Gurke und Tomaten würfeln, Kichererbsen abspülen.', 'Mit Zitronensaft, Öl, Salz mischen, Minze und Granatapfel drüber.']},
   {id: 'start-overnight-oats', title: 'Overnight Oats', summary: 'Abends 3 Minuten, morgens fertig.', servings: 1, prepTime: 5, cookTime: 0, restTime: 480, icon: 'breakfast', ingredients: [
     ing('Haferflocken', 50, 'g'), ing('Pflanzendrink', 150, 'ml'), ing('Banane', 1, 'Stück'),
@@ -59,8 +59,8 @@ const STARTERS = [
     ing('Knoblauch', 2, 'Zehe'), ing('Kreuzkümmel', 1, 'TL'), ing('Paprikapulver', 1, 'TL'), opt('Feta', 100, 'g'), opt('Brot', 1, 'Stück')],
     steps: ['Zwiebel, Paprika, Knoblauch in Öl weich braten, Gewürze kurz mit.', 'Tomaten rein, 10 Minuten einkochen.', 'Mulden machen, Eier reinschlagen, Deckel drauf, 6–8 Minuten stocken lassen.', 'Feta drüberbröseln, mit Brot essen.']},
   {id: 'start-ofen-feta-pasta', title: 'Ofen-Feta-Pasta', summary: 'Der Internet-Klassiker, zu Recht.', servings: 2, prepTime: 5, cookTime: 30, icon: 'pasta', ingredients: [
-    ing('Feta', 200, 'g'), ing('Tomate', 400, 'g', 'Kirsch'), ing('Nudeln', 250, 'g'), ing('Knoblauch', 2, 'Zehe'),
-    ing('Olivenöl', 3, 'EL'), opt('Basilikum', .5, 'Bund'), opt('Chiliflocken', 1, 'Prise')],
+    ing('Feta', 200, 'g'), ing('Tomate', 400, 'g', 'Cherry'), ing('Nudeln', 250, 'g'), ing('Knoblauch', 2, 'Zehe'),
+    ing('Öl', 3, 'EL', 'Oliven'), opt('Basilikum', .5, 'Bund'), opt('Chiliflocken', 1, 'Prise')],
     steps: ['Ofen auf 200 °C.', 'Tomaten und Knoblauch in eine Form, Feta in die Mitte, Öl drüber, 30 Minuten backen.', 'Nebenbei Nudeln kochen.', 'Alles zerdrücken, Nudeln unterheben, Basilikum drauf.']},
   {id: 'start-kartoffel-frittata', title: 'Kartoffel-Frittata', summary: 'Resteverwertung mit Ei.', servings: 2, prepTime: 10, cookTime: 20, icon: 'egg', ingredients: [
     ing('Ei', 5, 'Stück'), ing('Kartoffel', 400, 'g'), ing('Zwiebel', 1, 'Stück'), ing('Paprika', 1, 'Stück'),
@@ -72,11 +72,11 @@ const STARTERS = [
     steps: ['Mehl, Milch, Eier und eine Prise Salz glatt rühren, 10 Minuten stehen lassen.', 'Butter in der Pfanne heiß werden lassen, dünn Teig rein, von beiden Seiten goldig backen.', 'Mit Zucker oder Apfelmus essen.']},
   {id: 'start-gnocchi-tomate-mozzarella', title: 'Gnocchi mit Tomaten und Mozzarella', summary: 'Aus der Pfanne, überbacken.', servings: 2, prepTime: 5, cookTime: 15, icon: 'oven', ingredients: [
     ing('Gnocchi', 500, 'g'), ing('Passata', 400, 'ml'), ing('Mozzarella', 125, 'g'), ing('Knoblauch', 1, 'Zehe'),
-    ing('Olivenöl', 1, 'EL'), opt('Basilikum', .5, 'Bund')],
+    ing('Öl', 1, 'EL', 'Oliven'), opt('Basilikum', .5, 'Bund')],
     steps: ['Gnocchi in Öl goldbraun braten.', 'Knoblauch und Passata dazu, 5 Minuten köcheln.', 'Mozzarella zerzupft drauf, Deckel drauf, schmelzen lassen.', 'Basilikum drüber.']},
   {id: 'start-halloumi-bulgur', title: 'Halloumi mit Bulgur und Gemüse', summary: 'Salzig, knusprig, satt.', servings: 2, prepTime: 10, cookTime: 15, icon: 'bowl', ingredients: [
     ing('Halloumi', 225, 'g'), ing('Bulgur', 150, 'g'), ing('Zucchini', 1, 'Stück'), ing('Tomate', 2, 'Stück'),
-    ing('Zitrone', .5, 'Stück'), ing('Olivenöl', 2, 'EL'), opt('Joghurt', 150, 'g'), opt('Minze', .5, 'Bund')],
+    ing('Zitrone', .5, 'Stück'), ing('Öl', 2, 'EL', 'Oliven'), opt('Joghurt', 150, 'g'), opt('Minze', .5, 'Bund')],
     steps: ['Bulgur mit doppelter Menge Wasser 10 Minuten quellen lassen.', 'Zucchini in Scheiben anbraten, Tomaten würfeln.', 'Halloumi in Scheiben von beiden Seiten knusprig braten.', 'Alles mit Zitrone und Öl anrichten, Joghurt dazu.']},
   {id: 'start-kartoffelgratin', title: 'Kartoffelgratin', summary: 'Sonntag. Ofen. Käse.', servings: 4, prepTime: 20, cookTime: 50, icon: 'oven', ingredients: [
     ing('Kartoffel', 1000, 'g'), ing('Sahne', 200, 'ml'), ing('Milch', 200, 'ml'), ing('Reibekäse', 100, 'g'),
@@ -90,7 +90,7 @@ const STARTERS = [
   /* ---- alles ---- */
   {id: 'start-bolognese', title: 'Spaghetti Bolognese', summary: 'Je länger sie köchelt, desto besser.', servings: 4, prepTime: 15, cookTime: 45, icon: 'pasta', ingredients: [
     ing('Hackfleisch', 400, 'g'), ing('Nudeln', 400, 'g'), ing('Passata', 500, 'ml'), ing('Zwiebel', 1, 'Stück'),
-    ing('Karotte', 1, 'Stück'), ing('Knoblauch', 2, 'Zehe'), ing('Tomatenmark', 2, 'EL'), ing('Olivenöl', 1, 'EL'), opt('Parmesan', 40, 'g')],
+    ing('Karotte', 1, 'Stück'), ing('Knoblauch', 2, 'Zehe'), ing('Tomatenmark', 2, 'EL'), ing('Öl', 1, 'EL', 'Oliven'), opt('Parmesan', 40, 'g')],
     steps: ['Zwiebel, Karotte und Knoblauch fein würfeln, in Öl anschwitzen.', 'Hack dazu und krümelig braten, Tomatenmark kurz mitrösten.', 'Passata rein, 40 Minuten leise köcheln.', 'Nudeln kochen, mit Parmesan servieren.']},
   {id: 'start-haehnchen-curry', title: 'Hähnchen-Curry', summary: 'Mild, cremig, mit Reis.', servings: 2, prepTime: 10, cookTime: 20, icon: 'curry', ingredients: [
     ing('Hähnchenbrust', 300, 'g'), ing('Kokosmilch', 1, 'Dose'), ing('Currypaste', 1, 'EL'), ing('Paprika', 1, 'Stück'),
@@ -98,7 +98,7 @@ const STARTERS = [
     steps: ['Reis aufsetzen.', 'Hähnchen in Stücken scharf anbraten, rausnehmen.', 'Zwiebel und Paprika mit Currypaste anbraten, Kokosmilch rein.', 'Hähnchen zurück, 10 Minuten köcheln, mit Limette und Koriander.']},
   {id: 'start-ofenlachs', title: 'Ofenlachs mit Kartoffeln und Brokkoli', summary: 'Ein Blech, eine halbe Stunde.', servings: 2, prepTime: 10, cookTime: 30, icon: 'oven', ingredients: [
     ing('Lachs', 250, 'g'), ing('Kartoffel', 500, 'g'), ing('Brokkoli', 1, 'Stück'), ing('Zitrone', 1, 'Stück'),
-    ing('Olivenöl', 2, 'EL'), opt('Dill', .5, 'Bund')],
+    ing('Öl', 2, 'EL', 'Oliven'), opt('Dill', .5, 'Bund')],
     steps: ['Ofen auf 200 °C. Kartoffeln vierteln, mit Öl und Salz 15 Minuten aufs Blech.', 'Brokkoli-Röschen und Lachs dazu, Zitronenscheiben drauf.', 'Weitere 15 Minuten backen, mit Dill bestreuen.']},
   {id: 'start-chili-con-carne', title: 'Chili con Carne', summary: 'Großer Topf, zwei Tage glücklich.', servings: 4, prepTime: 15, cookTime: 40, icon: 'taco', ingredients: [
     ing('Hackfleisch', 500, 'g'), ing('Kidneybohnen', 2, 'Dose'), ing('Mais', 1, 'Dose'), ing('Dosentomaten', 2, 'Dose'),
@@ -118,7 +118,7 @@ const STARTERS = [
     steps: ['Hähnchen in Streifen mit Paprika und Salz anbraten.', 'Joghurt mit Salz und etwas Knoblauch verrühren.', 'Wraps kurz in der Pfanne warm machen.', 'Füllen, rollen, essen.']},
   {id: 'start-thunfisch-pasta', title: 'Thunfisch-Pasta', summary: 'Wenn nur noch Dosen da sind.', servings: 2, prepTime: 5, cookTime: 15, icon: 'pasta', ingredients: [
     ing('Nudeln', 250, 'g'), ing('Thunfisch', 1, 'Dose'), ing('Dosentomaten', 1, 'Dose'), ing('Zwiebel', 1, 'Stück'),
-    ing('Knoblauch', 1, 'Zehe'), ing('Olivenöl', 1, 'EL'), opt('Kapern', 1, 'EL'), opt('Petersilie', .5, 'Bund')],
+    ing('Knoblauch', 1, 'Zehe'), ing('Öl', 1, 'EL', 'Oliven'), opt('Kapern', 1, 'EL'), opt('Petersilie', .5, 'Bund')],
     steps: ['Nudeln kochen.', 'Zwiebel und Knoblauch in Öl anschwitzen, Tomaten dazu, 10 Minuten köcheln.', 'Thunfisch und Kapern unterrühren, warm werden lassen.', 'Mit Nudeln und Petersilie mischen.']},
 ];
 

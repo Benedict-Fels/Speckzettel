@@ -118,6 +118,8 @@ export function shouldSkip(name, opts = {}) {
 
 /* Amount for a receipt line: pack size from the text ("1KG") in the ingredient's unit; whole pieces are rounded ("1 kg Zwiebeln" -> 7 Stück). */
 export function receiptAmount(sz, qty, unit, c) {
+  /* loose produce sold by the piece ("3 x 0,49 Tomaten"): pieces × average weight; one line without size: the usual pack */
+  if (!sz && c && c.loose && qty > 1 && c.per && c.per['Stück']) return +(qty * c.per['Stück']).toFixed(1);
   if (!sz) return c && c.pack && !COUNT_UNITS.includes(unit) ? qty * c.pack : qty;   /* no size printed: usual pack */
   if (CONTAINERS.includes(unit)) return qty;   /* "Kichererbsen 400 g" is one can, whatever it weighs */
   const v = convert(sz[0] * qty, sz[1], unit, c);

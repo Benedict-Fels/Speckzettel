@@ -5,17 +5,18 @@ import {now} from './clock.js';
 import {uid} from './text.js';
 import {fmt} from './units.js';
 import {AREAS} from './areas.js';
-import {catalogFor, setOverrides, key, resolve} from './catalog.js';
+import {catalogFor, setOverrides, key, resolve, pieceWeight, varietiesOf} from './catalog.js';
 import {seed, emptyState} from './seed.js';
 import {COUNT_UNITS} from './units.js';
 import {backupJson, parseBackup} from './store.js';
 import {addItem, removeItem, itemLabel, packStatus, setArea, confirmStillThere, markSeen} from './pantry.js';
 import {recipeCheck, planCook, applyCook, shoppingCandidates} from './recipes.js';
-import {newDraft, draftFromRecipe, draftFromParsed, recipeFromDraft, restoreStarter, lineInfo, rawSuggested, suggestRawAll} from './recipe-edit.js';
+import {newDraft, draftFromRecipe, draftFromParsed, recipeFromDraft, restoreStarter, lineInfo, rawSuggested, suggestRawAll, line, lineFromText, lineToIngredient} from './recipe-edit.js';
 import {refreshDraftBits} from './views/cooking-view.js';
+import {shopSuggestions} from './views/shopping-view.js';
 import {addNewStarters} from './starter-recipes.js';
 import {parseIngredientLine, parseRecipeText, splitEntries} from './recipe-text.js';
-import {addToShopping, shopName, setDone, stockPlan, applyStockPlan, shoppingText, settleWithReceipt} from './shopping.js';
+import {addToShopping, stepShopping, shopName, setDone, stockPlan, applyStockPlan, shoppingText, settleWithReceipt, stockNote} from './shopping.js';
 import {parseReceipt, aliasKey, receiptAmount} from './receipt/pipeline.js';
 import {pdfToText} from './receipt/pdf.js';
 import {receiptRecord, findDuplicate, receiptsExport} from './receipt/history.js';
@@ -73,6 +74,8 @@ function setOverride(ingredient, patch) {
 function addEntry(p, raw) {
   const c = catalogFor(p.name);
   const explicitUnit = /\b(st(ü|ue)ck|stk)\b/i.test(raw);
+  /* loose produce: "2 Tomaten" are two tomatoes by weight, not two 500-g packs (11.10.2026) */
+  if (c && c.loose && p.amount != null && p.unit === 'Stück' && c.per && c.per['Stück']) return [addItem(app.state, {name: p.name, variety: p.variety, amount: +(p.amount * c.per['Stück']).toFixed(1), unit: c.unit})];
   if (c && c.pack && p.unit === 'Stück' && c.unit !== 'Stück' && !explicitUnit) {
     const packs = [];
     for (let n = 0; n < Math.max(1, Math.round(p.amount)); n++) packs.push(addItem(app.state, {name: p.name, amount: c.pack, unit: c.unit}));
@@ -202,7 +205,7 @@ function onClick(e) {
     case 'closeSheet': ui.sheet = null; return render();
     case 'toggleSheetMore': e.preventDefault(); ui.sheetMore = !ui.sheetMore; return render();
     case 'packStep': {
-      const i = item(v); const step = (i.unit === 'g' || i.unit === 'ml') ? (i.amount > 100 || +b.dataset.d > 0 ? 50 : 10) : 1;
+      const i = item(v); const loose = (catalogFor(i.ingredient) || {}).loose; const step = (i.unit === 'g' || i.unit === 'ml') ? (loose || i.amount > 100 || +b.dataset.d > 0 ? 50 : 10) : 1;
       const next = +Math.max(0, i.amount + step * +b.dataset.d).toFixed(2);
       if (next <= 0) return withUndo(() => removeItem(state, i), `${itemLabel(i)}: Packung entfernt`);
       i.amount = next; markSeen(i); return commit();
@@ -243,6 +246,7 @@ function onClick(e) {
     }
 
     /* settings */
+    case 'setTheme': state.settings.theme = v; return commit();
     case 'dismissInstallHint': state.settings.installHintDismissed = true; return commit();
     case 'resetOverride': { delete state.catalogOverrides[v]; setOverrides(state.catalogOverrides); return commit(`${v}: zurückgesetzt`); }
     case 'forgetAliases':
@@ -287,7 +291,12 @@ function onClick(e) {
       const chosen = ui.shopPick.items.filter(c => c.checked);
       ui.shopPick = null;
       const rid = ui.recipeId;
-      return withUndo(() => chosen.forEach(c => addToShopping(state, c.name, c.amount, c.unit, {recipe: rid})), `${chosen.length} ${chosen.length === 1 ? 'Zutat' : 'Zutaten'} auf dem Einkaufszettel`);
+      return withUndo(() => chosen.forEach(c => addToShopping(state, c.name, c.amount, c.unit, {recipe: rid}, c.variety)), `${chosen.length} ${chosen.length === 1 ? 'Zutat' : 'Zutaten'} auf dem Einkaufszettel`);
+    }
+    case 'swapAccept': case 'swapUndo': {
+      const r = currentRecipe(), ing = r.ingredients[+v]; if (!ing) return;
+      ing.swapOk = a === 'swapAccept';
+      return commit(ing.swapOk ? `${ing.name}: andere Sorte ist für dieses Rezept ok` : `${ing.name}: nur noch ${ing.variety || 'ohne Sorte'}`);
     }
     case 'quickHave': {
       const x = recipeCheck(state.items, currentRecipe(), ui.persons)[+v];
@@ -325,8 +334,15 @@ function onClick(e) {
       return toast(`${ui.draft.lines.length - 1} Zutaten und ${ui.draft.steps.filter(Boolean).length} Schritte gefunden. Bitte prüfen.`);
     }
     case 'pickIcon': ui.draft.icon = v; return render();
-    case 'lineAdd': ui.draft.lines.push({text: '', optional: false, raw: false, rawTouched: false}); render(); return focusField(`ing-line-${ui.draft.lines.length - 1}`);
-    case 'lineRemove': { const d = ui.draft; d.lines.splice(+v, 1); if (!d.lines.length) d.lines.push({text: '', optional: false, raw: false, rawTouched: false}); return render(); }
+    case 'lineAdd': ui.draft.lines.push(line()); render(); return focusField(`ing-name-${ui.draft.lines.length - 1}`);
+    case 'lineRemove': { const d = ui.draft; d.lines.splice(+v, 1); if (!d.lines.length) d.lines.push(line()); return render(); }
+    case 'lineSuggest': {
+      const d = ui.draft, n = +v, l = d.lines[n]; if (!l) return;
+      l.name = b.dataset.name; l.variety = b.dataset.variety || '';
+      defaultUnit(l); afterLineChange(d, l);
+      ui.lineFocus = null; render();
+      return focusField(l.amount === '' ? `ing-amount-${n}` : `ing-name-${n}`);
+    }
     case 'stepAdd': ui.draft.steps.push(''); render(); return focusField(`step-${ui.draft.steps.length - 1}`);
     case 'stepRemove': { const d = ui.draft; d.steps.splice(+v, 1); if (!d.steps.length) d.steps.push(''); return render(); }
     case 'stepMove': {
@@ -338,6 +354,25 @@ function onClick(e) {
     case 'shoppingDelete': { e.preventDefault(); const s = state.shopping.find(x => x.id === v); return withUndo(() => { state.shopping = state.shopping.filter(x => x !== s); }, `${shopName(s)} vom Zettel genommen`); }
     case 'shoppingClear': return withUndo(() => { state.shopping = state.shopping.filter(s => !s.done); }, 'Erledigte gelöscht');
     case 'toggleShopDone': ui.showShopDone = !ui.showShopDone; return render();
+    case 'shopSuggest': {
+      const c = catalogFor(v);
+      const typed = parseIngredientLine((ui.shopQuery || '').split(/,\s*|;/).pop());
+      let amount = typed && typed.amount != null ? typed.amount : (c && c.tracking === 'exact' && c.pack ? c.pack : null);
+      let unit = typed && typed.amount != null ? typed.unit : (amount != null ? c.unit : null);
+      const piece = !(typed && typed.amount != null) && amount != null ? pieceWeight(v, b.dataset.variety || null) : null;
+      if (piece) { amount = Math.min(6, Math.max(1, Math.round(amount / piece))); unit = 'Stück'; }   /* loose: a few pieces, not the 2-kg bag */
+      const added = [];
+      const entry = withUndo(() => {
+        for (const part of splitEntries(ui.shopQuery || '').slice(0, -1)) { const p = parseIngredientLine(part); if (p) added.push(addToShopping(state, p.name, p.amount, p.unit, null, p.variety)); }
+        const e = addToShopping(state, v, amount, unit, null, b.dataset.variety || null);
+        added.push(e); return e;
+      }, () => stockToast(added));
+      ui.shopQuery = ''; ui.shopEdit = entry.id; render();
+      return focusField('shopping-input');
+    }
+    case 'shopEdit': ui.shopEdit = ui.shopEdit === v ? null : v; return render();
+    case 'shopStep': { const s = state.shopping.find(x => x.id === v); if (!s) return; stepShopping(s, +b.dataset.d); return commit(); }
+    case 'stockSize': { const r = ui.sheet.plan.rows[+v]; r.size = +b.dataset.s; return render(); }
     case 'shoppingCopy': return copyText(shoppingText(state.shopping), 'Einkaufszettel kopiert');
     case 'shoppingShare': {
       const text = shoppingText(state.shopping);
@@ -349,7 +384,7 @@ function onClick(e) {
     case 'stockStep': {
       const r = ui.sheet.plan.rows[+v], d = +b.dataset.d;
       if (r.kind === 'packs') r.count = Math.max(0, r.count + d);
-      else { const fine = r.unit === 'g' || r.unit === 'ml'; r.amount = Math.max(0, +(r.amount + d * (fine ? (r.amount > 100 || (r.amount === 100 && d > 0) ? 50 : 10) : 1)).toFixed(2)); }
+      else { const fine = r.unit === 'g' || r.unit === 'ml'; r.amount = Math.max(0, +(r.amount + d * (fine ? 50 : 1)).toFixed(2)); }
       r.take = (r.kind === 'packs' ? r.count : r.amount) > 0;
       return render();
     }
@@ -404,6 +439,11 @@ function onChange(e) {
     if (f === 'opened') { i.openedAt = t.checked ? now() : null; return commit(); }
     if (f === 'bestBefore') { i.bestBefore = t.value ? new Date(t.value + 'T12:00').getTime() : null; i.confirmedAt = null; return commit(t.value ? 'MHD eingetragen' : 'MHD entfernt'); }
   }
+  if (t.dataset.lf === 'name' && ui.draft) {   /* left the name field: a known ingredient gets its usual unit */
+    const n = +t.dataset.line, l = ui.draft.lines[n]; if (!l) return;
+    if (defaultUnit(l)) { const sel = document.getElementById(`ing-unit-${n}`); if (sel) sel.value = l.unit; }
+    return;
+  }
   if (t.dataset.lineFlag && ui.draft) {
     const l = ui.draft.lines[+t.dataset.v]; if (!l) return;
     l[t.dataset.lineFlag] = t.checked;
@@ -451,6 +491,7 @@ function onInput(e) {
   const t = e.target, {ui} = app;
   if (t.id === 'pantry-search') { ui.search = t.value; return render(); }
   if (t.id === 'recipe-search') { ui.recipeSearch = t.value; return render(); }
+  if (t.id === 'shopping-input') { ui.shopQuery = t.value; const box = document.getElementById('shop-suggest'); if (box) box.innerHTML = shopSuggestions(t.value); return; }
   if (t.dataset.pasteText != null) { ui.pasteText = t.value; return; }
   const d = ui.draft;
   if (!d) return;
@@ -459,34 +500,68 @@ function onInput(e) {
     if (t.dataset.draft === 'title') { suggestRawAll(d); refreshDraftBits(); }
     return;
   }
-  if (t.dataset.line != null) {
+  if (t.dataset.line != null && t.dataset.lf) {
     const l = d.lines[+t.dataset.line]; if (!l) return;
-    l.text = t.value;
-    const info = lineInfo(l.text);
-    if (info && info.optional) l.optional = true;
-    if (!l.rawTouched) l.raw = !!(info && rawSuggested(d.title, info.name));
+    l[t.dataset.lf] = t.value;
+    if (t.dataset.lf === 'name') { ui.lineFocus = +t.dataset.line; l.variety = keepVariety(l); }
+    afterLineChange(d, l);
     return refreshDraftBits();
   }
   if (t.dataset.step != null) { d.steps[+t.dataset.step] = t.value; }
 }
 
-/* Recipe form: Enter in an ingredient line opens the next one; pasting several lines fills several rows. */
-const blankLine = text => ({text, optional: false, raw: false, rawTouched: false});
+/* Typed onto the list by hand: is it still at home? (11.10.2026) The note also stays on the row. */
+function stockToast(entries) {
+  const hits = [...new Set(entries.filter(e => e && e.ingredient).map(e => e.ingredient))]
+    .map(n => [n, stockNote(app.state.items, n)]).filter(([, t]) => t);
+  if (!hits.length) return undefined;
+  return hits.length === 1 ? `${hits[0][0]} ist noch da: ${hits[0][1]}` : `Noch da – ${hits.map(([n, t]) => `${n}: ${t}`).join("; ")}`;
+}
+
+/* ---- recipe form, ingredient rows ---- */
+function afterLineChange(d, l) {
+  const info = lineInfo(l);
+  if (info && info.optional) l.optional = true;
+  if (!l.rawTouched) l.raw = !!(info && rawSuggested(d.title, info.name));
+}
+/* A variety chosen for another ingredient does not carry over when the name changes to something else. */
+function keepVariety(l) {
+  if (!l.variety) return '';
+  const info = lineInfo({...l, variety: ''});
+  return info && !info.known ? l.variety : info && varietiesOf(info.name).some(v => v.toLowerCase() === l.variety.toLowerCase()) ? l.variety : '';
+}
+/* Usual unit of a known ingredient when none is chosen yet: loose produce in pieces, the rest in its pack unit. */
+function defaultUnit(l) {
+  if (l.unit) return false;
+  const info = lineToIngredient(l);
+  if (!info || info.unit) return false;
+  const c = catalogFor(info.name);
+  if (!c || !c.unit) return false;
+  l.unit = pieceWeight(c.name, l.variety || null) ? 'Stück' : c.unit;
+  return true;
+}
+/* Lines typed or pasted as text ("200 g Tomaten") become rows: before the trailing empty row, or from row n on. */
+function insertTextLines(d, parts, at) {
+  const rows = parts.map(lineFromText).filter(Boolean);
+  if (!rows.length) return 0;
+  if (at == null) { at = d.lines.length; while (at > 0 && !String(d.lines[at - 1].name).trim()) at--; }
+  else if (!String(d.lines[at].name).trim()) d.lines.splice(at, 1);
+  d.lines.splice(at, 0, ...rows);
+  if (!d.lines.length || String(d.lines.at(-1).name).trim()) d.lines.push(line());
+  suggestRawAll(d);
+  return rows.length;
+}
 function onPaste(e) {
   const t = e.target, d = app.ui.draft;
-  if (!d || t.dataset.line == null) return;
+  if (!d || !(t.dataset.ingQuick != null || t.dataset.lf === 'name')) return;
   const text = (e.clipboardData || window.clipboardData).getData('text');
   const parts = text.split(/\r?\n/).map(x => x.trim()).filter(Boolean);
   if (parts.length < 2) return;
   e.preventDefault();
-  const n = +t.dataset.line;
-  const before = t.value.slice(0, t.selectionStart) + parts[0] + t.value.slice(t.selectionEnd);
-  d.lines[n].text = before;
-  d.lines.splice(n + 1, 0, ...parts.slice(1).map(blankLine));
-  for (const l of d.lines) { const info = lineInfo(l.text); if (info && info.optional) l.optional = true; }
-  suggestRawAll(d);
+  const n = insertTextLines(d, parts, t.dataset.ingQuick != null ? null : +t.dataset.line);
   render();
-  focusField(`ing-line-${n + parts.length - 1}`);
+  if (t.dataset.ingQuick != null) focusField('ing-quick');
+  toast(`${n} Zutaten übernommen`);
 }
 
 /* ---- forms ---- */
@@ -497,13 +572,14 @@ function onSubmit(e) {
   if (f === 'add') return submitAdd();
   if (f === 'shopping') {
     const v = $('#shopping-input').value.trim(); if (!v) return;
-    for (const part of splitEntries(v)) { const p = parseIngredientLine(part); if (p) addToShopping(state, p.name, p.amount, p.unit); }
-    return commit();
+    ui.shopQuery = '';
+    const added = [];
+    return withUndo(() => { for (const part of splitEntries(v)) { const p = parseIngredientLine(part); if (p) added.push(addToShopping(state, p.name, p.amount, p.unit, null, p.variety)); } }, () => stockToast(added));
   }
   if (f === 'recipe') {
     const d = ui.draft; if (!d) return;
     if (!(d.title || '').trim()) { toast('Bitte einen Namen eintragen'); return focusField('recipe-title'); }
-    if (!d.lines.some(l => lineInfo(l.text))) { toast('Mindestens eine Zutat eintragen'); return focusField('ing-line-0'); }
+    if (!d.lines.some(l => lineToIngredient(l))) { toast('Mindestens eine Zutat eintragen'); return focusField('ing-name-0'); }
     const existing = d.id ? state.recipes.find(r => r.id === d.id) : null;
     const r = recipeFromDraft(d, existing, state.recipes);
     return withUndo(() => {
@@ -517,12 +593,19 @@ function onSubmit(e) {
 function onKey(e) {
   if (e.key === 'Escape' && app.ui.sheet) { app.ui.sheet = null; return render(); }
   const t = e.target, d = app.ui.draft;
-  if (e.key === 'Enter' && d && t.dataset && t.dataset.line != null && !e.isComposing) {
+  if (e.key !== 'Enter' || !d || !t.dataset || e.isComposing) return;
+  if (t.dataset.ingQuick != null) {   /* quick line: "200 g Tomaten" ⏎ becomes a row, the field stays for the next one */
+    e.preventDefault();
+    if (!t.value.trim()) return;
+    if (!insertTextLines(d, [t.value.trim()])) return toast('Keine Zutat erkannt');
+    render(); return focusField('ing-quick');
+  }
+  if (t.dataset.line != null && t.tagName === 'INPUT') {   /* Enter: name -> amount -> next row */
     e.preventDefault();
     const n = +t.dataset.line;
-    d.lines.splice(n + 1, 0, blankLine(''));
-    render();
-    focusField(`ing-line-${n + 1}`);
+    if (t.dataset.lf === 'name') { const l = d.lines[n]; if (defaultUnit(l)) { const sel = document.getElementById(`ing-unit-${n}`); if (sel) sel.value = l.unit; } app.ui.lineFocus = null; refreshDraftBits(); return focusField(`ing-amount-${n}`); }
+    if (n === d.lines.length - 1) { d.lines.push(line()); render(); }
+    focusField(`ing-name-${n + 1}`);
   }
 }
 

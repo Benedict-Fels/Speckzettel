@@ -29,12 +29,12 @@ export function seed() {
     demo: true,
     items: [
       it('Pflanzendrink', {variety: 'Hafer', amount: 1000, days: 5, area: 'fridge', openedAt: t - 2 * DAY}), it('Tofu', {label: 'Tofu natur', amount: 400, days: 8}), it('Tofu', {amount: 200, days: 1}),
-      it('Spinat', {amount: 200, days: 3}), it('Zucchini', {amount: 2, days: 6}), it('Champignons', {amount: 250, days: 14}),
+      it('Spinat', {amount: 200, days: 3}), it('Zucchini', {amount: 500, days: 6}), it('Champignons', {amount: 250, days: 14}),
       it('Zitrone', {amount: 1, days: 9}), it('Hummus', {days: 9}), it('Currypaste', {level: .25, days: 40, seenDays: 5}),
       it('Nudeln', {label: 'Spaghetti', amount: 500, days: 20, seenDays: 4}), it('Reis', {amount: 800, days: 30, seenDays: 6}),
       it('Linsen', {variety: 'rot', amount: 300, days: 45, seenDays: 10}), it('Dosentomaten', {amount: 2, days: 25, seenDays: 8}),
       it('Kokosmilch', {amount: 1, days: 25, seenDays: 8}), it('Kichererbsen', {amount: 1, days: 60, seenDays: 58}), it('Zwiebel', {amount: 3, days: 10}),
-      it('Knoblauch', {amount: 6, days: 12}), it('Olivenöl', {level: .5, days: 30, seenDays: 3}), it('Salz', {level: 1, days: 90, seenDays: 3}),
+      it('Knoblauch', {amount: 6, days: 12}), it('Öl', {variety: 'Oliven', amount: 400, days: 30, seenDays: 3}), it('Öl', {variety: 'Raps', amount: 750, days: 40, seenDays: 3}), it('Salz', {level: 1, days: 90, seenDays: 3}),
       it('Pfeffer', {level: .75, days: 90, seenDays: 3}), it('Erdnussmus', {level: .5, days: 20, seenDays: 6}), it('Chips', {days: 9}),
       it('Erbsen', {amount: 450, days: 30, seenDays: 20}),
     ],
@@ -49,7 +49,7 @@ export function seed() {
   };
 }
 
-export const defaultSettings = () => ({hintSoon: true, hintCheck: true, trackSnacks: false, installHintDismissed: false});
+export const defaultSettings = () => ({hintSoon: true, hintCheck: true, trackSnacks: false, installHintDismissed: false, theme: 'system'});
 
 /* withRecipes: false when the household wants no suggested recipes. onboarded: false shows the first-start screens. */
 export const emptyState = ({withRecipes = true, onboarded = true, diet = null} = {}) => ({schema: SCHEMA, demo: false, items: [], recipes: withRecipes ? seedRecipes() : [], starterIds: withRecipes ? seedRecipes().map(r => r.id) : [],

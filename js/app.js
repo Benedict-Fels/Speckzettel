@@ -1,7 +1,7 @@
 /* Shared runtime context: data (state), screen state (ui) and device environment (env). */
 export const app = {
   state: null,
-  ui: {tab: 'pantry', onboardingStep: 0, sheet: null, sheetMore: false, search: '', showGone: false, recipeId: null, persons: 2, recipeForm: false, draft: null, recipeFilters: [], recipeSearch: '', pasteText: '', showShopDone: false, shopPick: null,
+  ui: {tab: 'pantry', onboardingStep: 0, sheet: null, sheetMore: false, search: '', showGone: false, recipeId: null, persons: 2, recipeForm: false, draft: null, recipeFilters: [], recipeSearch: '', pasteText: '', showShopDone: true, shopEdit: null, shopQuery: '', shopPick: null,
     receiptText: '', receipt: null, receiptEdit: null, receiptDuplicate: null, receiptBusy: false, receiptHow: false, confirm: null, pendingImport: null},
   env: {
     persisted: null,

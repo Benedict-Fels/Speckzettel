@@ -1,6 +1,6 @@
 {
- "_comment": "Speckzettel product catalog. Keys are ingredient names (German, shown to users; singular unless bought in plural). group: shop section (see groups, in shop-walk order). area: where it is usually kept. unit: unit of the pack. tracking: exact / rough / flag. profile: perishable (shelf-life clock) or stable (no clock); the freezer always counts as frozen. shelfDays: days from purchase (perishable only). openedDays: days after opening (also turns stable into perishable). graceDays: days 'drüber' after expiry before 'vermutlich weg' (default: same as shelfDays). useBy: use-by date (meat, fish): grace 0, 'nicht mehr essen'. pack: usual pack size in unit. diet: vegan / vegetarian / all. staple: always there (Salz, Pfeffer, Wasser). snack: only tracked if the household turns snacks on. ignore: not taken over from receipts by default. plural: display plural. per: {unit: amount in this ingredient's unit}. synonyms: other names, 'text|Sorte' sets the variety. receiptRules: case-insensitive regex patterns, tried in order (longest first).",
- "version": 3,
+ "_comment": "Speckzettel product catalog. Keys are ingredient names (German, shown to users; singular unless bought in plural). group: shop section (see groups, in shop-walk order). area: where it is usually kept. unit: unit of the pack. tracking: exact / rough / flag. profile: perishable (shelf-life clock) or stable (no clock); the freezer always counts as frozen. shelfDays: days from purchase (perishable only). openedDays: days after opening (also turns stable into perishable). graceDays: days 'drüber' after expiry before 'vermutlich weg' (default: same as shelfDays). useBy: use-by date (meat, fish): grace 0, 'nicht mehr essen'. pack: usual pack size in unit. diet: vegan / vegetarian / all. staple: always there (Salz, Pfeffer, Wasser). snack: only tracked if the household turns snacks on. ignore: not taken over from receipts by default. icon: own symbol (else the group's). loose: sold loose, on the shopping list in pieces (per.Stück as the average) unless the variety is in packedVarieties. strictVariety: true = another variety is only offered as a swap in recipes; a list = only these varieties are kept apart. varietyGroups: {group variety: member varieties}; asking for the group takes any member. family: entries that stand in for each other in recipes (Milch / H-Milch / Pflanzendrink), if the pack's diet is at least as strict.sizes: usual pack sizes to pick from when buying. plural: display plural. per: {unit: amount in this ingredient's unit}. synonyms: other names, 'text|Sorte' sets the variety. receiptRules: case-insensitive regex patterns, tried in order (longest first).",
+ "version": 4,
  "groups": [
   {
    "key": "produce",
@@ -85,13 +85,15 @@
    "tracking": "exact",
    "diet": "vegan",
    "group": "produce",
-   "unit": "Stück",
+   "unit": "g",
    "shelfDays": 7,
-   "pack": 1,
+   "pack": 300,
    "plural": "Auberginen",
+   "loose": true,
    "per": {
-    "g": 0.0033333333333333335
-   }
+    "Stück": 300
+   },
+   "icon": "🍆"
   },
   "Avocado": {
    "area": "pantry",
@@ -102,7 +104,8 @@
    "unit": "Stück",
    "shelfDays": 5,
    "pack": 1,
-   "plural": "Avocados"
+   "plural": "Avocados",
+   "icon": "🥑"
   },
   "Blumenkohl": {
    "area": "fridge",
@@ -115,7 +118,8 @@
    "pack": 1,
    "per": {
     "g": 0.00125
-   }
+   },
+   "icon": "🥦"
   },
   "Brokkoli": {
    "area": "fridge",
@@ -131,7 +135,8 @@
    ],
    "per": {
     "g": 0.0022222222222222222
-   }
+   },
+   "icon": "🥦"
   },
   "Champignons": {
    "area": "fridge",
@@ -146,7 +151,8 @@
     "champignon",
     "braune champignons|braun",
     "egerlinge|braun"
-   ]
+   ],
+   "icon": "🍄"
   },
   "Pilze": {
    "area": "fridge",
@@ -162,7 +168,8 @@
     "shiitake|Shiitake",
     "kräuterseitlinge|Kräuterseitling",
     "pfifferlinge|Pfifferling"
-   ]
+   ],
+   "icon": "🍄"
   },
   "Chili": {
    "area": "fridge",
@@ -179,7 +186,8 @@
     "peperoni",
     "jalapeño|Jalapeño"
    ],
-   "plural": "Chilis"
+   "plural": "Chilis",
+   "icon": "🌶️"
   },
   "Eisbergsalat": {
    "area": "fridge",
@@ -189,7 +197,8 @@
    "group": "produce",
    "unit": "Stück",
    "shelfDays": 7,
-   "pack": 1
+   "pack": 1,
+   "icon": "🥬"
   },
   "Kopfsalat": {
    "area": "fridge",
@@ -207,7 +216,8 @@
     "römersalat|Romana",
     "lollo rosso|Lollo Rosso",
     "eichblattsalat"
-   ]
+   ],
+   "icon": "🥬"
   },
   "Feldsalat": {
    "area": "fridge",
@@ -220,7 +230,8 @@
    "pack": 150,
    "synonyms": [
     "rapunzel"
-   ]
+   ],
+   "icon": "🥬"
   },
   "Rucola": {
    "area": "fridge",
@@ -233,7 +244,8 @@
    "pack": 125,
    "synonyms": [
     "rauke"
-   ]
+   ],
+   "icon": "🥬"
   },
   "Salatmischung": {
    "area": "fridge",
@@ -248,7 +260,8 @@
     "salatmix",
     "babyleaf",
     "pflücksalat"
-   ]
+   ],
+   "icon": "🥗"
   },
   "Fenchel": {
    "area": "fridge",
@@ -276,7 +289,8 @@
    "plural": "Frühlingszwiebeln",
    "per": {
     "Stück": 0.16666666666666666
-   }
+   },
+   "icon": "🌱"
   },
   "Gurke": {
    "area": "fridge",
@@ -292,7 +306,8 @@
     "minigurken|Mini",
     "snackgurken|Mini"
    ],
-   "plural": "Gurken"
+   "plural": "Gurken",
+   "icon": "🥒"
   },
   "Ingwer": {
    "area": "fridge",
@@ -302,7 +317,9 @@
    "group": "produce",
    "unit": "g",
    "shelfDays": 21,
-   "pack": 100
+   "pack": 100,
+   "loose": true,
+   "icon": "🫚"
   },
   "Karotte": {
    "area": "fridge",
@@ -319,10 +336,12 @@
     "mohrrüben",
     "karotten"
    ],
+   "loose": true,
    "plural": "Karotten",
    "per": {
     "Stück": 80
-   }
+   },
+   "icon": "🥕"
   },
   "Kartoffel": {
    "area": "pantry",
@@ -339,10 +358,15 @@
     "festkochend|festkochend",
     "mehligkochend|mehlig"
    ],
+   "loose": true,
    "plural": "Kartoffeln",
    "per": {
     "Stück": 100
-   }
+   },
+   "icon": "🥔",
+   "packedVarieties": [
+    "Drillinge"
+   ]
   },
   "Süßkartoffel": {
    "area": "pantry",
@@ -357,10 +381,12 @@
     "süsskartoffel",
     "süßkartoffeln"
    ],
+   "loose": true,
    "plural": "Süßkartoffeln",
    "per": {
     "Stück": 400
-   }
+   },
+   "icon": "🍠"
   },
   "Knoblauch": {
    "area": "pantry",
@@ -380,7 +406,8 @@
     "Stück": 1,
     "g": 0.2,
     "Knolle": 10
-   }
+   },
+   "icon": "🧄"
   },
   "Kohlrabi": {
    "area": "fridge",
@@ -398,18 +425,21 @@
    "tracking": "exact",
    "diet": "vegan",
    "group": "produce",
-   "unit": "Stück",
+   "unit": "g",
    "shelfDays": 60,
-   "pack": 1,
+   "pack": 1200,
    "synonyms": [
     "hokkaido|Hokkaido",
     "butternut|Butternut",
     "butternutkürbis|Butternut",
     "hokkaidokürbis|Hokkaido"
    ],
+   "plural": "Kürbisse",
+   "loose": true,
    "per": {
-    "g": 0.0008333333333333334
-   }
+    "Stück": 1200
+   },
+   "icon": "🎃"
   },
   "Lauch": {
    "area": "fridge",
@@ -425,7 +455,8 @@
    ],
    "per": {
     "g": 0.0033333333333333335
-   }
+   },
+   "icon": "🌱"
   },
   "Mangold": {
    "area": "fridge",
@@ -435,7 +466,8 @@
    "group": "produce",
    "unit": "g",
    "shelfDays": 4,
-   "pack": 300
+   "pack": 300,
+   "icon": "🥬"
   },
   "Paprika": {
    "area": "fridge",
@@ -456,7 +488,8 @@
    "plural": "Paprika",
    "per": {
     "g": 0.00625
-   }
+   },
+   "icon": "🫑"
   },
   "Pak Choi": {
    "area": "fridge",
@@ -470,7 +503,8 @@
    "synonyms": [
     "pak choy",
     "pak-choi"
-   ]
+   ],
+   "icon": "🥬"
   },
   "Radieschen": {
    "area": "fridge",
@@ -480,7 +514,8 @@
    "group": "produce",
    "unit": "Bund",
    "shelfDays": 5,
-   "pack": 1
+   "pack": 1,
+   "icon": "🌱"
   },
   "Rote Bete": {
    "area": "fridge",
@@ -511,7 +546,8 @@
    ],
    "per": {
     "g": 0.001
-   }
+   },
+   "icon": "🥬"
   },
   "Weißkohl": {
    "area": "fridge",
@@ -529,7 +565,8 @@
    ],
    "per": {
     "g": 0.0008333333333333334
-   }
+   },
+   "icon": "🥬"
   },
   "Wirsing": {
    "area": "fridge",
@@ -539,7 +576,8 @@
    "group": "produce",
    "unit": "Stück",
    "shelfDays": 14,
-   "pack": 1
+   "pack": 1,
+   "icon": "🥬"
   },
   "Rosenkohl": {
    "area": "fridge",
@@ -549,7 +587,8 @@
    "group": "produce",
    "unit": "g",
    "shelfDays": 7,
-   "pack": 500
+   "pack": 500,
+   "icon": "🥬"
   },
   "Grünkohl": {
    "area": "fridge",
@@ -559,7 +598,8 @@
    "group": "produce",
    "unit": "g",
    "shelfDays": 4,
-   "pack": 500
+   "pack": 500,
+   "icon": "🥬"
   },
   "Sellerie": {
    "area": "fridge",
@@ -601,7 +641,8 @@
     "spargel weiß|weiß",
     "spargel grün|grün",
     "grüner spargel|grün"
-   ]
+   ],
+   "icon": "🌱"
   },
   "Spinat": {
    "area": "fridge",
@@ -619,7 +660,8 @@
    ],
    "per": {
     "Handvoll": 30
-   }
+   },
+   "icon": "🥬"
   },
   "Tomate": {
    "area": "fridge",
@@ -633,18 +675,31 @@
    "synonyms": [
     "tomaten",
     "rispentomaten|Rispen",
+    "rispentomate|Rispen",
     "cherrytomaten|Cherry",
+    "cherrytomate|Cherry",
     "kirschtomaten|Cherry",
+    "kirschtomate|Cherry",
     "cocktailtomaten|Cherry",
-    "strauchtomaten",
+    "strauchtomaten|Rispen",
     "romatomaten|Roma",
+    "romatomate|Roma",
     "fleischtomaten|Fleisch",
-    "snacktomaten|Cherry"
+    "fleischtomate|Fleisch",
+    "ochsenherz|Ochsenherz",
+    "snacktomaten|Cherry",
+    "datteltomaten|Dattel"
    ],
    "plural": "Tomaten",
+   "loose": true,
    "per": {
     "Stück": 100
-   }
+   },
+   "icon": "🍅",
+   "packedVarieties": [
+    "Cherry",
+    "Dattel"
+   ]
   },
   "Zucchini": {
    "area": "fridge",
@@ -652,16 +707,18 @@
    "tracking": "exact",
    "diet": "vegan",
    "group": "produce",
-   "unit": "Stück",
+   "unit": "g",
    "shelfDays": 10,
-   "pack": 1,
+   "pack": 250,
    "synonyms": [
     "zucchetti"
    ],
    "plural": "Zucchini",
+   "loose": true,
    "per": {
-    "g": 0.004
-   }
+    "Stück": 250
+   },
+   "icon": "🥒"
   },
   "Zwiebel": {
    "area": "pantry",
@@ -682,7 +739,8 @@
    "plural": "Zwiebeln",
    "per": {
     "g": 0.006666666666666667
-   }
+   },
+   "icon": "🧅"
   },
   "Schalotte": {
    "area": "pantry",
@@ -693,7 +751,8 @@
    "unit": "Stück",
    "shelfDays": 30,
    "pack": 6,
-   "plural": "Schalotten"
+   "plural": "Schalotten",
+   "icon": "🧅"
   },
   "Grüne Bohnen": {
    "area": "fridge",
@@ -709,7 +768,8 @@
     "buschbohnen",
     "prinzessbohnen",
     "stangenbohnen"
-   ]
+   ],
+   "icon": "🫛"
   },
   "Zuckerschoten": {
    "area": "fridge",
@@ -723,7 +783,8 @@
    "synonyms": [
     "zuckerschote",
     "kaiserschoten"
-   ]
+   ],
+   "icon": "🫛"
   },
   "Mais (Kolben)": {
    "area": "fridge",
@@ -736,7 +797,8 @@
    "pack": 2,
    "synonyms": [
     "maiskolben"
-   ]
+   ],
+   "icon": "🌽"
   },
   "Petersilie": {
    "area": "fridge",
@@ -754,7 +816,8 @@
    "per": {
     "g": 0.03333333333333333,
     "Handvoll": 0.5
-   }
+   },
+   "icon": "🌿"
   },
   "Basilikum": {
    "area": "fridge",
@@ -771,7 +834,8 @@
    "per": {
     "Handvoll": 0.5,
     "Stück": 1
-   }
+   },
+   "icon": "🌿"
   },
   "Koriander": {
    "area": "fridge",
@@ -787,7 +851,8 @@
    ],
    "per": {
     "Handvoll": 0.5
-   }
+   },
+   "icon": "🌿"
   },
   "Schnittlauch": {
    "area": "fridge",
@@ -797,7 +862,8 @@
    "group": "produce",
    "unit": "Bund",
    "shelfDays": 5,
-   "pack": 1
+   "pack": 1,
+   "icon": "🌿"
   },
   "Dill": {
    "area": "fridge",
@@ -807,7 +873,8 @@
    "group": "produce",
    "unit": "Bund",
    "shelfDays": 4,
-   "pack": 1
+   "pack": 1,
+   "icon": "🌿"
   },
   "Minze": {
    "area": "fridge",
@@ -820,7 +887,8 @@
    "pack": 1,
    "synonyms": [
     "pfefferminze"
-   ]
+   ],
+   "icon": "🌿"
   },
   "Apfel": {
    "area": "fridge",
@@ -838,7 +906,8 @@
    "plural": "Äpfel",
    "per": {
     "g": 0.005555555555555556
-   }
+   },
+   "icon": "🍎"
   },
   "Banane": {
    "area": "pantry",
@@ -855,7 +924,8 @@
    "plural": "Bananen",
    "per": {
     "g": 0.008333333333333333
-   }
+   },
+   "icon": "🍌"
   },
   "Birne": {
    "area": "fridge",
@@ -869,7 +939,8 @@
    "plural": "Birnen",
    "per": {
     "g": 0.005555555555555556
-   }
+   },
+   "icon": "🍐"
   },
   "Orange": {
    "area": "pantry",
@@ -887,7 +958,8 @@
    "plural": "Orangen",
    "per": {
     "g": 0.005
-   }
+   },
+   "icon": "🍊"
   },
   "Mandarine": {
    "area": "pantry",
@@ -906,7 +978,8 @@
    "plural": "Mandarinen",
    "per": {
     "g": 0.0125
-   }
+   },
+   "icon": "🍊"
   },
   "Zitrone": {
    "area": "fridge",
@@ -924,7 +997,8 @@
    "plural": "Zitronen",
    "per": {
     "g": 0.01
-   }
+   },
+   "icon": "🍋"
   },
   "Limette": {
    "area": "fridge",
@@ -939,7 +1013,8 @@
     "limetten",
     "limone"
    ],
-   "plural": "Limetten"
+   "plural": "Limetten",
+   "icon": "🍋"
   },
   "Erdbeeren": {
    "area": "fridge",
@@ -952,7 +1027,8 @@
    "pack": 500,
    "synonyms": [
     "erdbeere"
-   ]
+   ],
+   "icon": "🍓"
   },
   "Heidelbeeren": {
    "area": "fridge",
@@ -965,7 +1041,8 @@
    "pack": 125,
    "synonyms": [
     "blaubeeren"
-   ]
+   ],
+   "icon": "🫐"
   },
   "Himbeeren": {
    "area": "fridge",
@@ -975,7 +1052,8 @@
    "group": "produce",
    "unit": "g",
    "shelfDays": 2,
-   "pack": 125
+   "pack": 125,
+   "icon": "🫐"
   },
   "Weintrauben": {
    "area": "fridge",
@@ -989,7 +1067,8 @@
    "synonyms": [
     "trauben",
     "tafeltrauben"
-   ]
+   ],
+   "icon": "🍇"
   },
   "Kiwi": {
    "area": "fridge",
@@ -1000,7 +1079,8 @@
    "unit": "Stück",
    "shelfDays": 10,
    "pack": 1,
-   "plural": "Kiwis"
+   "plural": "Kiwis",
+   "icon": "🥝"
   },
   "Mango": {
    "area": "pantry",
@@ -1011,7 +1091,8 @@
    "unit": "Stück",
    "shelfDays": 5,
    "pack": 1,
-   "plural": "Mangos"
+   "plural": "Mangos",
+   "icon": "🥭"
   },
   "Ananas": {
    "area": "pantry",
@@ -1021,7 +1102,8 @@
    "group": "produce",
    "unit": "Stück",
    "shelfDays": 5,
-   "pack": 1
+   "pack": 1,
+   "icon": "🍍"
   },
   "Melone": {
    "area": "pantry",
@@ -1037,7 +1119,8 @@
     "honigmelone|Honig",
     "galiamelone|Galia"
    ],
-   "plural": "Melonen"
+   "plural": "Melonen",
+   "icon": "🍉"
   },
   "Pfirsich": {
    "area": "fridge",
@@ -1053,7 +1136,8 @@
     "nektarinen|Nektarine",
     "pfirsiche"
    ],
-   "plural": "Pfirsiche"
+   "plural": "Pfirsiche",
+   "icon": "🍑"
   },
   "Pflaumen": {
    "area": "fridge",
@@ -1067,7 +1151,8 @@
    "synonyms": [
     "zwetschgen",
     "zwetschen"
-   ]
+   ],
+   "icon": "🫐"
   },
   "Kirschen": {
    "area": "fridge",
@@ -1077,7 +1162,8 @@
    "group": "produce",
    "unit": "g",
    "shelfDays": 4,
-   "pack": 500
+   "pack": 500,
+   "icon": "🍒"
   },
   "Granatapfel": {
    "area": "fridge",
@@ -1087,7 +1173,8 @@
    "group": "produce",
    "unit": "Stück",
    "shelfDays": 14,
-   "pack": 1
+   "pack": 1,
+   "icon": "🍎"
   },
   "Brot": {
    "area": "pantry",
@@ -1107,7 +1194,8 @@
     "dinkelbrot|Dinkel",
     "bauernbrot",
     "krustenbrot"
-   ]
+   ],
+   "icon": "🍞"
   },
   "Brötchen": {
    "area": "pantry",
@@ -1125,7 +1213,8 @@
     "schrippe",
     "weckle",
     "aufbackbrötchen|Aufback"
-   ]
+   ],
+   "icon": "🥯"
   },
   "Baguette": {
    "area": "pantry",
@@ -1136,7 +1225,8 @@
    "graceDays": 2,
    "group": "bread",
    "shelfDays": 2,
-   "pack": 1
+   "pack": 1,
+   "icon": "🥖"
   },
   "Brezel": {
    "area": "pantry",
@@ -1152,7 +1242,8 @@
     "laugenbrezel",
     "brezn"
    ],
-   "plural": "Brezeln"
+   "plural": "Brezeln",
+   "icon": "🥨"
   },
   "Toastbrot": {
    "area": "pantry",
@@ -1168,7 +1259,8 @@
     "toast",
     "sandwichtoast",
     "vollkorntoast|Vollkorn"
-   ]
+   ],
+   "icon": "🍞"
   },
   "Wraps": {
    "area": "pantry",
@@ -1184,7 +1276,8 @@
     "tortilla",
     "tortillas",
     "weizentortillas"
-   ]
+   ],
+   "icon": "🫓"
   },
   "Knäckebrot": {
    "area": "pantry",
@@ -1193,7 +1286,8 @@
    "diet": "vegan",
    "unit": "Packung",
    "group": "bread",
-   "pack": 1
+   "pack": 1,
+   "icon": "🫓"
   },
   "Tofu": {
    "area": "fridge",
@@ -1266,7 +1360,8 @@
     "veggie würstchen",
     "tofuwürstchen",
     "vegane bratwurst"
-   ]
+   ],
+   "icon": "🌭"
   },
   "Veganer Aufschnitt": {
    "area": "fridge",
@@ -1297,7 +1392,8 @@
    "synonyms": [
     "humus",
     "hommus"
-   ]
+   ],
+   "icon": "🫘"
   },
   "Frische Pasta": {
    "area": "fridge",
@@ -1315,7 +1411,9 @@
     "tortellini|Tortellini",
     "ravioli|Ravioli",
     "frische tagliatelle|Tagliatelle"
-   ]
+   ],
+   "icon": "🍝",
+   "strictVariety": true
   },
   "Gnocchi": {
    "area": "fridge",
@@ -1327,7 +1425,8 @@
    "shelfDays": 30,
    "openedDays": 2,
    "graceDays": 3,
-   "pack": 500
+   "pack": 500,
+   "icon": "🥟"
   },
   "Kimchi": {
    "area": "fridge",
@@ -1398,7 +1497,8 @@
    "pack": 400,
    "synonyms": [
     "pizza teig"
-   ]
+   ],
+   "icon": "🍕"
   },
   "Pflanzenjoghurt": {
    "area": "fridge",
@@ -1416,7 +1516,9 @@
     "haferjoghurt|Hafer",
     "veganer joghurt",
     "joghurtalternative"
-   ]
+   ],
+   "icon": "🥣",
+   "family": "Joghurt"
   },
   "Margarine": {
    "area": "fridge",
@@ -1431,7 +1533,8 @@
     "vegane butter",
     "pflanzenbutter",
     "pflanzenmargarine"
-   ]
+   ],
+   "icon": "🧈"
   },
   "Milch": {
    "area": "fridge",
@@ -1449,7 +1552,9 @@
     "vollmilch|Voll",
     "fettarme milch|fettarm",
     "weidemilch"
-   ]
+   ],
+   "icon": "🥛",
+   "family": "Milch"
   },
   "H-Milch": {
    "area": "pantry",
@@ -1464,7 +1569,9 @@
     "haltbare milch",
     "h milch",
     "h-vollmilch"
-   ]
+   ],
+   "icon": "🥛",
+   "family": "Milch"
   },
   "Pflanzendrink": {
    "area": "pantry",
@@ -1487,7 +1594,9 @@
     "erbsendrink|Erbse",
     "dinkeldrink|Dinkel",
     "cashewdrink|Cashew"
-   ]
+   ],
+   "icon": "🥛",
+   "family": "Milch"
   },
   "Pflanzensahne": {
    "area": "pantry",
@@ -1507,7 +1616,9 @@
     "soja cuisine|Soja",
     "pflanzliche sahne",
     "hafersahne|Hafer"
-   ]
+   ],
+   "icon": "🥛",
+   "family": "Sahne"
   },
   "Sahne": {
    "area": "fridge",
@@ -1526,7 +1637,9 @@
     "kochsahne",
     "schlagrahm",
     "rahm"
-   ]
+   ],
+   "icon": "🥛",
+   "family": "Sahne"
   },
   "Saure Sahne": {
    "area": "fridge",
@@ -1544,7 +1657,8 @@
     "crème fraîche|Crème fraîche",
     "creme fraiche|Crème fraîche",
     "sauerrahm"
-   ]
+   ],
+   "strictVariety": true
   },
   "Joghurt": {
    "area": "fridge",
@@ -1562,8 +1676,72 @@
     "griechischer joghurt|griechisch",
     "joghurt griechisch|griechisch",
     "jogurt",
-    "joghurt natur|natur"
-   ]
+    "joghurt natur|natur",
+    "fruchtjoghurt|Frucht",
+    "joghurt frucht|Frucht",
+    "vanillejoghurt|Vanille",
+    "joghurt vanille|Vanille",
+    "erdbeerjoghurt|Erdbeer",
+    "heidelbeerjoghurt|Heidelbeer",
+    "himbeerjoghurt|Himbeer",
+    "kirschjoghurt|Kirsch",
+    "mangojoghurt|Mango",
+    "pfirsichjoghurt|Pfirsich",
+    "aprikosenjoghurt|Aprikose",
+    "bananenjoghurt|Banane",
+    "waldfruchtjoghurt|Waldfrucht",
+    "rhabarberjoghurt|Rhabarber",
+    "maracujajoghurt|Maracuja",
+    "blaubeerjoghurt|Blaubeer",
+    "joghurt erdbeer|Erdbeer",
+    "joghurt heidelbeer|Heidelbeer",
+    "joghurt himbeer|Himbeer",
+    "joghurt kirsch|Kirsch",
+    "joghurt mango|Mango",
+    "joghurt pfirsich|Pfirsich",
+    "joghurt aprikose|Aprikose",
+    "joghurt banane|Banane",
+    "joghurt waldfrucht|Waldfrucht",
+    "joghurt rhabarber|Rhabarber",
+    "joghurt maracuja|Maracuja",
+    "joghurt blaubeer|Blaubeer",
+    "pfirsich-maracuja|Pfirsich",
+    "erdbeere joghurt|Erdbeer"
+   ],
+   "icon": "🥣",
+   "varietyGroups": {
+    "Frucht": [
+     "Erdbeer",
+     "Heidelbeer",
+     "Himbeer",
+     "Kirsch",
+     "Mango",
+     "Pfirsich",
+     "Aprikose",
+     "Banane",
+     "Waldfrucht",
+     "Rhabarber",
+     "Maracuja",
+     "Blaubeer"
+    ]
+   },
+   "strictVariety": [
+    "Frucht",
+    "Vanille",
+    "Erdbeer",
+    "Heidelbeer",
+    "Himbeer",
+    "Kirsch",
+    "Mango",
+    "Pfirsich",
+    "Aprikose",
+    "Banane",
+    "Waldfrucht",
+    "Rhabarber",
+    "Maracuja",
+    "Blaubeer"
+   ],
+   "family": "Joghurt"
   },
   "Skyr": {
    "area": "fridge",
@@ -1575,7 +1753,8 @@
    "shelfDays": 21,
    "openedDays": 4,
    "graceDays": 60,
-   "pack": 450
+   "pack": 450,
+   "icon": "🥣"
   },
   "Quark": {
    "area": "fridge",
@@ -1593,7 +1772,8 @@
     "speisequark",
     "sahnequark|Sahne",
     "topfen"
-   ]
+   ],
+   "icon": "🥣"
   },
   "Frischkäse": {
    "area": "fridge",
@@ -1609,7 +1789,8 @@
    "synonyms": [
     "frischkäse natur",
     "doppelrahmfrischkäse"
-   ]
+   ],
+   "icon": "🧀"
   },
   "Mozzarella": {
    "area": "fridge",
@@ -1626,7 +1807,8 @@
     "büffelmozzarella|Büffel",
     "burrata|Burrata",
     "mozzarella mini|Mini"
-   ]
+   ],
+   "icon": "🧀"
   },
   "Feta": {
    "area": "fridge",
@@ -1643,7 +1825,8 @@
     "hirtenkäse",
     "schafskäse",
     "salatkäse"
-   ]
+   ],
+   "icon": "🧀"
   },
   "Halloumi": {
    "area": "fridge",
@@ -1657,7 +1840,8 @@
    "pack": 225,
    "synonyms": [
     "grillkäse"
-   ]
+   ],
+   "icon": "🧀"
   },
   "Ricotta": {
    "area": "fridge",
@@ -1669,7 +1853,8 @@
    "shelfDays": 14,
    "openedDays": 3,
    "graceDays": 10,
-   "pack": 250
+   "pack": 250,
+   "icon": "🧀"
   },
   "Mascarpone": {
    "area": "fridge",
@@ -1681,7 +1866,8 @@
    "shelfDays": 21,
    "openedDays": 3,
    "graceDays": 10,
-   "pack": 250
+   "pack": 250,
+   "icon": "🧀"
   },
   "Weichkäse": {
    "area": "fridge",
@@ -1697,7 +1883,8 @@
    "synonyms": [
     "camembert|Camembert",
     "brie|Brie"
-   ]
+   ],
+   "icon": "🧀"
   },
   "Rohmilchkäse": {
    "area": "fridge",
@@ -1712,7 +1899,8 @@
    "pack": 150,
    "synonyms": [
     "käse aus rohmilch"
-   ]
+   ],
+   "icon": "🧀"
   },
   "Parmesan": {
    "area": "fridge",
@@ -1730,7 +1918,8 @@
     "parmigiano",
     "hartkäse",
     "pecorino|Pecorino"
-   ]
+   ],
+   "icon": "🧀"
   },
   "Hartkäse am Stück": {
    "area": "fridge",
@@ -1750,7 +1939,8 @@
     "emmentaler am stück|Emmentaler",
     "cheddar|Cheddar",
     "käse am stück"
-   ]
+   ],
+   "icon": "🧀"
   },
   "Käse in Scheiben": {
    "area": "fridge",
@@ -1769,7 +1959,8 @@
     "scheibenkäse",
     "emmentaler scheiben|Emmentaler",
     "butterkäse|Butterkäse"
-   ]
+   ],
+   "icon": "🧀"
   },
   "Reibekäse": {
    "area": "fridge",
@@ -1787,7 +1978,8 @@
     "pizzakäse",
     "gratinkäse",
     "käse gerieben"
-   ]
+   ],
+   "icon": "🧀"
   },
   "Butter": {
    "area": "fridge",
@@ -1802,7 +1994,8 @@
     "süßrahmbutter",
     "sauerrahmbutter",
     "deutsche markenbutter"
-   ]
+   ],
+   "icon": "🧈"
   },
   "Buttermilch": {
    "area": "fridge",
@@ -1814,7 +2007,8 @@
    "shelfDays": 14,
    "openedDays": 3,
    "graceDays": 5,
-   "pack": 500
+   "pack": 500,
+   "icon": "🥛"
   },
   "Ei": {
    "area": "fridge",
@@ -1832,7 +2026,8 @@
     "bio eier",
     "eier freiland"
    ],
-   "plural": "Eier"
+   "plural": "Eier",
+   "icon": "🥚"
   },
   "Hackfleisch": {
    "area": "fridge",
@@ -1851,7 +2046,8 @@
     "schweinehack|Schwein",
     "faschiertes",
     "hackfleisch gemischt|gemischt"
-   ]
+   ],
+   "icon": "🥩"
   },
   "Mett": {
    "area": "fridge",
@@ -1866,7 +2062,8 @@
    "synonyms": [
     "zwiebelmett",
     "hackepeter"
-   ]
+   ],
+   "icon": "🥩"
   },
   "Hähnchenbrust": {
    "area": "fridge",
@@ -1883,7 +2080,8 @@
     "hühnerbrust",
     "hähnchenfilet",
     "hähnchen brust"
-   ]
+   ],
+   "icon": "🍗"
   },
   "Hähnchenschenkel": {
    "area": "fridge",
@@ -1898,7 +2096,8 @@
    "synonyms": [
     "hähnchenkeulen",
     "hähnchen unterschenkel"
-   ]
+   ],
+   "icon": "🍗"
   },
   "Putenbrust": {
    "area": "fridge",
@@ -1913,7 +2112,8 @@
    "synonyms": [
     "putenschnitzel|Schnitzel",
     "putenfilet"
-   ]
+   ],
+   "icon": "🍗"
   },
   "Schnitzel": {
    "area": "fridge",
@@ -1928,7 +2128,8 @@
    "synonyms": [
     "schweineschnitzel|Schwein",
     "kalbsschnitzel|Kalb"
-   ]
+   ],
+   "icon": "🥩"
   },
   "Steak": {
    "area": "fridge",
@@ -1945,7 +2146,8 @@
     "rumpsteak|Rumpsteak",
     "entrecote|Entrecôte",
     "hüftsteak|Hüfte"
-   ]
+   ],
+   "icon": "🥩"
   },
   "Gulasch": {
    "area": "fridge",
@@ -1960,7 +2162,8 @@
    "synonyms": [
     "rindergulasch|Rind",
     "schweinegulasch|Schwein"
-   ]
+   ],
+   "icon": "🥩"
   },
   "Bratwurst": {
    "area": "fridge",
@@ -1977,7 +2180,8 @@
     "grillwurst",
     "nürnberger|Nürnberger",
     "thüringer|Thüringer"
-   ]
+   ],
+   "icon": "🌭"
   },
   "Würstchen": {
    "area": "fridge",
@@ -1996,7 +2200,8 @@
     "frankfurter",
     "wienerle",
     "geflügelwürstchen|Geflügel"
-   ]
+   ],
+   "icon": "🌭"
   },
   "Aufschnitt": {
    "area": "fridge",
@@ -2014,7 +2219,8 @@
     "lyoner|Lyoner",
     "mortadella|Mortadella",
     "bierschinken"
-   ]
+   ],
+   "icon": "🥓"
   },
   "Salami": {
    "area": "fridge",
@@ -2030,7 +2236,8 @@
    "synonyms": [
     "salami am stück",
     "salamisticks"
-   ]
+   ],
+   "icon": "🥓"
   },
   "Schinken": {
    "area": "fridge",
@@ -2049,7 +2256,8 @@
     "rohschinken|roh",
     "serrano|Serrano",
     "parmaschinken|Parma"
-   ]
+   ],
+   "icon": "🥓"
   },
   "Speck": {
    "area": "fridge",
@@ -2066,7 +2274,8 @@
     "bacon",
     "schinkenwürfel|Würfel",
     "bauchspeck"
-   ]
+   ],
+   "icon": "🥓"
   },
   "Lachs": {
    "area": "fridge",
@@ -2081,7 +2290,8 @@
    "synonyms": [
     "lachsfilet",
     "lachs frisch"
-   ]
+   ],
+   "icon": "🐟"
   },
   "Räucherlachs": {
    "area": "fridge",
@@ -2096,7 +2306,8 @@
    "synonyms": [
     "graved lachs|Graved",
     "stremellachs"
-   ]
+   ],
+   "icon": "🐟"
   },
   "Fisch": {
    "area": "fridge",
@@ -2116,7 +2327,8 @@
     "dorade|Dorade",
     "zander|Zander",
     "rotbarsch|Rotbarsch"
-   ]
+   ],
+   "icon": "🐟"
   },
   "Garnelen": {
    "area": "fridge",
@@ -2132,7 +2344,8 @@
     "shrimps",
     "scampi",
     "riesengarnelen"
-   ]
+   ],
+   "icon": "🦐"
   },
   "Nudeln": {
    "area": "pantry",
@@ -2157,7 +2370,8 @@
     "vollkornnudeln|Vollkorn",
     "spaghettini|Spaghetti",
     "conchiglie"
-   ]
+   ],
+   "icon": "🍝"
   },
   "Lasagneplatten": {
    "area": "pantry",
@@ -2170,7 +2384,8 @@
    "synonyms": [
     "lasagne platten",
     "lasagneblätter"
-   ]
+   ],
+   "icon": "🍝"
   },
   "Reis": {
    "area": "pantry",
@@ -2191,7 +2406,9 @@
     "milchreis|Milchreis",
     "sushireis|Sushi",
     "parboiled reis"
-   ]
+   ],
+   "icon": "🍚",
+   "strictVariety": true
   },
   "Linsen": {
    "area": "pantry",
@@ -2208,7 +2425,9 @@
     "berglinsen|Berg",
     "gelbe linsen|gelb",
     "braune linsen|braun"
-   ]
+   ],
+   "icon": "🫘",
+   "strictVariety": true
   },
   "Couscous": {
    "area": "pantry",
@@ -2279,7 +2498,8 @@
     "zarte haferflocken|zart",
     "kernige haferflocken|kernig",
     "hafer flocken"
-   ]
+   ],
+   "icon": "🥣"
   },
   "Müsli": {
    "area": "pantry",
@@ -2293,7 +2513,8 @@
     "granola|Granola",
     "crunchy|Crunchy",
     "knuspermüsli|Knusper"
-   ]
+   ],
+   "icon": "🥣"
   },
   "Cornflakes": {
    "area": "pantry",
@@ -2305,7 +2526,8 @@
    "pack": 375,
    "synonyms": [
     "corn flakes"
-   ]
+   ],
+   "icon": "🥣"
   },
   "Reisnudeln": {
    "area": "pantry",
@@ -2318,7 +2540,8 @@
    "synonyms": [
     "glasnudeln|Glas",
     "reis nudeln"
-   ]
+   ],
+   "icon": "🍜"
   },
   "Mie-Nudeln": {
    "area": "pantry",
@@ -2334,7 +2557,8 @@
     "ramen nudeln|Ramen",
     "udon|Udon",
     "asia nudeln"
-   ]
+   ],
+   "icon": "🍜"
   },
   "Sojagranulat": {
    "area": "pantry",
@@ -2373,7 +2597,8 @@
    "synonyms": [
     "walnusskerne",
     "walnuss"
-   ]
+   ],
+   "icon": "🌰"
   },
   "Mandeln": {
    "area": "pantry",
@@ -2388,7 +2613,8 @@
     "gemahlene mandeln|gemahlen",
     "mandelblättchen|Blättchen",
     "mandelstifte|Stifte"
-   ]
+   ],
+   "icon": "🌰"
   },
   "Haselnüsse": {
    "area": "pantry",
@@ -2401,7 +2627,8 @@
    "synonyms": [
     "haselnusskerne",
     "gemahlene haselnüsse|gemahlen"
-   ]
+   ],
+   "icon": "🌰"
   },
   "Cashews": {
    "area": "pantry",
@@ -2414,7 +2641,8 @@
    "synonyms": [
     "cashewkerne",
     "cashew"
-   ]
+   ],
+   "icon": "🌰"
   },
   "Erdnüsse": {
    "area": "pantry",
@@ -2427,7 +2655,8 @@
    "synonyms": [
     "erdnusskerne",
     "erdnüsse geröstet|geröstet"
-   ]
+   ],
+   "icon": "🥜"
   },
   "Pinienkerne": {
    "area": "pantry",
@@ -2552,7 +2781,8 @@
    "per": {
     "g": 0.0025,
     "ml": 0.0025
-   }
+   },
+   "icon": "🍅"
   },
   "Passata": {
    "area": "pantry",
@@ -2567,7 +2797,8 @@
     "passierte tomaten",
     "tomaten passiert",
     "tomatenpüree"
-   ]
+   ],
+   "icon": "🍅"
   },
   "Tomatenmark": {
    "area": "pantry",
@@ -2579,7 +2810,8 @@
    "synonyms": [
     "tomatenmark 3-fach",
     "tomatenpaste"
-   ]
+   ],
+   "icon": "🍅"
   },
   "Kokosmilch": {
    "area": "pantry",
@@ -2598,7 +2830,8 @@
    "per": {
     "ml": 0.0025,
     "g": 0.0025
-   }
+   },
+   "icon": "🥥"
   },
   "Kichererbsen": {
    "area": "pantry",
@@ -2614,7 +2847,8 @@
    ],
    "per": {
     "g": 0.004166666666666667
-   }
+   },
+   "icon": "🫘"
   },
   "Kidneybohnen": {
    "area": "pantry",
@@ -2632,7 +2866,8 @@
    ],
    "per": {
     "g": 0.004
-   }
+   },
+   "icon": "🫘"
   },
   "Weiße Bohnen": {
    "area": "pantry",
@@ -2651,7 +2886,8 @@
    ],
    "per": {
     "g": 0.004
-   }
+   },
+   "icon": "🫘"
   },
   "Schwarze Bohnen": {
    "area": "pantry",
@@ -2664,7 +2900,8 @@
    "pack": 1,
    "per": {
     "g": 0.004
-   }
+   },
+   "icon": "🫘"
   },
   "Mais": {
    "area": "pantry",
@@ -2682,7 +2919,8 @@
    ],
    "per": {
     "g": 0.0035087719298245615
-   }
+   },
+   "icon": "🌽"
   },
   "Thunfisch": {
    "area": "pantry",
@@ -2696,7 +2934,8 @@
    "synonyms": [
     "thunfisch in öl|Öl",
     "thunfisch naturale|natur"
-   ]
+   ],
+   "icon": "🐟"
   },
   "Oliven": {
    "area": "pantry",
@@ -2711,7 +2950,8 @@
     "kalamata|Kalamata",
     "schwarze oliven|schwarz",
     "grüne oliven|grün"
-   ]
+   ],
+   "icon": "🫒"
   },
   "Kapern": {
    "area": "pantry",
@@ -2736,7 +2976,8 @@
     "essiggurken",
     "cornichons|Cornichons",
     "saure gurken"
-   ]
+   ],
+   "icon": "🥒"
   },
   "Sauerkraut": {
    "area": "pantry",
@@ -2765,7 +3006,8 @@
     "pesto rosso|Rosso",
     "pesto verde|Basilikum",
     "pesto genovese|Basilikum"
-   ]
+   ],
+   "strictVariety": true
   },
   "Getrocknete Tomaten": {
    "area": "pantry",
@@ -2779,7 +3021,8 @@
    "synonyms": [
     "tomaten getrocknet",
     "sonnengetrocknete tomaten"
-   ]
+   ],
+   "icon": "🍅"
   },
   "Apfelmus": {
    "area": "pantry",
@@ -2815,7 +3058,8 @@
    "synonyms": [
     "blütenhonig",
     "waldhonig"
-   ]
+   ],
+   "icon": "🍯"
   },
   "Ahornsirup": {
    "area": "pantry",
@@ -2826,7 +3070,8 @@
    "group": "cans",
    "synonyms": [
     "ahorn sirup"
-   ]
+   ],
+   "icon": "🍁"
   },
   "Agavendicksaft": {
    "area": "pantry",
@@ -2851,7 +3096,8 @@
    "synonyms": [
     "erdnussbutter",
     "erdnusscreme"
-   ]
+   ],
+   "icon": "🥜"
   },
   "Mandelmus": {
    "area": "pantry",
@@ -2891,40 +3137,35 @@
     "schokoaufstrich"
    ]
   },
-  "Olivenöl": {
+  "Öl": {
    "area": "pantry",
    "profile": "stable",
-   "tracking": "rough",
+   "tracking": "exact",
    "diet": "vegan",
    "unit": "ml",
    "group": "oils",
+   "pack": 1000,
    "synonyms": [
-    "natives olivenöl",
-    "olivenöl extra",
-    "olivenoel"
-   ]
-  },
-  "Rapsöl": {
-   "area": "pantry",
-   "profile": "stable",
-   "tracking": "rough",
-   "diet": "vegan",
-   "unit": "ml",
-   "group": "oils",
-   "synonyms": [
-    "rapsoel"
-   ]
-  },
-  "Sonnenblumenöl": {
-   "area": "pantry",
-   "profile": "stable",
-   "tracking": "rough",
-   "diet": "vegan",
-   "unit": "ml",
-   "group": "oils",
-   "synonyms": [
-    "sonnenblumenoel"
-   ]
+    "olivenöl|Oliven",
+    "natives olivenöl|Oliven",
+    "olivenöl extra|Oliven",
+    "olivenoel|Oliven",
+    "rapsöl|Raps",
+    "rapsoel|Raps",
+    "sonnenblumenöl|Sonnenblumen",
+    "sonnenblumenoel|Sonnenblumen",
+    "speiseöl",
+    "pflanzenöl",
+    "bratöl",
+    "neutrales öl"
+   ],
+   "sizes": [
+    1000,
+    750,
+    500,
+    250
+   ],
+   "icon": "🫒"
   },
   "Sesamöl": {
    "area": "pantry",
@@ -2946,7 +3187,8 @@
    "group": "oils",
    "synonyms": [
     "kokosfett"
-   ]
+   ],
+   "icon": "🥥"
   },
   "Essig": {
    "area": "pantry",
@@ -3004,7 +3246,8 @@
    "synonyms": [
     "tomatenketchup",
     "curry ketchup|Curry"
-   ]
+   ],
+   "icon": "🍅"
   },
   "Mayonnaise": {
    "area": "pantry",
@@ -3047,7 +3290,8 @@
     "sweet chili|süß",
     "süße chilisauce|süß",
     "tabasco"
-   ]
+   ],
+   "icon": "🌶️"
   },
   "Zitronensaft": {
    "area": "pantry",
@@ -3058,7 +3302,8 @@
    "group": "oils",
    "synonyms": [
     "limettensaft|Limette"
-   ]
+   ],
+   "icon": "🍋"
   },
   "Salz": {
    "area": "pantry",
@@ -3074,7 +3319,8 @@
     "salz jodiert",
     "fleur de sel"
    ],
-   "staple": true
+   "staple": true,
+   "icon": "🧂"
   },
   "Pfeffer": {
    "area": "pantry",
@@ -3100,9 +3346,20 @@
    "group": "spices",
    "synonyms": [
     "paprika edelsüß|edelsüß",
-    "paprika rosenscharf|scharf",
+    "paprikapulver edelsüß|edelsüß",
+    "paprika rosenscharf|rosenscharf",
+    "paprikapulver rosenscharf|rosenscharf",
+    "rosenscharfes paprikapulver|rosenscharf",
+    "scharfes paprikapulver|rosenscharf",
     "geräuchertes paprikapulver|geräuchert",
+    "paprika geräuchert|geräuchert",
+    "paprikapulver geräuchert|geräuchert",
+    "pimentón|geräuchert",
+    "smoked paprika|geräuchert",
     "paprika pulver"
+   ],
+   "strictVariety": [
+    "rosenscharf"
    ]
   },
   "Currypulver": {
@@ -3165,7 +3422,8 @@
     "chilipulver|Pulver",
     "cayennepfeffer|Cayenne",
     "chili gemahlen|Pulver"
-   ]
+   ],
+   "icon": "🌶️"
   },
   "Oregano": {
    "area": "pantry",
@@ -3291,7 +3549,8 @@
     "weizenmehl 405|405",
     "vollkornmehl|Vollkorn",
     "roggenmehl|Roggen"
-   ]
+   ],
+   "icon": "🌾"
   },
   "Zucker": {
    "area": "pantry",
@@ -3306,7 +3565,8 @@
     "kristallzucker",
     "feinzucker",
     "brauner zucker|braun"
-   ]
+   ],
+   "icon": "🍬"
   },
   "Puderzucker": {
    "area": "pantry",
@@ -3314,7 +3574,8 @@
    "tracking": "rough",
    "diet": "vegan",
    "unit": "g",
-   "group": "baking"
+   "group": "baking",
+   "icon": "🍬"
   },
   "Backpulver": {
    "area": "pantry",
@@ -3382,7 +3643,8 @@
    "synonyms": [
     "kakaopulver",
     "backkakao"
-   ]
+   ],
+   "icon": "🍫"
   },
   "Schokotropfen": {
    "area": "pantry",
@@ -3395,7 +3657,8 @@
     "schokodrops",
     "kuvertüre|Kuvertüre",
     "blockschokolade"
-   ]
+   ],
+   "icon": "🍫"
   },
   "Schokolade": {
    "area": "pantry",
@@ -3411,7 +3674,8 @@
     "vollmilchschokolade|Vollmilch",
     "schoko",
     "tafel schokolade"
-   ]
+   ],
+   "icon": "🍫"
   },
   "Chips": {
    "area": "pantry",
@@ -3426,7 +3690,8 @@
     "tortilla chips|Tortilla",
     "nachos|Tortilla",
     "paprika chips|Paprika"
-   ]
+   ],
+   "icon": "🥔"
   },
   "Kekse": {
    "area": "pantry",
@@ -3441,7 +3706,8 @@
     "butterkekse",
     "butterkeks",
     "plätzchen"
-   ]
+   ],
+   "icon": "🍪"
   },
   "Gummibärchen": {
    "area": "pantry",
@@ -3454,7 +3720,8 @@
    "synonyms": [
     "fruchtgummi",
     "weingummi"
-   ]
+   ],
+   "icon": "🍬"
   },
   "Salzstangen": {
    "area": "pantry",
@@ -3467,7 +3734,8 @@
    "synonyms": [
     "salzbrezeln",
     "brezeln salz"
-   ]
+   ],
+   "icon": "🥨"
   },
   "Popcorn": {
    "area": "pantry",
@@ -3476,7 +3744,8 @@
    "diet": "vegan",
    "unit": "Stück",
    "snack": true,
-   "group": "sweets"
+   "group": "sweets",
+   "icon": "🍿"
   },
   "Müsliriegel": {
    "area": "pantry",
@@ -3518,7 +3787,8 @@
     "stilles wasser|still",
     "tafelwasser"
    ],
-   "staple": true
+   "staple": true,
+   "icon": "💧"
   },
   "Saft": {
    "area": "pantry",
@@ -3534,7 +3804,8 @@
     "multivitaminsaft|Multivitamin",
     "direktsaft",
     "apfelschorle|Apfelschorle"
-   ]
+   ],
+   "icon": "🧃"
   },
   "Limonade": {
    "area": "pantry",
@@ -3549,7 +3820,8 @@
     "cola|Cola",
     "spezi",
     "eistee|Eistee"
-   ]
+   ],
+   "icon": "🥤"
   },
   "Bier": {
    "area": "pantry",
@@ -3563,7 +3835,8 @@
     "pils",
     "radler|Radler",
     "weizenbier|Weizen"
-   ]
+   ],
+   "icon": "🍺"
   },
   "Wein": {
    "area": "pantry",
@@ -3578,7 +3851,8 @@
     "weißwein|Weiß",
     "rosé|Rosé",
     "sekt|Sekt"
-   ]
+   ],
+   "icon": "🍷"
   },
   "Kaffee": {
    "area": "pantry",
@@ -3593,7 +3867,8 @@
     "espresso|Espresso",
     "gemahlener kaffee|gemahlen",
     "filterkaffee"
-   ]
+   ],
+   "icon": "☕"
   },
   "Tee": {
    "area": "pantry",
@@ -3609,7 +3884,8 @@
     "schwarzer tee|schwarz",
     "früchtetee|Früchte",
     "pfefferminztee|Pfefferminz"
-   ]
+   ],
+   "icon": "🍵"
   },
   "Erbsen": {
    "area": "freezer",
@@ -3624,7 +3900,8 @@
     "erbsen tk",
     "junge erbsen",
     "erbsen fein"
-   ]
+   ],
+   "icon": "🫛"
   },
   "Gemüsemischung": {
    "area": "freezer",
@@ -3654,7 +3931,8 @@
     "tk beeren",
     "beerenmix",
     "waldbeeren|Wald"
-   ]
+   ],
+   "icon": "🫐"
   },
   "Pommes": {
    "area": "freezer",
@@ -3668,7 +3946,8 @@
     "pommes frites",
     "ofenfrites",
     "kroketten|Kroketten"
-   ]
+   ],
+   "icon": "🍟"
   },
   "Tiefkühlpizza": {
    "area": "freezer",
@@ -3681,7 +3960,8 @@
    "synonyms": [
     "pizza",
     "steinofenpizza"
-   ]
+   ],
+   "icon": "🍕"
   },
   "Edamame": {
    "area": "freezer",
@@ -3690,7 +3970,8 @@
    "diet": "vegan",
    "unit": "g",
    "group": "frozen",
-   "pack": 400
+   "pack": 400,
+   "icon": "🫛"
   },
   "Fischstäbchen": {
    "area": "freezer",
@@ -3699,7 +3980,8 @@
    "diet": "all",
    "unit": "g",
    "group": "frozen",
-   "pack": 450
+   "pack": 450,
+   "icon": "🐟"
   },
   "Eis": {
    "area": "freezer",
@@ -3714,7 +3996,8 @@
     "eiscreme",
     "eis am stiel"
    ],
-   "snack": true
+   "snack": true,
+   "icon": "🍦"
   },
   "Spülmittel": {
    "area": "pantry",
@@ -3728,7 +4011,8 @@
     "geschirrspülmittel",
     "spülmaschinentabs|Tabs",
     "spültabs|Tabs"
-   ]
+   ],
+   "icon": "🧽"
   },
   "Toilettenpapier": {
    "area": "pantry",
@@ -3741,7 +4025,8 @@
    "synonyms": [
     "klopapier",
     "wc papier"
-   ]
+   ],
+   "icon": "🧻"
   },
   "Küchenrolle": {
    "area": "pantry",
@@ -3754,7 +4039,8 @@
    "synonyms": [
     "küchentücher",
     "haushaltsrolle"
-   ]
+   ],
+   "icon": "🧻"
   },
   "Zahnpasta": {
    "area": "pantry",
@@ -3766,7 +4052,8 @@
    "group": "household",
    "synonyms": [
     "zahncreme"
-   ]
+   ],
+   "icon": "🪥"
   },
   "Duschgel": {
    "area": "pantry",
@@ -3779,7 +4066,8 @@
    "synonyms": [
     "shampoo|Shampoo",
     "seife|Seife"
-   ]
+   ],
+   "icon": "🧴"
   },
   "Waschmittel": {
    "area": "pantry",
@@ -3791,7 +4079,8 @@
    "group": "household",
    "synonyms": [
     "weichspüler|Weichspüler"
-   ]
+   ],
+   "icon": "🧺"
   },
   "Müllbeutel": {
    "area": "pantry",
@@ -3807,7 +4096,8 @@
     "alufolie|Alu",
     "frischhaltefolie|Folie",
     "backpapier|Backpapier"
-   ]
+   ],
+   "icon": "🗑️"
   },
   "Tragetasche": {
    "area": "pantry",
@@ -3822,7 +4112,8 @@
     "tragetasche papier",
     "papiertüte",
     "tasche"
-   ]
+   ],
+   "icon": "🛍️"
   },
   "Blumen": {
    "area": "pantry",
@@ -3835,7 +4126,8 @@
    "synonyms": [
     "blumenstrauß",
     "tulpen"
-   ]
+   ],
+   "icon": "💐"
   },
   "Zeitschrift": {
    "area": "pantry",
@@ -3848,7 +4140,8 @@
    "synonyms": [
     "zeitung",
     "magazin"
-   ]
+   ],
+   "icon": "📰"
   }
  },
  "receiptRules": [
@@ -3873,12 +4166,24 @@
    "Erdnussmus"
   ],
   [
+   "rosenscharf.*paprikapulv",
+   "Paprikapulver"
+  ],
+  [
    "sonnengetrockne.*tomate",
    "Getrocknete Tomaten"
   ],
   [
+   "paprikapulv.*ger(?:ä|ae)uche",
+   "Paprikapulver"
+  ],
+  [
    "doppelrahmfrischk(?:ä|ae)",
    "Frischkäse"
+  ],
+  [
+   "paprikapulv.*rosenscha",
+   "Paprikapulver"
   ],
   [
    "hafer.*(dr|milch)|haferdr",
@@ -3893,6 +4198,14 @@
    "Würstchen"
   ],
   [
+   "ger(?:ö|oe)stet.*sesam(?:ö|oe)l",
+   "Sesamöl"
+  ],
+  [
+   "paprikapulv.*edels(?:ü|ue)",
+   "Paprikapulver"
+  ],
+  [
    "garam.*masala.*gew(?:ü|ue)rz",
    "Garam Masala"
   ],
@@ -3903,10 +4216,6 @@
   [
    "aprikosenkonfit(?:ü|ue)",
    "Marmelade"
-  ],
-  [
-   "ger(?:ö|oe)stet.*sesam(?:ö|oe)",
-   "Sesamöl"
   ],
   [
    "italienisc.*kr(?:ä|ae)ute",
@@ -3935,6 +4244,10 @@
   [
    "wei(?:ß|ss)e.*riesenbohn",
    "Weiße Bohnen"
+  ],
+  [
+   "scharf.*paprikapulv",
+   "Paprikapulver"
   ],
   [
    "kreuzk(?:ü|ue)mm.*gemahl",
@@ -4001,12 +4314,24 @@
    "Trockenobst"
   ],
   [
+   "native.*oliven(?:ö|oe)l",
+   "Öl"
+  ],
+  [
+   "sonnenblumen(?:ö|oe)l",
+   "Öl"
+  ],
+  [
    "mittelscharf.*\\bsenf\\b",
    "Senf"
   ],
   [
    "s(?:ü|ue)(?:ß|ss)e.*chilisau",
    "Chilisauce"
+  ],
+  [
+   "paprik.*ger(?:ä|ae)uche",
+   "Paprikapulver"
   ],
   [
    "braune.*champigno",
@@ -4039,6 +4364,14 @@
   [
    "pflanzenmargari",
    "Margarine"
+  ],
+  [
+   "heidelbeerjoghu",
+   "Joghurt"
+  ],
+  [
+   "waldfruchtjoghu",
+   "Joghurt"
   ],
   [
    "frischk(?:ä|ae).*natur",
@@ -4099,6 +4432,10 @@
   [
    "nuss.*nougat.*creme",
    "Nuss-Nougat-Creme"
+  ],
+  [
+   "oliven(?:ö|oe)l.*extra",
+   "Öl"
   ],
   [
    "gr(?:ü|ue)ne.*currypas",
@@ -4162,6 +4499,22 @@
   ],
   [
    "joghur.*griechis",
+   "Joghurt"
+  ],
+  [
+   "aprikosenjoghu",
+   "Joghurt"
+  ],
+  [
+   "rhabarberjoghu",
+   "Joghurt"
+  ],
+  [
+   "joghur.*heidelbe",
+   "Joghurt"
+  ],
+  [
+   "joghur.*waldfruc",
    "Joghurt"
   ],
   [
@@ -4349,6 +4702,22 @@
    "Sahne"
   ],
   [
+   "pfirsichjoghu",
+   "Joghurt"
+  ],
+  [
+   "maracujajoghu",
+   "Joghurt"
+  ],
+  [
+   "blaubeerjoghu",
+   "Joghurt"
+  ],
+  [
+   "joghur.*rhabarb",
+   "Joghurt"
+  ],
+  [
    "k(?:ä|ae)se.*st(?:ü|ue)ck",
    "Hartkäse am Stück"
   ],
@@ -4430,7 +4799,7 @@
   ],
   [
    "sonnenblumeno",
-   "Sonnenblumenöl"
+   "Öl"
   ],
   [
    "wei(?:ß|ss)weiness",
@@ -4563,6 +4932,70 @@
   [
    "pflanzenbutt",
    "Margarine"
+  ],
+  [
+   "joghur.*frucht",
+   "Joghurt"
+  ],
+  [
+   "vanillejoghu",
+   "Joghurt"
+  ],
+  [
+   "joghur.*vanill",
+   "Joghurt"
+  ],
+  [
+   "erdbeerjoghu",
+   "Joghurt"
+  ],
+  [
+   "himbeerjoghu",
+   "Joghurt"
+  ],
+  [
+   "bananenjoghu",
+   "Joghurt"
+  ],
+  [
+   "joghur.*erdbee",
+   "Joghurt"
+  ],
+  [
+   "joghur.*himbee",
+   "Joghurt"
+  ],
+  [
+   "joghur.*kirsch",
+   "Joghurt"
+  ],
+  [
+   "joghur.*pfirsi",
+   "Joghurt"
+  ],
+  [
+   "joghur.*apriko",
+   "Joghurt"
+  ],
+  [
+   "joghur.*banane",
+   "Joghurt"
+  ],
+  [
+   "joghur.*maracu",
+   "Joghurt"
+  ],
+  [
+   "joghur.*blaube",
+   "Joghurt"
+  ],
+  [
+   "pfirsi.*maracu",
+   "Joghurt"
+  ],
+  [
+   "erdbee.*joghur",
+   "Joghurt"
   ],
   [
    "mozzarel.*mini",
@@ -4717,16 +5150,12 @@
    "Agavendicksaft"
   ],
   [
-   "native.*oliven",
-   "Olivenöl"
-  ],
-  [
    "sonnenbl.*(ö|oe)l",
-   "Sonnenblumenöl"
+   "Öl"
   ],
   [
-   "sonnenblumen",
-   "Sonnenblumenöl"
+   "pflanzen(?:ö|oe)l",
+   "Öl"
   ],
   [
    "aceto.*balsami",
@@ -4755,6 +5184,10 @@
   [
    "pfeffe.*schwar",
    "Pfeffer"
+  ],
+  [
+   "smoked.*paprik",
+   "Paprikapulver"
   ],
   [
    "paprik.*pulver",
@@ -4881,6 +5314,14 @@
    "Tomate"
   ],
   [
+   "fleischtoma",
+   "Tomate"
+  ],
+  [
+   "datteltomat",
+   "Tomate"
+  ],
+  [
    "stangenbohn",
    "Grüne Bohnen"
   ],
@@ -4970,6 +5411,18 @@
   ],
   [
    "joghur.*natur",
+   "Joghurt"
+  ],
+  [
+   "fruchtjoghu",
+   "Joghurt"
+  ],
+  [
+   "kirschjoghu",
+   "Joghurt"
+  ],
+  [
+   "joghur.*mango",
    "Joghurt"
   ],
   [
@@ -5063,10 +5516,6 @@
   [
    "erdnussbutt",
    "Erdnussmus"
-  ],
-  [
-   "oliven.*extra",
-   "Olivenöl"
   ],
   [
    "curry.*ketchu",
@@ -5199,6 +5648,18 @@
   [
    "wei(ß|ss)kohl",
    "Weißkohl"
+  ],
+  [
+   "rispentoma",
+   "Tomate"
+  ],
+  [
+   "cherrytoma",
+   "Tomate"
+  ],
+  [
+   "kirschtoma",
+   "Tomate"
   ],
   [
    "snacktomat",
@@ -5334,6 +5795,10 @@
   ],
   [
    "naturjoghu",
+   "Joghurt"
+  ],
+  [
+   "mangojoghu",
    "Joghurt"
   ],
   [
@@ -5538,7 +6003,19 @@
   ],
   [
    "oliven.?(ö|oe)l",
-   "Olivenöl"
+   "Öl"
+  ],
+  [
+   "speise(ö|oe)l",
+   "Öl"
+  ],
+  [
+   "oliven(?:ö|oe)l",
+   "Öl"
+  ],
+  [
+   "speise(?:ö|oe)l",
+   "Öl"
   ],
   [
    "rotweiness",
@@ -6025,11 +6502,19 @@
    "Sesamöl"
   ],
   [
+   "sesam(?:ö|oe)l",
+   "Sesamöl"
+  ],
+  [
    "kokos(ö|oe)l",
    "Kokosöl"
   ],
   [
    "kokosfett",
+   "Kokosöl"
+  ],
+  [
+   "kokos(?:ö|oe)l",
    "Kokosöl"
   ],
   [
@@ -6203,6 +6688,14 @@
   [
    "rahmspin",
    "Spinat"
+  ],
+  [
+   "romatoma",
+   "Tomate"
+  ],
+  [
+   "ochsenhe",
+   "Tomate"
   ],
   [
    "maiskolb",
@@ -6502,19 +6995,19 @@
   ],
   [
    "raps(ö|oe)l",
-   "Rapsöl"
+   "Öl"
+  ],
+  [
+   "brat(ö|oe)l",
+   "Öl"
   ],
   [
    "raps(?:ö|oe)l",
-   "Rapsöl"
+   "Öl"
   ],
   [
-   "sesam(?:ö|oe)",
-   "Sesamöl"
-  ],
-  [
-   "kokos(?:ö|oe)",
-   "Kokosöl"
+   "brat(?:ö|oe)l",
+   "Öl"
   ],
   [
    "apfeless",
@@ -7054,7 +7547,11 @@
   ],
   [
    "oliveno",
-   "Olivenöl"
+   "Öl"
+  ],
+  [
+   "neutral",
+   "Öl"
   ],
   [
    "kokosfe",
@@ -7762,7 +8259,7 @@
   ],
   [
    "rapsoe",
-   "Rapsöl"
+   "Öl"
   ],
   [
    "balsam",
@@ -7807,6 +8304,10 @@
   [
    "pfeffe",
    "Pfeffer"
+  ],
+  [
+   "piment",
+   "Paprikapulver"
   ],
   [
    "kreuzk",

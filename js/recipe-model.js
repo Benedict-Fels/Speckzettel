@@ -13,6 +13,7 @@ export function normalizeIngredient(x) {
     variety: x.variety || null,
     optional: !!x.optional,
     raw: !!x.raw,
+    ...(x.swapOk ? {swapOk: true} : {}),
   };
 }
 

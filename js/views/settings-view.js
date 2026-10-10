@@ -77,6 +77,8 @@ export function renderSettings() {
   h += `<div class="panel"><h3>Haushalt</h3>
     <label class="fld">Ich esse<select data-household="diet">${Object.entries(DIETS).map(([k, l]) => `<option value="${k}" ${k === diet ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
     <p class="small muted">Bei „vegan“ und „vegetarisch“ zeigt „Kochen“ nur passende Rezepte. Ob ein Rezept passt, erkennt die App an den Zutaten.</p></div>`;
+  const theme = state.settings.theme || 'system';
+  h += `<div class="panel"><h3>Darstellung</h3><div class="seg theme-seg" role="group" aria-label="Hell oder dunkel">${[['system', 'wie das Gerät'], ['light', 'hell'], ['dark', 'dunkel']].map(([k, l]) => `<button type="button" class="${theme === k ? 'on' : ''}" data-act="setTheme" data-v="${k}" aria-pressed="${theme === k}">${l}</button>`).join('')}</div></div>`;
   h += `<div class="panel"><h3>Hinweise</h3>
     ${toggle('hintSoon', 'Bald verbrauchen', 'Rote Hinweise, wenn etwas bald abläuft oder drüber ist, und die Zahl am Vorrat-Symbol.')}
     ${toggle('hintCheck', 'Schau lieber nach', 'Gelbe Hinweise bei „fast leer“ und bei Sachen, die du lange nicht bestätigt hast.')}

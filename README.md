@@ -35,7 +35,7 @@ starten (unter Windows heißt der Befehl oft `python` oder `py` statt `python3`)
 
 ## Selbsttest
 
-Bei laufendem Server `http://localhost:8000/tests/run.html` öffnen. Die Seite prüft die Logik (Umzug alter Daten, echter Netto-eBon (anonymisiert, `tests/receipts/`), Zutaten- und Rezepttext lesen, Bon-Auswertung, Packungen und Haltbarkeit, „Vermutlich weg“, Katalog und Umrechnung, Rezept-Abgleich mit optional/roh, Filter, Gekocht-Vorschau, Rezept bearbeiten, Einkaufszettel) und zeigt „58 von 58 Tests bestanden“. Wer Node.js installiert hat, kann stattdessen `node tests/run.mjs` ausführen.
+Bei laufendem Server `http://localhost:8000/tests/run.html` öffnen. Die Seite prüft die Logik (Umzug alter Daten, echter Netto-eBon (anonymisiert, `tests/receipts/`), Zutaten- und Rezepttext lesen, Bon-Auswertung, Packungen und Haltbarkeit, „Vermutlich weg“, Katalog und Umrechnung, Rezept-Abgleich mit optional/roh, Filter, Gekocht-Vorschau, Rezept bearbeiten, Einkaufszettel) und zeigt „63 von 63 Tests bestanden“. Wer Node.js installiert hat, kann stattdessen `node tests/run.mjs` ausführen.
 
 ## Online stellen mit GitHub Pages (kostenlos)
 
@@ -57,7 +57,7 @@ Danach Speckzettel immer über das Icon öffnen.
 ## Neue Version veröffentlichen
 
 1. Änderungen an den Dateien machen.
-2. In `sw.js` die Zeile `const VERSION = 'speckzettel-2.0.0';` hochzählen (z. B. `2.0.1`) und in `js/version.js` `APP_VERSION` genauso.
+2. In `sw.js` die Zeile `const VERSION = 'speckzettel-2.3.1';` hochzählen (z. B. `2.3.2`) und in `js/version.js` `APP_VERSION` genauso.
 3. Geänderte Dateien bei GitHub hochladen.
 
 Beim nächsten Öffnen erscheint in der App oben **„Neue Version da – Neu laden“**. Ohne das Hochzählen in `sw.js` bekommen die Handys die neue Version nicht mit.
@@ -78,6 +78,11 @@ Die Daten tragen eine Formatnummer (`schema`). Öffnet eine neuere App-Version �
 | 1.4.1 | 5 | 26 Startrezepte (10 vegan, 8 vegetarisch, 8 mit Fleisch/Fisch), neue kommen bei bestehenden Daten dazu (`starterIds` merkt sich gelöschte); Schnellkorrektur „Ist da / Weg“ bzw. „Reicht noch / Leer“ in der Rezeptzeile; optionale Zutaten einzeln auf den Zettel |
 | 1.5.0 | 6 | Einkaufszettel: Einträge sind Zutat oder Freitext, Gruppen im Ladenrundgang, „für Dal“, Zusammenführen mit Umrechnung, Packungshinweis, Erledigte eingeklappt, Kopieren/Teilen, Prüfliste vor „In den Vorrat“, Bon hakt passende Einträge ab |
 | 2.0.0 | 6 | Bon: eBon-PDF direkt einlesen (pdf.js), Ketten erkennen (Netto, REWE, …), Zeilen einordnen, Mengenzeilen per Rechnung zuordnen, Rabatt/Pfand, Rechenproben (Zeile, Summe, Anzahl), neue Prüfansicht als Bon, „immer ignorieren“, gelernt pro Kette, Bons werden gemerkt (ohne Filiale/Payback), doppelte erkannt, Bon-Statistik in den Einstellungen, KI-Auftrag mit Preis und Summe |
+| 2.0.1 | 6 | Rezept → Einkaufszettel: Auswahl per Haken direkt in der Zutatenliste statt eigener Liste darunter |
+| 2.1.0 | 7 | Eigene Symbole für ~190 Zutaten; Öl ist eine Zutat mit Sorte (Oliven, Raps, Sonnenblumen), andere Sorte wird im Rezept als „Ersatz“ angeboten; Zucchini, Aubergine, Kürbis nach Gewicht; Einkaufszettel: Menge direkt nach dem Namen (antippen: 50-g-Schritte), Mehrzahl, Sorte, Rezept-Symbole statt „für …“, Erledigt offen; Flaschengröße beim Übernehmen; hell/dunkel in den Einstellungen |
+| 2.2.0 | 7 | Rezepttext: Menge und Zutat auf getrennten Zeilen (kopierte Webseiten), Knöpfe wie „Portion abziehen“ ignoriert, Menge hinten („Tomaten 200g“), „Zwiebel, rot“, kleine Tippfehler, „Salz & Pfeffer“; „roh“ nur bei Eiern; Sorte nur bei manchen Zutaten streng (Öl, Linsen, Reis …); Einkaufszettel mit Vorschlägen beim Tippen; lose Ware: Stück → Gewicht, „≈ 3“ |
+| 2.3.0 | 8 | Rezept-Formular mit festen Feldern (Zutat mit Vorschlägen, Menge, Einheit, Sorte) und Schnellzeile; Sorte nur noch bei Öl, Linsen, Reis, Tofu, Pesto, Saurer Sahne, Frischer Pasta streng, bei Joghurt nur Frucht; Pflanzendrink zählt als Milch, Pflanzensahne als Sahne, Pflanzenjoghurt als Joghurt (nicht umgekehrt); Einkaufszettel: lose Ware in Stück, Verpacktes in 50-g-Schritten |
+| 2.3.1 | 8 | Öl und Tofu: Sorte nur Beschreibung; Fruchtjoghurt mit einzelnen Früchten; Paprikapulver rosenscharf streng; Einkaufszettel zeigt, was noch im Vorrat/Kühlschrank/Tiefkühler ist |
 
 ## Bevor andere Leute die Adresse bekommen
 

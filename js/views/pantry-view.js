@@ -3,7 +3,7 @@ import {app} from '../app.js';
 import {esc} from '../text.js';
 import {fmt} from '../units.js';
 import {AREAS} from '../areas.js';
-import {catalogNames, groupOf} from '../catalog.js';
+import {catalogNames, iconFor} from '../catalog.js';
 import {daysBetween, now} from '../clock.js';
 import {groupItems, packStatus, inSoonBox, inCheckBox, levelText, itemLabel, purgeDate} from '../pantry.js';
 import {header, worstChip} from './components.js';
@@ -41,7 +41,7 @@ function groupRow(g) {
   const chip = worstChip(g.items);
   const meta = groupMeta(g);
   return `<div class="item"><button class="item-main" data-act="sheet" data-v="${esc(g.key)}">
-    <span class="item-name"><span class="group-icon" aria-hidden="true">${groupOf(g.ingredient).icon}</span>${esc(g.name)}</span><span class="item-qty">${groupQty(g)}</span>
+    <span class="item-name"><span class="group-icon" aria-hidden="true">${iconFor(g.ingredient)}</span>${esc(g.name)}</span><span class="item-qty">${groupQty(g)}</span>
     <span class="item-meta">${chip ? `<span class="chip ${chip.cls}">${chip.text}</span>` : ''}${meta ? `<span>${esc(meta)}</span>` : ''}</span></button></div>`;
 }
 

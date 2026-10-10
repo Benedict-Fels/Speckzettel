@@ -25,8 +25,16 @@ function keepFocus(draw) {
   if (sel && el.setSelectionRange) try { el.setSelectionRange(...sel); } catch (e) {}
 }
 
+/* Light / dark: follows the device unless chosen in the settings (11.10.2026). */
+function applyTheme() {
+  const t = app.state.settings.theme;
+  if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+  else delete document.documentElement.dataset.theme;
+}
+
 export function render() {
   setOverrides(app.state.catalogOverrides);
+  applyTheme();
   keepFocus(() => {
     $('#app').innerHTML = `<section class="view">${VIEWS[app.ui.tab]()}</section>`;
     const onboarding = !app.state.household.onboarded;

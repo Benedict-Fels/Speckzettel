@@ -1,7 +1,7 @@
 /* Recipe logic: scaling, check against the pantry (spec 10), ranking and filters (8.1), cooking with preview (11). */
 import {now, daysBetween} from './clock.js';
 import {fmt, convert, COUNT_UNITS} from './units.js';
-import {catalogFor} from './catalog.js';
+import {catalogFor, familyOf, varietyDiffers, key} from './catalog.js';
 import {norm} from './text.js';
 import {stockFor, isShaky, packStatus, expiryOf, levelText, inSoonBox} from './pantry.js';
 import {activeTime} from './recipe-model.js';
@@ -15,12 +15,25 @@ const isOver = i => packStatus(i).phase === 'over';
 const dayText = n => `${n} ${n === 1 ? 'Tag' : 'Tagen'}`;
 export const ingredientLabel = ing => ing.variety ? `${ing.name} (${ing.variety})` : ing.name;
 
-/* Packs a recipe line may use. Raw use (Tiramisu, Mayo): packs past their date are left out (spec 10.1). */
+/* Packs a recipe line may use.
+   Variety (spec 10, E6, 11.10.2026): if the recipe names one ("Öl (Oliven)"), packs of another variety ("Öl (Raps)") are only used
+   when the user accepted the swap for this line (swapOk); packs without a variety always count.
+   Raw use (Tiramisu, Mayo): packs past their date are left out (spec 10.1). */
 function usableStock(items, ing) {
-  const all = stockFor(items, ing.name);
-  if (!ing.raw) return {stock: all, tooOld: []};
-  return {stock: all.filter(i => !isOver(i)), tooOld: all.filter(isOver)};
+  const own = stockFor(items, ing.name);
+  /* family (Milch <- H-Milch, Pflanzendrink): counts like a description, unless a strict variety is asked for or offered */
+  const kin = familyOf(ing.name).flatMap(n => stockFor(items, n))
+    .filter(i => !varietyDiffers(ing.name, ing.variety, null) && !varietyDiffers(ing.name, null, i.variety));
+  const all = own.concat(kin);
+  let stock = all, others = [];
+  const differs = i => own.includes(i) && varietyDiffers(ing.name, ing.variety, i.variety);
+  const otherName = i => own.includes(i) && i.variety && ing.variety && norm(i.variety) !== norm(ing.variety);
+  others = all.filter(i => differs(i) || otherName(i));   /* for the note "gelb statt rot" */
+  if (!ing.swapOk) stock = all.filter(i => !differs(i));   /* other varieties of everything else simply count */
+  if (!ing.raw) return {stock, tooOld: [], others};
+  return {stock: stock.filter(i => !isOver(i)), tooOld: stock.filter(isOver), others: others.filter(i => !isOver(i))};
 }
+const varietiesOf = packs => [...new Set(packs.map(i => i.variety).filter(Boolean))];
 
 /* Why a "schau nach": past the date (with how long) or not seen for a while. */
 function shakyNote(stock) {
@@ -62,8 +75,16 @@ export function checkIngredient(items, ing, factor) {
   const label = need != null ? fmt(need, unit) : 'nach Geschmack';
   const head = {ing, need, unit, label, optional: !!ing.optional, raw: !!ing.raw};
   if (c && c.staple) return {...head, stock: [], staple: true, status: 'ok', note: 'gehört zur Grundausstattung'};
-  const {stock, tooOld} = usableStock(items, ing);
+  const {stock, tooOld, others} = usableStock(items, ing);
   let row = judge({...head, stock}, c, need, unit);
+  if (others.length && !ing.swapOk && row.status === 'buy') {
+    /* another variety is there: offered, not used unless the user says so */
+    const alt = judge({...head, stock: others}, c, need, unit);
+    if (alt.status !== 'buy') return {...row, status: 'swap', swap: varietiesOf(others), note: `${varietiesOf(others).join(', ') || 'ohne Sorte'} da – ${ing.variety ? `statt ${ing.variety} nehmen?` : 'trotzdem nehmen?'}`};
+  }
+  if (others.length && stock.some(i => others.includes(i)) && row.status !== 'buy') row = {...row, swapped: !!ing.swapOk, note: `${row.note} · ${varietiesOf(others).join(', ') || 'ohne Sorte'} statt ${ing.variety || ing.name}`};
+  const kin = row.status !== 'buy' ? [...new Set(stock.filter(i => key(i.ingredient) !== key(ing.name)).map(i => i.ingredient))] : [];
+  if (kin.length) row = {...row, note: `${row.note} · ${kin.join(', ')} zählt mit`};
   if (tooOld.length && row.status === 'buy') {
     const plural = c && c.plural && c.name === ing.name ? c.plural : null;
     const subject = plural ? `${plural} sind` : `${ingredientLabel(ing)} ist`;
@@ -87,6 +108,7 @@ export function recipeScore(items, r, t = now()) {
   const rows = recipeCheck(items, r, r.servings).filter(x => !x.staple && !x.optional);
   const ok = rows.filter(x => x.status === 'ok').length, ch = rows.filter(x => x.status === 'check').length;
   const missing = rows.filter(x => x.status === 'buy');
+  const swaps = rows.filter(x => x.status === 'swap').length;
   const over = rows.filter(x => x.over || x.rawOver).length;
   const soonMap = new Map();
   for (const x of rows) for (const i of x.stock) {
@@ -95,10 +117,10 @@ export function recipeScore(items, r, t = now()) {
     soonMap.set(x.ing.name, {name: x.ing.name, when: soonText(s), daysLeft: s.daysLeft});
   }
   const soon = [...soonMap.values()].sort((a, b) => a.daysLeft - b.daysLeft);
-  const pct = rows.length ? (ok + ch * .6) / rows.length : 1;
+  const pct = rows.length ? (ok + ch * .6 + swaps * .3) / rows.length : 1;
   const last = lastCooked(r);
   const recent = last != null && daysBetween(last, t) <= 3;
-  return {rows, ok, ch, over, total: rows.length, pct, soon, missing: missing.map(x => ingredientLabel(x.ing)), buy: missing.length,
+  return {rows, ok, ch, over, swaps, total: rows.length, pct, soon, missing: missing.map(x => ingredientLabel(x.ing)), buy: missing.length,
     score: pct + .15 * Math.min(soon.length, 2) - (recent ? .05 : 0), lastCooked: last};
 }
 
@@ -106,7 +128,7 @@ export function recipeScore(items, r, t = now()) {
 export const RECIPE_FILTERS = {cookable: 'Kochbar', quick: '≤ 30 Min', longAgo: 'Lange nicht gekocht'};
 export const LONG_AGO_DAYS = 30;
 export function matchesFilters(r, s, filters = [], query = '', t = now()) {
-  if (filters.includes('cookable') && s.buy > 0) return false;
+  if (filters.includes('cookable') && (s.buy > 0 || s.swaps > 0)) return false;
   if (filters.includes('quick') && !(activeTime(r) > 0 && activeTime(r) <= 30)) return false;
   if (filters.includes('longAgo') && s.lastCooked != null && daysBetween(s.lastCooked, t) <= LONG_AGO_DAYS) return false;
   const q = norm(query);
@@ -152,7 +174,8 @@ export function planCook(items, r, persons) {
     const exact = stock.filter(i => i.tracking === 'exact');
     if (!exact.length) return {...base, kind: 'flag', seen, itemIds: stock.map(i => i.id), gone: false};
     const unit = (c && exact.some(i => i.unit === c.unit) ? c.unit : exact[0].unit);
-    const pool = exact.filter(i => convert(i.amount, i.unit, unit, c) != null).sort(fifo);
+    const kin = i => key(i.ingredient) !== key(ing.name) ? 1 : 0;   /* the asked-for ingredient first, then the family */
+    const pool = exact.filter(i => convert(i.amount, i.unit, unit, c) != null).sort((a, b) => kin(a) - kin(b) || fifo(a, b));
     const have = +pool.reduce((s, i) => s + convert(i.amount, i.unit, unit, c), 0).toFixed(2);
     const recipeUnit = ing.unit || 'Stück';
     const need = ing.amount != null ? scaleAmount(ing.amount, recipeUnit, f) : null;
@@ -210,10 +233,11 @@ export function cook(state, r, persons) {
 /* What "Auf den Einkaufszettel" offers (spec 8.2): missing lines pre-ticked, missing optional lines not ticked,
    nothing that is already open on the list. n = index of the recipe line. */
 export function shoppingCandidates(rows, isListed = () => false) {
-  return rows.map((x, n) => ({x, n})).filter(({x}) => (x.status === 'buy' || x.status === 'optional') && !isListed(x.ing.name))
+  return rows.map((x, n) => ({x, n})).filter(({x}) => ['buy', 'optional', 'swap'].includes(x.status) && !isListed(x.ing.name))
     .map(({x, n}) => {
-      const optional = x.status === 'optional';
-      const amount = optional ? x.need : x.missing;
-      return {n, name: x.ing.name, label: ingredientLabel(x.ing), amount: amount ?? null, unit: amount != null ? (optional ? x.unit : x.missingUnit) : null, optional, checked: !optional};
+      const extra = x.status !== 'buy';
+      const amount = x.status === 'optional' ? x.need : x.missing;
+      return {n, name: x.ing.name, variety: x.ing.variety || null, label: ingredientLabel(x.ing), amount: amount ?? null,
+        unit: amount != null ? (x.status === 'optional' ? x.unit : x.missingUnit) : null, optional: x.status === 'optional', swap: x.status === 'swap', checked: !extra};
     });
 }

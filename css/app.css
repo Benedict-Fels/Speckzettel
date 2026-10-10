@@ -195,6 +195,7 @@ body.sheet-open{overflow:hidden}
 .toast[hidden]{display:none}
 .toast-btn{border:0;background:transparent;color:var(--accent-soft);font-weight:700;text-decoration:underline;text-underline-offset:3px;padding:6px 4px;min-height:36px}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .toast-btn{color:var(--accent-ink)}}
+:root[data-theme="dark"] .toast-btn{color:var(--accent-ink)}
 .more summary::-webkit-details-marker{display:none}
 
 /* ---- 1.3: group icons, gear, settings switches, first start, skipped receipt rows ---- */
@@ -244,7 +245,7 @@ h1:has(> .recipe-icon){display:flex;align-items:center;gap:12px}
 @media (max-width:380px){.check-row{grid-template-columns:auto 1fr}.check-row .check-qty{grid-column:2;text-align:left}}
 .check-row .chip{justify-self:start}
 .check-row .note{grid-column:2/-1}
-.check-name{min-width:0}
+.check-name{min-width:0;overflow-wrap:break-word;hyphens:auto}
 .check-qty{text-align:right;color:var(--muted);white-space:nowrap}
 .chip.optional{color:var(--muted);background:transparent;border:1px dashed var(--line)}
 .chip.optional::before{background:transparent;border:1.5px solid currentColor;box-sizing:border-box}
@@ -345,3 +346,65 @@ details.how:not([open]){gap:0}
 .receipt-edit{display:flex;flex-direction:column;gap:10px;background:var(--surface);color:var(--ink);border-radius:10px;padding:12px;margin-top:4px}
 .grid3{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:8px}
 @media (max-width:420px){.grid3{grid-template-columns:1fr 1fr}.grid3 .fld:last-child{grid-column:1/-1}}
+/* shopping selection inside the ingredient list (11.10.2026) */
+.checklist.picking .check-row{grid-template-columns:30px 104px minmax(0,1fr) auto}
+.checklist.picking .check-row .note,.checklist.picking .check-row .quick{grid-column:3/-1}
+.pick-cell{display:flex;align-items:center}
+.pick-cell input{width:22px;height:22px;accent-color:var(--accent);margin:0}
+.check-row.pick-off .check-name,.check-row.pick-off .check-qty{opacity:.6}
+.pick-hint{color:var(--accent);font-weight:700}
+@media (max-width:380px){.checklist.picking .check-row{grid-template-columns:32px auto 1fr}.checklist.picking .check-row .check-qty{grid-column:3;text-align:left}}
+
+/* ---- 2.1: variety swap, shopping rows with amount after the name, recipe symbols, theme switch ---- */
+.chip.swap{color:var(--swap);background:var(--swap-bg)}
+:root{--swap:#2f5f9a;--swap-bg:#e0eaf6}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--swap:#8fb6e8;--swap-bg:#1d2a3a}}
+:root[data-theme="dark"]{--swap:#8fb6e8;--swap-bg:#1d2a3a}
+.shop-row{padding:0 4px 0 12px;gap:2px;flex-wrap:nowrap}
+.shop-main{font-size:1.05rem;min-height:54px;flex:0 1 auto;gap:10px;min-width:0}
+.shop-name{overflow-wrap:break-word;hyphens:auto;min-width:0}
+.shop-name{flex:0 1 auto;font-weight:700}
+.shop-row.done .shop-name{font-weight:400}
+.shop-qty{border:0;background:var(--sunk);border-radius:999px;padding:6px 12px;font-size:1rem;font-weight:700;color:var(--ink);min-height:36px;margin-left:8px;white-space:nowrap}
+.shop-qty.empty{color:var(--muted);font-weight:400;padding:6px 12px}
+span.shop-qty{background:transparent;color:var(--muted);font-weight:400}
+.shop-row .shop-recipes{margin-left:auto;display:flex;gap:0;flex:none}
+.shop-row .remove{flex:none}
+.shop-qty{flex:none}
+.shop-recipe{border:0;background:none;font-size:1.15rem;min-width:36px;min-height:40px;padding:0;border-radius:8px}
+.shop-recipe:hover{background:var(--sunk)}
+.shop-edit{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 14px 12px 48px;border-bottom:1px solid var(--line);background:var(--sunk)}
+.shop-edit .stepper span{min-width:120px}
+.theme-seg{align-self:flex-start}
+:root[data-theme="light"]{color-scheme:light}
+.shop-row{min-height:56px}
+.shop-row > input[type=checkbox]{width:22px;height:22px;accent-color:var(--accent);flex:none;margin:0}
+.shop-row .group-icon{flex:none;cursor:pointer;margin-left:8px}
+.shop-body{flex:1 1 auto;min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;padding:8px 0;font-size:1.05rem}
+.shop-body .shop-name{cursor:pointer;font-weight:700}
+.shop-body .shop-qty{margin-left:0}
+.shop-body .shop-name{flex:0 0 auto;max-width:100%;min-width:0;overflow-wrap:break-word;hyphens:auto}
+.flag[hidden]{display:none}
+.suggest{display:flex;flex-wrap:wrap;gap:6px;margin-top:-8px}
+.suggest:empty{display:none}
+.suggest-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;min-height:40px;font-weight:700;font-size:.92rem}
+.suggest-chip:hover{border-color:var(--accent)}
+
+/* ---- 2.3: recipe form with fixed fields (Zutat, Menge, Einheit, Sorte) ---- */
+.ing-line{padding-bottom:10px;border-bottom:1px solid var(--line)}
+.ing-line:last-child{border-bottom:0}
+.ing-fields{display:grid;grid-template-columns:minmax(0,1fr) 3.4rem 4.6rem 32px;gap:5px;align-items:center}
+.ing-fields .ing-amount{padding-inline:6px}
+.ing-fields .ing-unit{padding-inline:6px 2px;font-size:.92rem}
+.ing-fields .remove{width:32px;min-width:32px}
+.ing-fields input,.ing-fields select{min-height:44px;min-width:0;width:100%}
+.ing-amount{text-align:right}
+.ing-suggest{margin-top:2px}
+.ing-variety{width:auto;min-height:36px;max-width:12rem;font-size:.9rem;padding-block:4px}
+.ing-variety[hidden]{display:none}
+.ing-meta{justify-content:flex-start}
+@media (max-width:360px){.ing-fields{grid-template-columns:minmax(0,1fr) 3rem 4.2rem 28px}}
+.ing-amount::placeholder{font-size:.8rem}
+
+/* ---- 2.3.1: shopping list cross-check with the pantry ---- */
+.shop-have{flex-basis:100%;color:var(--warn);font-weight:600;line-height:1.3}

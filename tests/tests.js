@@ -1,18 +1,18 @@
 /* Speckzettel tests. Run in the browser (tests/run.html via the local server) or with Node (node tests/run.mjs).
    Every new receipt format or bug fix should add a case here. */
-import {setCatalog, setOverrides, resolve, key, catalogFor, ruleFor} from '../js/catalog.js';
+import {setCatalog, setOverrides, resolve, key, catalogFor, ruleFor, iconFor} from '../js/catalog.js';
 import {convert} from '../js/units.js';
 import {migrate, SCHEMA} from '../js/migrate.js';
 import {seed} from '../js/seed.js';
 import {addItem, packStatus, stockFor, purgeGone, confirmStillThere, setArea, groupItems, inSoonBox} from '../js/pantry.js';
 import {shoppingCandidates, recipeCheck, recipeScore, cook, scaleAmount, recipeDiet, fitsDiet, planCook, applyCook, matchesFilters} from '../js/recipes.js';
-import {newDraft, draftFromRecipe, recipeFromDraft, restoreStarter, rawSuggested, draftFromParsed} from '../js/recipe-edit.js';
+import {newDraft, draftFromRecipe, recipeFromDraft, restoreStarter, rawSuggested, draftFromParsed, line, lineText, lineFromText, lineToIngredient} from '../js/recipe-edit.js';
 import {suggestIcon} from '../js/recipe-icons.js';
 import {recipeId} from '../js/recipe-model.js';
 import {starterById, starterRecipes, addNewStarters} from '../js/starter-recipes.js';
 import {emptyState} from '../js/seed.js';
 import {parseIngredientLine, parseRecipeText, splitEntries} from '../js/recipe-text.js';
-import {addToShopping, shoppingToStock, shoppingAmountText, groupShopping, shoppingText, stockPlan, applyStockPlan, settleWithReceipt, shopName} from '../js/shopping.js';
+import {stepShopping, shopLabel, addToShopping, shoppingToStock, shoppingAmountText, groupShopping, shoppingText, stockPlan, applyStockPlan, settleWithReceipt, shopName, stockNote} from '../js/shopping.js';
 import {parseAmountStr} from '../js/units.js';
 import {parseReceipt, classifyLine, buildArticles, receiptDate, aliasKey} from '../js/receipt/pipeline.js';
 import {itemsToLines} from '../js/receipt/lines.js';
@@ -22,6 +22,7 @@ import {NETTO_TEXT, NETTO_ITEMS} from './receipts/fixtures.js';
 import {SAMPLE_RECEIPT, SAMPLE_AI, SAMPLE_RECIPE_TEXT} from '../js/samples.js';
 
 const DAY = 864e5;
+const KNOEDEL = "Zutaten\nPortionen\nPortion abziehen\n4\nPortion hinzufügen\n400 g\nMini Knödel\n250 g\nPilze, gemischt\n1\nZwiebel, rot\n1 Bund\nSpinat, frisch\n0,5\nPaprikas, rot\n0,5\nPaprikas, gelb\n3\nKnoblauchzehen\n150 ml\nGemüsebrühe\n100 ml\nSahne\n2 EL\nOlivenöl\n100 g\nParmesan, gerieben\nSalz\nPfeffer\nZubereitung\n\n1. Die Mini-Knödel nach Packungsanleitung zubereiten und bereithalten. Die Pilze putzen und in mundgerechte Stücke schneiden. Die rote Zwiebel pellen, halbieren und in feine Streifen schneiden.\n2. Den Spinat waschen, trockenschleudern, vom Strunk befreien und in feine Streifen schneiden.\n3. Den Knoblauch pellen und in feine Würfel schneiden. Rote und gelbe Paprika waschen, trocknen und in Streifen schneiden. Öl erhitzen, Paprika, Pilze sowie die Zwiebeln hinzugeben und für etwa 5 Minuten bei mittlerer Hitze anbraten.\n4. Den Spinat und Knoblauch hineingeben und für 2 Minuten anschwitzen. Mit Gemüsebrühe auffüllen, aufkochen und für 3 Minuten köcheln lassen. Mit Salz und Pfeffer abschmecken.\nBackofen auf 160 Grad Umluft (180 Grad Ober-/ Unterhitze) vorheizen.\n5. Die Knödel hineingeben und mit geriebenem Parmesan bestreuen, für 15 Minuten im Backofen auf mittlerer Schiene überbacken. Anschließend servieren.\n";
 const T0 = new Date(2026, 9, 10, 12).getTime(); /* 10.10.2026, 12:00 local time */
 const empty = () => ({items: [], recipes: [], shopping: [], aliases: {}, catalogOverrides: {}});
 
@@ -52,14 +53,14 @@ export async function runAll(catalogDoc) {
       learned: {'tofu natur': {name: 'Tofu', cat: 'kuehl', unit: 'g'}}};
     const s = migrate(JSON.parse(JSON.stringify(v1)));
     is(s.schema, SCHEMA, 'schema');
-    is(s.items.map(i => [i.ingredient, i.label, i.area, i.unit]), [['Nudeln', 'Spaghetti', 'pantry', 'g'], ['Zucchini', null, 'fridge', 'Stück'], ['Erbsen', null, 'freezer', 'g']]);
+    is(s.items.map(i => [i.ingredient, i.label, i.area, i.unit]), [['Nudeln', 'Spaghetti', 'pantry', 'g'], ['Zucchini', null, 'fridge', 'g'], ['Erbsen', null, 'freezer', 'g']]);
     is(s.items[0].boughtAt, T0, 'boughtAt');
     is(s.items.some(i => 'snack' in i), false, 'kein snack-Feld mehr');
     is(s.items[2].frozenAt, T0, 'Tiefkühl-Sachen bekommen ein Einfrierdatum');
     const rc = s.recipes[0];
     is([rc.id, rc.title, rc.servings, rc.origin, rc.steps], ['x', 'Test', 2, 'own', ['a']]);
     is(rc.ingredients, [{amount: 1, unit: 'Stück', name: 'Zucchini', variety: null, optional: false, raw: false}, {amount: null, unit: null, name: 'Salz', variety: null, optional: false, raw: false}]);
-    is(s.shopping, [{id: 's', ingredient: 'Banane', text: null, amount: 3, unit: 'Stück', done: true, doneAt: null, addedAt: null, reason: null}]);
+    is(s.shopping, [{id: 's', ingredient: 'Banane', variety: null, text: null, amount: 3, unit: 'Stück', done: true, doneAt: null, addedAt: null, reason: null}]);
     is(s.aliases, {'tofu natur': {ingredient: 'Tofu', area: 'fridge', unit: 'g', variety: null}});
     is([s.household.onboarded, s.settings.hintSoon], [true, true], 'bestehende Daten: kein erster Start');
     is(s.catalogOverrides, {});
@@ -134,7 +135,7 @@ export async function runAll(catalogDoc) {
       ['2 Zehen Knoblauch', {name: 'Knoblauch', amount: 2, unit: 'Zehe'}],
       ['1,5 kg Kartoffeln', {name: 'Kartoffel', amount: 1500, unit: 'g'}],
       ['200 g Linsen (rot)', {name: 'Linsen', amount: 200, unit: 'g', variety: 'rot'}],
-      ['2 Knoblauchzehen', {name: 'Knoblauch', amount: 2, unit: 'Stück'}],
+      ['2 Knoblauchzehen', {name: 'Knoblauch', amount: 2, unit: 'Zehe'}],
       ['½ Zitrone', {name: 'Zitrone', amount: .5, unit: 'Stück'}],
       ['Salz nach Geschmack', {name: 'Salz', amount: null, unit: null}],
       ['• 200 ml Hafercuisine', {name: 'Pflanzensahne', amount: 200, unit: 'ml', variety: 'Hafer'}],
@@ -149,7 +150,19 @@ export async function runAll(catalogDoc) {
   test('Rezepttext (Instagram-Beispiel)', () => {
     const r = parseRecipeText(SAMPLE_RECIPE_TEXT);
     is(r.title, 'Cremige Pasta mit Champignons (vegan)');
-    is(r.servings, 2); is(r.ingredients.length, 7); is(r.steps.length, 4);
+    is(r.servings, 2); is(r.ingredients.length, 8); is(r.steps.length, 4);
+    is(r.ingredients.slice(-2).map(i => i.name), ['Salz', 'Pfeffer'], '„Salz & Pfeffer“ wird zwei Zutaten');
+  });
+
+  test('Kopierte Webseite: Menge und Zutat auf getrennten Zeilen, Knöpfe ignoriert (Bene, 11.10.2026)', () => {
+    const r = parseRecipeText(KNOEDEL);
+    is([r.title, r.servings, r.ingredients.length, r.steps.length], ['Neues Rezept', 4, 13, 6]);
+    is(r.ingredients.map(i => [i.amount, i.unit, i.name, i.variety]).slice(0, 11), [[400, 'g', 'Mini Knödel', null], [250, 'g', 'Pilze', null], [1, 'Stück', 'Zwiebel', 'rot'],
+      [1, 'Bund', 'Spinat', null], [.5, 'Stück', 'Paprika', 'rot'], [.5, 'Stück', 'Paprika', 'gelb'], [3, 'Zehe', 'Knoblauch', null], [150, 'ml', 'Gemüsebrühe', null],
+      [100, 'ml', 'Sahne', null], [2, 'EL', 'Öl', 'Oliven'], [100, 'g', 'Parmesan', null]]);
+    const p = l => { const x = parseIngredientLine(l); return [x.amount, x.unit, x.name]; };
+    is([p('Tomaten 200g'), p('200g Tomaten'), p('200 g Tomaten'), p('Tomatn 200 g'), p('2 Zuchini'), p('Salz, 1 Prise')],
+      [[200, 'g', 'Tomate'], [200, 'g', 'Tomate'], [200, 'g', 'Tomate'], [200, 'g', 'Tomate'], [2, 'Stück', 'Zucchini'], [1, 'Prise', 'Salz']]);
   });
 
   /* ---- receipts ---- */
@@ -187,10 +200,10 @@ export async function runAll(catalogDoc) {
     const s = empty();
     addItem(s, {name: 'Tofu', amount: 400}); addItem(s, {name: 'Tofu', amount: 200}); addItem(s, {name: 'Tofu'});
     is(s.items.map(i => i.amount), [400, 200, 400], 'ohne Menge: übliche Packung');
-    const oil = addItem(s, {name: 'Olivenöl'}); oil.level = .25;
-    addItem(s, {name: 'Olivenöl'});
-    is([s.items.filter(i => i.ingredient === 'Olivenöl').length, oil.level], [1, 1]);
-    is(groupItems(s.items).map(x => [x.name, x.items.length]), [['Tofu', 3], ['Olivenöl', 1]]);
+    const oil = addItem(s, {name: 'Essig'}); oil.level = .25;
+    addItem(s, {name: 'Essig'});
+    is([s.items.filter(i => i.ingredient === 'Essig').length, oil.level], [1, 1]);
+    is(groupItems(s.items).map(x => [x.name, x.items.length]), [['Tofu', 3], ['Essig', 1]]);
   });
 
   /* The four phases from spec 7.3, days counted from purchase. */
@@ -400,19 +413,34 @@ export async function runAll(catalogDoc) {
   test('Rezept bearbeiten: Formular hin und zurück, Mitgeliefertes wird eigenes', () => {
     const starter = starterById('r2');
     const d = draftFromRecipe(starter);
-    is(d.lines.map(l => l.text).slice(0, 2), ['200 g Linsen (rot)', '1 Dose Kokosmilch']);
-    is(d.lines.at(-1).optional, true, 'optional bleibt erhalten');
-    d.title = 'Mein Dal'; d.lines[0].text = '250 g Linsen (rot)'; d.cookTime = '25';
+    is(d.lines.map(lineText).slice(0, 2), ['200 g Linsen (rot)', '1 Dose Kokosmilch']);
+    is([d.lines[0].name, d.lines[0].amount, d.lines[0].unit, d.lines[0].variety], ['Linsen', '200', 'g', 'rot'], 'feste Felder');
+    is([d.lines.at(-2).optional, lineText(d.lines.at(-1))], [true, ''], 'optional bleibt erhalten, unten eine leere Zeile');
+    d.title = 'Mein Dal'; d.lines[0].amount = '250'; d.cookTime = '25';
     const r = recipeFromDraft(d, {...starter, cookedAt: [at(-3)]}, [starter]);
     is([r.id, r.origin, r.basedOn, r.title, r.ingredients[0].amount, r.cookTime, r.cookedAt], ['r2', 'own', 'r2', 'Mein Dal', 250, 25, [at(-3)]]);
     const back = restoreStarter(r);
     is([back.origin, back.title, back.cookedAt], ['starter', 'Rotes Linsen-Dal', [at(-3)]], 'Original wiederherstellen behält den Verlauf');
-    const nd = newDraft(); nd.title = 'Tiramisu'; nd.lines = [{text: '3 Eier', optional: false, raw: true, rawTouched: false}, {text: 'Kakao zum Bestreuen', optional: false, raw: false}];
+    const nd = newDraft(); nd.title = 'Tiramisu'; nd.lines = [line({name: 'Eier', amount: '3', raw: true}), line({name: 'Kakao zum Bestreuen'})];
     const t = recipeFromDraft(nd, null, [{id: 'tiramisu'}]);
     is([t.id, t.origin, t.icon, t.ingredients.map(i => [i.name, i.raw, i.optional]), recipeDiet(t)], ['tiramisu-2', 'own', 'dessert', [['Ei', true, false], ['Kakao', false, true]], 'vegetarian']);
     is(recipeDiet({...t, diet: 'all'}), 'all', 'eigene Angabe schlägt Vorschlag');
     const p = draftFromParsed(newDraft(), parseRecipeText('Mayonnaise\nZutaten\n1 Ei\n200 ml Öl\nZubereitung\n1. Mixen.'));
     is([p.title, p.lines[0].raw, p.lines[1].raw], ['Mayonnaise', true, false], 'roh vorgeschlagen');
+  });
+
+  test('Rezeptformular: feste Felder lesen', () => {
+    const ing = l => { const p = lineToIngredient(line(l)); return p && [p.name, p.amount, p.unit, p.variety, p.optional]; };
+    is(ing({name: 'Tomaten', amount: '1,5', unit: 'kg'}), ['Tomate', 1500, 'g', null, false], 'kg wird g, Mehrzahl wird Katalogname');
+    is(ing({name: 'Linsen', amount: '200', unit: 'g', variety: 'rot'}), ['Linsen', 200, 'g', 'rot', false]);
+    is(ing({name: 'Knoblauch', amount: '2', unit: 'Zehe'}), ['Knoblauch', 2, 'Zehe', null, false]);
+    is(ing({name: 'Zwiebel', amount: '2'}), ['Zwiebel', 2, 'Stück', null, false], 'ohne Einheit: Stück');
+    is(ing({name: 'Salz'}), ['Salz', null, null, null, false], 'ohne Menge: nach Geschmack');
+    is(ing({name: 'Cherrytomaten', amount: '200', unit: 'g'}), ['Tomate', 200, 'g', 'Cherry', false], 'Sorte aus dem Namen');
+    is(ing({name: '200 g Feta'}), ['Feta', 200, 'g', null, false], 'ganze Zeile im Namensfeld');
+    is(ing({name: '  '}), null);
+    const q = lineFromText('Tomaten 200g');
+    is([q.name, q.amount, q.unit], ['Tomate', '200', 'g'], 'Schnellzeile');
   });
 
   test('Zutatenzeilen: „optional“, „nach Belieben“, „evtl.“', () => {
@@ -487,20 +515,20 @@ export async function runAll(catalogDoc) {
       ['100 g (1 Pck.)', '1 Dose', '2', '240 g (1 Dose)', '']);
     addToShopping(s, 'Sonnencreme', null, null); addToShopping(s, 'Brot', 1, 'Stück');
     is(groupShopping(s.shopping).map(g => g.key), ['produce', 'bread', 'cans', 'spices', 'other']);
-    is(shoppingText(s.shopping).split('\n').slice(0, 3), ['Einkauf (Speckzettel)', '– Spinat, 100 g (1 Pck.)', '– Zwiebel, 2']);
+    is(shoppingText(s.shopping).split('\n').slice(0, 3), ['Einkauf (Speckzettel)', '– Spinat, 100 g (1 Pck.)', '– Zwiebeln, 2']);
   });
 
   test('Zettel → Vorrat: Prüfliste mit Packungen, korrigierbar, Freitext wird nur gelöscht', () => {
     const s = empty();
-    addToShopping(s, 'Tofu', 700, 'g'); addToShopping(s, 'Zwiebel', 3, 'Stück'); addToShopping(s, 'Olivenöl', null, null); addToShopping(s, 'Geschenkpapier', null, null);
+    addToShopping(s, 'Tofu', 700, 'g'); addToShopping(s, 'Zwiebel', 3, 'Stück'); addToShopping(s, 'Essig', null, null); addToShopping(s, 'Geschenkpapier', null, null);
     addToShopping(s, 'Reis', 500, 'g');
     s.shopping.slice(0, 4).forEach(x => { x.done = true; });
     const plan = stockPlan(s);
-    is(plan.rows.map(r => [r.ingredient, r.kind, r.count ?? r.amount]), [['Tofu', 'packs', 2], ['Zwiebel', 'amount', 3], ['Olivenöl', 'level', undefined]]);
+    is(plan.rows.map(r => [r.ingredient, r.kind, r.count ?? r.amount]), [['Tofu', 'packs', 2], ['Zwiebel', 'amount', 3], ['Essig', 'level', undefined]]);
     is(plan.reminders.map(shopName), ['Geschenkpapier']);
     plan.rows[0].count = 1; plan.rows[1].take = false;
     is(applyStockPlan(s, plan), 2);
-    is(s.items.map(i => [i.ingredient, i.amount]), [['Tofu', 400], ['Olivenöl', 1]]);
+    is(s.items.map(i => [i.ingredient, i.amount]), [['Tofu', 400], ['Essig', 1]]);
     is(s.shopping.map(shopName), ['Reis'], 'Erledigte weg, Offenes bleibt');
   });
 
@@ -573,6 +601,107 @@ export async function runAll(catalogDoc) {
     const bad = receiptRecord(parseReceipt('TOFU 2,29 B\nSUMME 3,00', {}), []);
     const fixed = {...rec, corrected: true};
     is(receiptStats([rec, bad, fixed]), {total: 3, smooth: 1, corrected: 1, error: 1});
+  });
+
+  /* ---- 2.1: oil varieties, swap, shopping by weight and plural, sizes, symbols ---- */
+  test('Umzug 2.0 (Format 6): Öl mit Sorte, Zucchini nach Gewicht', () => {
+    const v6 = {schema: 6, demo: false, aliases: {'netto|rapsoel 1l': {ingredient: 'Rapsöl', area: 'pantry', unit: 'ml'}}, catalogOverrides: {}, starterIds: [], receipts: [], household: {diet: 'vegan', onboarded: true}, settings: {},
+      items: [{id: 'a', ingredient: 'Olivenöl', variety: null, label: null, area: 'pantry', tracking: 'rough', amount: 1, unit: 'ml', level: .5, boughtAt: T0, seenAt: T0},
+        {id: 'b', ingredient: 'Zucchini', variety: null, label: null, area: 'fridge', tracking: 'exact', amount: 2, unit: 'Stück', level: 1, boughtAt: T0, seenAt: T0}],
+      recipes: [{id: 'x', title: 'Salat', servings: 2, origin: 'own', steps: [], ingredients: [{amount: 2, unit: 'EL', name: 'Olivenöl', variety: null}]}, {id: 'r1', title: 'alt', servings: 2, origin: 'starter', ingredients: [], steps: [], cookedAt: [T0]}],
+      shopping: [{id: 's', ingredient: 'Sonnenblumenöl', text: null, amount: null, unit: null, done: false},
+        {id: 't', ingredient: 'Tomate', text: null, amount: 300, unit: 'g', done: false}, {id: 'c', ingredient: 'Tomate', variety: 'Cherry', text: null, amount: 250, unit: 'g', done: false}]};
+    const s = migrate(v6);
+    is(s.shopping.slice(1).map(x => [x.amount, x.unit]), [[3, 'Stück'], [250, 'g']], 'Format 8: lose Tomaten in Stück, Cherry bleibt Gewicht');
+    is(s.items.map(i => [i.ingredient, i.variety, i.amount, i.unit]), [['Öl', 'Oliven', 1, 'ml'], ['Zucchini', null, 500, 'g']]);
+    is([s.recipes[0].ingredients[0].name, s.recipes[0].ingredients[0].variety, s.recipes[1].title, s.recipes[1].cookedAt], ['Öl', 'Oliven', 'Spaghetti mit Tomatensauce und Spinat', [T0]]);
+    is([s.shopping[0].ingredient, s.shopping[0].variety, s.aliases['netto|rapsoel 1l'].variety, s.settings.theme], ['Öl', 'Sonnenblumen', 'Raps', 'system']);
+    is([resolve('Olivenöl'), ruleFor('BIO OLIVENOEL NATIV 0,75L'), ruleFor('SPEISEZWIEB. 1KG').name], [{name: 'Öl', variety: 'Oliven'}, {name: 'Öl', variety: 'Oliven'}, 'Zwiebel']);
+  });
+
+  test('Sorte im Rezept: andere Sorte als Ersatz anbieten, erst nach Zustimmung nehmen', () => {
+    const s = empty(); addItem(s, {name: 'Linsen', variety: 'Beluga', amount: 500});
+    const r = recipe([['Linsen', 200, 'g', {variety: 'rot'}], ['Linsen', 100, 'g']]);
+    let rows = recipeCheck(s.items, r, 2);
+    is([rows[0].status, rows[0].note, rows[1].status], ['swap', 'Beluga da – statt rot nehmen?', 'ok'], 'ohne Sorte im Rezept gehen alle Linsen');
+    is([recipeScore(s.items, r).swaps, planCook(s.items, r, 2)[0].kind], [1, 'none'], 'Ersatz wird nicht abgezogen');
+    is(shoppingCandidates(rows).map(c => [c.name, c.variety, c.checked, c.swap]), [['Linsen', 'rot', false, true]], 'auf dem Zettel nicht vorausgewählt');
+    r.ingredients[0].swapOk = true;
+    rows = recipeCheck(s.items, r, 2);
+    is([rows[0].status, rows[0].swapped, planCook(s.items, r, 2)[0].use], ['ok', true, 200]);
+    addItem(s, {name: 'Linsen', amount: 500});
+    r.ingredients[0].swapOk = false;
+    is(recipeCheck(s.items, r, 2)[0].status, 'ok', 'Packung ohne Sorte passt immer');
+    const o = empty(); addItem(o, {name: 'Öl', variety: 'Raps', amount: 750});
+    is(recipeCheck(o.items, recipe([['Öl', 2, 'EL', {variety: 'Oliven'}]]), 2)[0].status, 'ok', 'Öl: Sorte ist seit 11.10. nur Beschreibung');
+    const p = empty(); addItem(p, {name: 'Paprika', variety: 'gelb', amount: 1});
+    const pr = recipeCheck(p.items, recipe([['Paprika', 1, 'Stück', {variety: 'rot'}]]), 2)[0];
+    is([pr.status, pr.note], ['ok', '1 Stück da · gelb statt rot'], 'Paprika: Farbe ist nur Beschreibung');
+    const k = empty(); addItem(k, {name: 'Kartoffel', variety: 'mehligkochend', amount: 1000});
+    is(recipeCheck(k.items, recipe([['Kartoffel', 500, 'g', {variety: 'festkochend'}]]), 2)[0].status, 'ok', 'Kartoffel: Sorte ist nur Beschreibung');
+  });
+
+  test('Familien: Pflanzendrink zählt als Milch, nicht umgekehrt; Fruchtjoghurt nur als Ersatz', () => {
+    const s = empty(); addItem(s, {name: 'Pflanzendrink', variety: 'Hafer', amount: 1000});
+    const milk = recipeCheck(s.items, recipe([['Milch', 200, 'ml']]), 2)[0];
+    is([milk.status, milk.note], ['ok', '1 l da · Pflanzendrink zählt mit']);
+    is(planCook(s.items, recipe([['Milch', 200, 'ml']]), 2)[0].use, 200, 'wird abgezogen');
+    const c = empty(); addItem(c, {name: 'Milch', amount: 1000});
+    is(recipeCheck(c.items, recipe([['Pflanzendrink', 200, 'ml']]), 2)[0].status, 'buy', 'veganes Rezept nimmt keine Kuhmilch');
+    addItem(c, {name: 'Pflanzendrink', amount: 500});
+    is(planCook(c.items, recipe([['Milch', 200, 'ml']]), 2)[0].packIds.map(id => c.items.find(i => i.id === id).ingredient), ['Milch', 'Pflanzendrink'], 'erst die echte Milch');
+    const j = empty(); addItem(j, {name: 'Joghurt', variety: 'Frucht', amount: 500});
+    const jr = recipeCheck(j.items, recipe([['Joghurt', 150, 'g']]), 2)[0];
+    is([jr.status, jr.note], ['swap', 'Frucht da – trotzdem nehmen?'], 'Fruchtjoghurt statt Naturjoghurt nur als Ersatz');
+    const m = empty(); addItem(m, {name: 'Joghurt', variety: resolve('Mangojoghurt').variety, amount: 500});
+    is([m.items[0].variety, recipeCheck(m.items, recipe([['Joghurt', 150, 'g', {variety: 'Frucht'}]]), 2)[0].status], ['Mango', 'ok'], 'Fruchtjoghurt im Rezept: jede Frucht passt');
+    is(recipeCheck(m.items, recipe([['Joghurt', 150, 'g', {variety: 'Erdbeer'}]]), 2)[0].status, 'swap', 'Erdbeer statt Mango nur als Ersatz');
+    const pp = empty(); addItem(pp, {name: 'Paprikapulver', variety: 'geräuchert'});
+    is(['edelsüß', 'rosenscharf'].map(v => recipeCheck(pp.items, recipe([['Paprikapulver', 1, 'TL', {variety: v}]]), 2)[0].status), ['ok', 'swap'], 'Paprikapulver: rosenscharf ist streng');
+    addItem(j, {name: 'Joghurt', variety: 'griechisch', amount: 500});
+    is(recipeCheck(j.items, recipe([['Joghurt', 150, 'g', {variety: 'natur'}]]), 2)[0].status, 'ok', 'griechisch statt natur zählt');
+    is(recipeCheck(j.items, recipe([['Pflanzenjoghurt', 150, 'g']]), 2)[0].status, 'buy');
+  });
+
+  test('Zettel: Mehrzahl, Sorte, Gewicht statt Stück, 50-g-Schritte', () => {
+    const s = empty();
+    const t = addToShopping(s, 'Tomate', 2, 'Stück', null, 'Cherry');
+    addToShopping(s, 'Cherrytomaten', 100, 'g');
+    const z = addToShopping(s, 'Zwiebel', 1, 'Stück'), z2 = addToShopping(s, 'Zwiebeln', 2, 'Stück');
+    const b = addToShopping(s, 'Bananen', null, null);
+    is([shopLabel(t), t.amount, t.unit, shoppingAmountText(t), shopLabel(z), shopLabel(b), z === z2], ['Tomaten (Cherry)', 300, 'g', '300 g', 'Zwiebeln', 'Bananen', true]);
+    is(shopLabel(addToShopping(empty(), 'Zwiebel', 1, 'Stück')), 'Zwiebel', 'eine: Einzahl');
+    stepShopping(t, 1); is(t.amount, 350); stepShopping(t, -1); stepShopping(t, -1); is(t.amount, 250);
+    const ol = addToShopping(s, 'Öl', 2, 'EL', null, 'Oliven'); is(shoppingAmountText(ol), '1 Pck.');
+    const tofu = addToShopping(s, 'Tofu', 400, 'g'); stepShopping(tofu, 1); is(tofu.amount, 450, 'Verpacktes in 50-g-Schritten');
+    const lt = addToShopping(s, 'Tomate', 250, 'g');
+    is([lt.amount, lt.unit, shoppingAmountText(lt), shopLabel(lt)], [2.5, 'Stück', '3', 'Tomaten'], 'Loses in Stück (Durchschnitt 100 g)');
+    addToShopping(s, 'Tomaten', 1, 'Stück'); stepShopping(lt, 1); is(lt.amount, 4);
+    const kz = addToShopping(s, 'Zucchini', null, null); stepShopping(kz, 1); is([kz.amount, kz.unit], [1, 'Stück']);
+    stepShopping(z, -1); stepShopping(z, -1); stepShopping(z, -1); is(z.amount, null, 'unter 1: ohne Menge');
+  });
+
+  test('Zettel: Gegenprobe mit dem Vorrat', () => {
+    const s = empty();
+    addItem(s, {name: 'Tofu', amount: 400, area: 'fridge'}); addItem(s, {name: 'Tofu', variety: 'geräuchert', amount: 200, area: 'freezer'});
+    addItem(s, {name: 'Öl', variety: 'Oliven'});
+    is(stockNote(s.items, 'Tofu'), '400 g im Kühlschrank, 200 g (geräuchert) im Tiefkühler');
+    is(stockNote(s.items, 'Öl'), '1 l (Oliven) im Vorrat');
+    is([stockNote(s.items, 'Reis'), stockNote(s.items, 'Salz')], ['', ''], 'nichts da / Grundausstattung');
+  });
+
+  test('In den Vorrat: Flaschengröße wählbar, Loses in Stück, im Vorrat als Gewicht', () => {
+    const s = empty();
+    addToShopping(s, 'Öl', 2, 'EL', null, 'Oliven'); addToShopping(s, 'Tomate', 3, 'Stück');
+    s.shopping.forEach(x => { x.done = true; });
+    const plan = stockPlan(s);
+    is(plan.rows.map(r => [r.ingredient, r.variety, r.kind, r.count ?? r.amount, r.size ?? null, r.sizes ?? null]), [['Öl', 'Oliven', 'packs', 1, 1000, [1000, 750, 500, 250]], ['Tomate', null, 'pieces', 3, null, null]]);
+    plan.rows[0].size = 750;
+    applyStockPlan(s, plan);
+    is(s.items.map(i => [i.ingredient, i.variety, i.amount, i.unit]), [['Öl', 'Oliven', 750, 'ml'], ['Tomate', null, 300, 'g']]);
+    is([iconFor('Tomate'), iconFor('Rucola'), iconFor('Tofu')], ['🍅', '🥬', '🧊']);
+    const b = parseReceipt('TOMATEN 1,47 B\n3 x 0,49\nRISPENTOMATEN 500G 1,99 B\nTOMATEN 1,79 B\nSUMME 5,25', {});
+    is(b.rows.map(x => x.amount), [300, 500, 500], 'Bon: 3 einzelne Tomaten = 300 g, Packung mit Größe, ohne Angabe übliche Packung');
   });
 
   return results;
