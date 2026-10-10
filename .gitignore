@@ -1,0 +1,39 @@
+# Speckzettel-App – was nicht zu GitHub soll (dieser Ordner ist das Repository, sein Inhalt geht online)
+
+# Datensicherungen aus der App: enthalten Vorrat, Rezepte, Einkaufszettel, gelernte Bon-Texte
+speckzettel-sicherung-*.json
+*sicherung*.json
+speckzettel-bons-*.txt
+
+# Kassenbons: eBon-PDFs und Fotos enthalten Datum, Filiale und Teile der Payback-Nummer.
+# Nur anonymisierte Texte gehören nach tests/receipts/.
+*.pdf
+bons/
+tests/receipts/private/
+
+# Zugangsdaten
+.env
+.env.*
+*.key
+*.pem
+secrets.*
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Editor und Betriebssystem
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+*.lnk
+
+# Temporäres
+*.log
+*.tmp
+*.bak
+~$*
